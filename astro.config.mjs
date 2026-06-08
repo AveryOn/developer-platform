@@ -3,7 +3,19 @@ import vue from '@astrojs/vue'
 import node from '@astrojs/node'
 import { fileURLToPath } from 'node:url'
 import z from 'zod'
-import { serverEnvSchema } from '~/config/env'
+
+const serverEnvSchema = z.object({
+  NODE_ENV: z
+    .enum(['development', 'production', 'test'])
+    .default('development'),
+
+  DATABASE_URL: z.string().min(1)
+})
+
+const clientEnvSchema = z.object({
+  PUBLIC_APP_NAME: z.string().min(1),
+  PUBLIC_APP_URL: z.url()
+})
 
 const validateEnv = (mode) => {
   const env = loadEnv(mode, process.cwd(), '')
