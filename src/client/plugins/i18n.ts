@@ -3,14 +3,20 @@ import { createI18n } from 'vue-i18n'
 import en from '~/client/locales/en.json'
 import ru from '~/client/locales/ru.json'
 
+export enum AppLocaleEnum {
+  en = 'en',
+  ru = 'ru'
+}
 export type AppLocale = 'en' | 'ru'
 
 const getInitialLocale = (): AppLocale => {
-  if (typeof document === 'undefined') return 'en'
+  if (typeof document === 'undefined') return AppLocaleEnum.en
 
   const match = document.cookie.match(/(?:^|;\s*)lang=(en|ru)(?:;|$)/)
 
-  return match?.[1] === 'ru' ? 'ru' : 'en'
+  return match?.[1] === AppLocaleEnum.ru
+    ? AppLocaleEnum.ru
+    : AppLocaleEnum.en
 }
 
 export const i18n = createI18n({
@@ -63,7 +69,7 @@ export const plural = (
 }
 export const setLocale = (locale: AppLocale): void => {
   i18n.global.locale.value = locale
-  document.cookie = `lang=${locale}; path=/; max-age=31536000`
+  document.cookie = `lang=${AppLocaleEnum[locale]}; path=/; max-age=31536000`
 }
 
 export const getLocale = (): AppLocale => {
