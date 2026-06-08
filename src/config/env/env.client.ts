@@ -1,5 +1,5 @@
 import z from 'zod'
-import { clientEnvSchema } from '~/config/env.schema'
+import { clientEnvSchema } from '~/config/env/env.schema'
 
 const parsed = clientEnvSchema.safeParse({
   PUBLIC_APP_NAME: import.meta.env.PUBLIC_APP_NAME,

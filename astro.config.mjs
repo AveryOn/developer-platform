@@ -35,7 +35,7 @@ const validateEnv = (mode) => {
   const clientParsed = clientEnvSchema.safeParse(extendedEnv)
 
   if (!clientParsed.success) {
-    console.error(clientParsed.error.format())
+    console.error(z.treeifyError(clientParsed.error))
     throw new Error('Invalid client env')
   }
 }

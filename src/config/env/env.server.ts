@@ -1,5 +1,5 @@
 import z from 'zod'
-import { serverEnvSchema } from '~/config/env.schema'
+import { serverEnvSchema } from '~/config/env/env.schema'
 
 const parsed = serverEnvSchema.safeParse(process.env)
 
