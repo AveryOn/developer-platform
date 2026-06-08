@@ -1,12 +1,13 @@
 ---
 import IndexFooter from '~/client/components/common/IndexFooter.vue'
 import IndexHeader from '~/client/components/common/IndexHeader.vue'
-import IndexMain from '~/client/components/common/IndexMain.vue'
+import ResumeView from '~/client/components/resume/ResumeView.vue'
 import Layout from '~/client/layouts/Layout.astro'
 ---
 
 <Layout title="Developer Platform">
   <IndexHeader client:only="vue" slot="header" />
-  <IndexMain client:only="vue" slot="main" />
+  <!-- <IndexMain client:only="vue" slot="main" /> -->
+  <ResumeView />
   <IndexFooter client:only="vue" slot="footer" />
 </Layout>

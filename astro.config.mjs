@@ -75,7 +75,7 @@ export default defineConfig({
 
   plugins: [
     AutoImport({
-      imports: ['vue', 'vue-router', 'pinia', 'vue-i18n'],
+      imports: ['vue', 'vue-router', 'pinia'],
 
       dirs: [
         './src/client/composables',

@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { plural } from '~/client/plugins/i18n'
+import { UseI18n } from '~/client/composables/useI18n';
 
-const { t: $t } = useI18n()
+const { $t, plural } = UseI18n()
 
 const count = 101
 </script>
 
 <template>
-  <div class="main">
-    MAIN
+  <div class="example-314231">
+    RESUME
     <div>
       <p>{{ $t('Hello World!') }}</p>
       <p>{{ $t('Example 123') }}</p>
