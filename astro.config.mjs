@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config'
 import vue from '@astrojs/vue'
 import node from '@astrojs/node'
+import { fileURLToPath } from 'node:url'
 
 export default defineConfig({
   output: 'server',
