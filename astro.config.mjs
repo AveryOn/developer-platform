@@ -69,5 +69,36 @@ export default defineConfig({
         '~': fileURLToPath(new URL('./src', import.meta.url))
       }
     }
-  }
+  },
+
+  plugins: [
+    AutoImport({
+      imports: ['vue', 'vue-router', 'pinia', 'vue-i18n'],
+
+      dirs: [
+        './src/client/composables',
+        './src/client/stores',
+        './src/client/plugins',
+        './src/client/utils'
+      ],
+
+      dts: './src/auto-imports.d.ts',
+
+      eslintrc: {
+        enabled: true,
+        filepath: './.eslintrc-auto-import.json',
+        globalsPropValue: true
+      }
+    }),
+
+    Components({
+      dirs: ['./src/client/components'],
+
+      extensions: ['vue'],
+
+      deep: true,
+
+      dts: './src/components.d.ts'
+    })
+  ]
 })

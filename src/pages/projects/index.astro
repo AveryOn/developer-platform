@@ -1,0 +1,12 @@
+---
+import IndexFooter from '~/client/components/footer/IndexFooter.vue'
+import IndexHeader from '~/client/components/header/IndexHeader.vue'
+import IndexMain from '~/client/components/main/IndexMain.vue'
+import Layout from '~/client/layouts/Layout.astro'
+---
+
+<Layout title="Developer Platform">
+  <IndexHeader client:only="vue" slot="header" />
+  <IndexMain client:only="vue" slot="main" />
+  <IndexFooter client:only="vue" slot="footer" />
+</Layout>
