@@ -16,6 +16,7 @@ const count = 101
       <p>{{ plural('Project', count) }}</p>
       <p>{{ plural('You have {count} project', count) }}</p>
     </div>
+    lorem1000
   </div>
 </template>
 
