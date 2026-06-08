@@ -2,7 +2,7 @@
 
 <template>
   <div class="header">
-    HEADER
+    Everi Vladislav
   </div>
 </template>
 
