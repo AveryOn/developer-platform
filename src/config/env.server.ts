@@ -1,9 +1,10 @@
-import { serverEnvSchema } from './env.schema'
+import z from 'zod'
+import { serverEnvSchema } from '~/config/env.schema'
 
 const parsed = serverEnvSchema.safeParse(process.env)
 
 if (!parsed.success) {
-  console.error(parsed.error.format())
+  console.error(z.treeifyError(parsed.error))
   throw new Error('Invalid server environment variables')
 }
 
