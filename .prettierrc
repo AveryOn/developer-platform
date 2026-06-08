@@ -1,16 +1,16 @@
 {
-    "semi": false,
-    "singleQuote": true,
-    "printWidth": 73,
-    "tabWidth": 2,
-    "trailingComma": "none",
-    "plugins": ["prettier-plugin-astro"],
-    "overrides": [
-      {
-        "files": "*.astro",
-        "options": {
-          "parser": "astro"
-        }
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 73,
+  "tabWidth": 2,
+  "trailingComma": "none",
+  "plugins": ["prettier-plugin-astro"],
+  "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
       }
-    ]
-  }
+    }
+  ]
+}
