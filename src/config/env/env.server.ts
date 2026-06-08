@@ -1,5 +1,12 @@
 import z from 'zod'
-import { serverEnvSchema } from '~/config/env/env.schema'
+
+export const serverEnvSchema = z.object({
+  NODE_ENV: z
+    .enum(['development', 'production', 'test'])
+    .default('development'),
+
+  DATABASE_URL: z.string().min(1)
+})
 
 const parsed = serverEnvSchema.safeParse(process.env)
 
