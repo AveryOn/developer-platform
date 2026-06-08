@@ -56,7 +56,7 @@ export default defineConfig({
 
   integrations: [
     vue({
-      appEntrypoint: '/src/pages/_appVue.ts',
+      appEntrypoint: '/src/client/_appVue.ts',
       devtools: false
     }),
     UnoCSS({
