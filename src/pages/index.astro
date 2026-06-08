@@ -5,7 +5,7 @@ import IndexMain from '~/client/components/main/IndexMain.vue'
 import Layout from '~/client/layouts/Layout.astro'
 ---
 
-<Layout example={'EXAMPLE_TEXT_PROP'}>
+<Layout title="Developer Platform">
   <IndexHeader client:only="vue" slot="header" />
   <IndexMain client:only="vue" slot="main" />
   <IndexFooter client:only="vue" slot="footer" />
