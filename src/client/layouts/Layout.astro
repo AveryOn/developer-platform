@@ -1,5 +1,4 @@
 ---
-// import BaseLayout from '~/client/layouts/BaseLayout.client.vue'
 export interface Props {
   example: string
 }
@@ -19,27 +18,24 @@ const props = Astro.props
     <title>{props.example ?? 'HelloWorld!'}</title>
   </head>
   <body>
-    <div class="min-h-[100svh] flex flex-col items-center">
-      <div class="flex grow basis-1 flex-col">
+    <div class="min-h-svh bg-neutral-950 text-neutral-100">
+      <div
+        class="mx-auto flex min-h-svh w-full max-w-[1440px] flex-col px-4 sm:px-6 lg:px-8"
+      >
         <header
-          class="relative h-10 [@media(min-width:900px)]:z-[100] [@media(max-height:900px)]:clamp-h-[margin-top,32,88,640,900]"
+          class="sticky top-0 z-50 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur"
         >
-          <slot name="header" class="mb-[24px] flex flex-col gap-6" />
+          <slot name="header" />
         </header>
-        <main class="clamp-h-[margin-top,48,126,640,900]">
+
+        <main class="flex-1 py-10 md:py-16">
           <slot name="main" />
         </main>
-      </div>
-      <footer
-        id="mainFooter"
-        class="relative z-[75] flex flex-col gap-6 py-6"
-      >
-        <slot name="footer" class="mb-[24px] flex flex-col gap-6">
-          <!-- <ChangeLanguage client:only="vue" /> -->
-        </slot>
-      </footer>
-    </div>
 
-    <!-- <div id="toast-root"></div> -->
+        <footer class="border-t border-neutral-800 py-8">
+          <slot name="footer" />
+        </footer>
+      </div>
+    </div>
   </body>
 </html>
