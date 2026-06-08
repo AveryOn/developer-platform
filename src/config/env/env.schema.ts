@@ -10,7 +10,7 @@ export const serverEnvSchema = z.object({
 
 export const clientEnvSchema = z.object({
   PUBLIC_APP_NAME: z.string().min(1),
-  PUBLIC_APP_URL: z.string().url()
+  PUBLIC_APP_URL: z.url()
 })
 
 export const envSchema = serverEnvSchema.extend(clientEnvSchema)
