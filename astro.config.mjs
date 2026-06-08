@@ -48,7 +48,15 @@ export default defineConfig({
     mode: 'standalone'
   }),
 
-  integrations: [vue()],
+  integrations: [
+    vue({
+      appEntrypoint: '/src/pages/_appVue',
+      devtools: true
+    }),
+    UnoCSS({
+      injectReset: '@unocss/reset/tailwind.css'
+    })
+  ],
 
   vite: {
     resolve: {
