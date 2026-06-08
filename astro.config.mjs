@@ -19,19 +19,19 @@ const clientEnvSchema = z.object({
 const validateEnv = (mode) => {
   const env = loadEnv(mode, process.cwd(), '')
 
-  const mergedEnv = {
+  const extendedEnv = {
     ...process.env,
     ...env
   }
 
-  const serverParsed = serverEnvSchema.safeParse(mergedEnv)
+  const serverParsed = serverEnvSchema.safeParse(extendedEnv)
 
   if (!serverParsed.success) {
     console.error(serverParsed.error.format())
     throw new Error('Invalid server env')
   }
 
-  const clientParsed = clientEnvSchema.safeParse(mergedEnv)
+  const clientParsed = clientEnvSchema.safeParse(extendedEnv)
 
   if (!clientParsed.success) {
     console.error(clientParsed.error.format())
