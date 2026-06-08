@@ -4,6 +4,7 @@ import node from '@astrojs/node'
 import { loadEnv } from 'vite'
 import { fileURLToPath } from 'node:url'
 import { z } from 'zod'
+import UnoCSS from 'unocss/astro'
 
 const mode = process.env.NODE_ENV ?? 'development'
 const rawEnv = loadEnv(mode, process.cwd(), '')
