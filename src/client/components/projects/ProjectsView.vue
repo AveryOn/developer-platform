@@ -1,8 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps<{
+  uuid: string
+}>()
+</script>
 
 <template>
   <div class="header">
-    Projects View
+    Projects View {{ props.uuid }}
   </div>
 </template>
 

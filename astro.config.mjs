@@ -4,6 +4,8 @@ import node from '@astrojs/node'
 import { loadEnv } from 'vite'
 import { fileURLToPath } from 'node:url'
 import { z } from 'zod'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
 import UnoCSS from 'unocss/astro'
 
 const mode = process.env.NODE_ENV ?? 'development'
