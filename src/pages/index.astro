@@ -1,17 +1,20 @@
 ---
-import BaseLayout from '~/client/layouts/BaseLayout.client.vue'
+import Layout from '~/client/layouts/Layout.astro'
 ---
 
-<BaseLayout client:only="vue">
-  <template slot="header">
-    <div>Header</div>
-  </template>
+<Layout
+  title={locals.title}
+  favicons={locals.favicons}
+  description={locals.description}
+  product={locals.provider}
+>
+  <FormSignIn
+    product={locals.provider}
+    client:only="vue"
+    isDangerMode={isDangerMode}
+    traceId={traceId}
+    isMobile={false}
+  />
 
-  <template slot="main">
-    <div>Main content</div>
-  </template>
-
-  <template slot="footer">
-    <div>Footer</div>
-  </template>
-</BaseLayout>
+  <TermsOfUseFooter slot="footer-after" client:only="vue" />
+</Layout>
