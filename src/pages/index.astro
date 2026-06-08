@@ -1,20 +1,12 @@
 ---
+import IndexFooter from '~/client/components/footer/IndexFooter.vue'
+import IndexHeader from '~/client/components/header/IndexHeader.vue'
+import IndexMain from '~/client/components/main/IndexMain.vue'
 import Layout from '~/client/layouts/Layout.astro'
 ---
 
-<Layout
-  title={locals.title}
-  favicons={locals.favicons}
-  description={locals.description}
-  product={locals.provider}
->
-  <FormSignIn
-    product={locals.provider}
-    client:only="vue"
-    isDangerMode={isDangerMode}
-    traceId={traceId}
-    isMobile={false}
-  />
-
-  <TermsOfUseFooter slot="footer-after" client:only="vue" />
+<Layout example={'EXAMPLE_TEXT_PROP'}>
+  <IndexHeader client:only="vue" slot="header" />
+  <IndexMain client:only="vue" slot="main" />
+  <IndexFooter client:only="vue" slot="footer" />
 </Layout>
