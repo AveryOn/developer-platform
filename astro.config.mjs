@@ -44,6 +44,9 @@ console.log('ASTRO CONFIG LOADED')
 
 export default defineConfig({
   output: 'server',
+  devToolbar: {
+    enabled: false
+  },
 
   adapter: node({
     mode: 'standalone'
@@ -51,11 +54,12 @@ export default defineConfig({
 
   integrations: [
     vue({
-      appEntrypoint: '/src/pages/_appVue',
-      devtools: true
+      appEntrypoint: '/src/pages/_appVue.ts',
+      devtools: false
     }),
     UnoCSS({
-      injectReset: '@unocss/reset/tailwind.css'
+      injectReset: '@unocss/reset/tailwind.css',
+      inspector: false
     })
   ],
 

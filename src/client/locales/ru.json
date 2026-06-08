@@ -1,3 +1,5 @@
 {
-  "Hello World!": "Привет мир!"
+  "Hello World!": "Привет мир!",
+  "Project": "проект | проекта | проектов",
+  "You have {count} project": "У тебя {count} проект | У тебя {count} проекта | У тебя {count} проектов"
 }
