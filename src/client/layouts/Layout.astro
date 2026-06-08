@@ -1,9 +1,13 @@
 ---
 export interface Props {
-  example: string
+  title?: string
+  description?: string
 }
 
-const props = Astro.props
+const {
+  title = 'Developer Platform',
+  description = 'Backend architecture, projects, technical notes, and developer portfolio.'
+} = Astro.props
 ---
 
 <!doctype html>
@@ -11,28 +15,34 @@ const props = Astro.props
   <head>
     <meta charset="UTF-8" />
     <meta name="robots" content="noindex, nofollow, nosnippet" />
-    <meta name="description" content="Description" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
     <meta name="generator" content={Astro.generator} />
 
-    <title>{props.example ?? 'HelloWorld!'}</title>
+    <title>{title}</title>
   </head>
+
   <body>
-    <div class="min-h-svh bg-neutral-950 text-neutral-100">
+    <div class="min-h-svh bg-[#0b0f14] text-[#e6edf3]">
       <div
-        class="mx-auto flex min-h-svh w-full max-w-[1440px] flex-col px-4 sm:px-6 lg:px-8"
+        class="mx-auto grid min-h-svh w-full max-w-[1440px] grid-rows-[auto_1fr_auto] px-4 sm:px-6 lg:px-8"
       >
         <header
-          class="sticky top-0 z-50 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur"
+          class="sticky top-0 z-50 border-b border-white/10 bg-[#0b0f14]/85 backdrop-blur"
         >
           <slot name="header" />
         </header>
 
-        <main class="flex-1 py-10 md:py-16">
-          <slot name="main" />
+        <main class="py-12">
+          <div class="mx-auto w-full max-w-[1120px]">
+            <slot name="main" />
+          </div>
         </main>
 
-        <footer class="border-t border-neutral-800 py-8">
+        <footer class="border-t border-white/10 py-8">
           <slot name="footer" />
         </footer>
       </div>

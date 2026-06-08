@@ -1,4 +1,5 @@
 import type { App } from 'vue'
+import '~/client/styles/normalize.css'
 import { i18n } from '~/client/plugins/i18n'
 import pinia from '~/client/plugins/pinia'
 
