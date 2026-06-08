@@ -1,7 +1,7 @@
 import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { id, timestamp } from '~/server/database/helpers'
 
-export const articles = sqliteTable('articles', {
+export const articlesTable = sqliteTable('article', {
   id: id(),
   slug: text('slug').notNull().unique(),
   title: text('title').notNull(),

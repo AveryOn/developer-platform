@@ -1,9 +1,11 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { id, timestamp } from '~/server/database/helpers'
 
 export const projectsTable = sqliteTable('project', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
+  id: id(),
   title: text('title').notNull(),
   description: text('description').notNull(),
   stack: text('stack').notNull(),
-  createdAt: text('created_at').notNull()
+  updatedAt: timestamp('updated_at', true),
+  createdAt: timestamp('created_at', true)
 })
