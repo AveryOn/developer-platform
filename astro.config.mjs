@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config'
 import vue from '@astrojs/vue'
 import node from '@astrojs/node'
 import { fileURLToPath } from 'node:url'
+import z from 'zod'
 
 const serverEnvSchema = z.object({
   NODE_ENV: z
@@ -13,7 +14,7 @@ const serverEnvSchema = z.object({
 
 const clientEnvSchema = z.object({
   PUBLIC_APP_NAME: z.string().min(1),
-  PUBLIC_APP_URL: z.string().url()
+  PUBLIC_APP_URL: z.url()
 })
 
 const validateEnv = (mode) => {
