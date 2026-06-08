@@ -1,6 +1,6 @@
 import Database from 'better-sqlite3'
 import { drizzle } from 'drizzle-orm/better-sqlite3'
-import { serverEnv } from '~/config/env'
+import { serverEnv } from '~/server/config/env'
 
 const sqlite = new Database(serverEnv.DATABASE_URL)
 
