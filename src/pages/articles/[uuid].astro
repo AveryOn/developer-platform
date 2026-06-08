@@ -1,0 +1,30 @@
+---
+import { eq } from 'drizzle-orm'
+
+import Layout from '~/client/layouts/Layout.astro'
+import { db } from '~/server/database/client'
+import { articlesTable } from '~/server/database/schema'
+import { renderMarkdown } from '~/server/utils/markdown/renderMarkdown'
+
+const { slug } = Astro.params
+
+if (!slug) {
+  return Astro.redirect('/notes')
+}
+
+const [article] = await db
+  .select()
+  .from(articlesTable)
+  .where(eq(articlesTable.slug, slug))
+  .limit(1)
+
+if (!article) {
+  return Astro.redirect('/404')
+}
+
+const html = await renderMarkdown(article.content)
+---
+
+<Layout title={article.title}>
+  <article slot="main" class="markdown-body" set:html={html} />
+</Layout>
