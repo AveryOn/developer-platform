@@ -28,7 +28,7 @@ const validateEnv = (mode) => {
   const serverParsed = serverEnvSchema.safeParse(extendedEnv)
 
   if (!serverParsed.success) {
-    console.error(serverParsed.error.format())
+    console.error(z.treeifyError(serverParsed.error))
     throw new Error('Invalid server env')
   }
 
