@@ -7,7 +7,6 @@ import Layout from '~/client/layouts/Layout.astro'
 
 <Layout title="Developer Platform">
   <IndexHeader client:only="vue" slot="header" />
-  <!-- <IndexMain client:only="vue" slot="main" /> -->
-  <ResumeView />
+  <ResumeView client:only="vue" slot="main" />
   <IndexFooter client:only="vue" slot="footer" />
 </Layout>
