@@ -7,5 +7,12 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone'
   }),
-  integrations: [vue()]
+  integrations: [vue()],
+  vite: {
+    resolve: {
+      alias: {
+        '~': fileURLToPath(new URL('./src', import.meta.url))
+      }
+    }
+  }
 })
