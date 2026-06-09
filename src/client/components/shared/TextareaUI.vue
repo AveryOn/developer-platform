@@ -63,9 +63,9 @@ const props = withDefaults(
   border-radius: 10px;
 
   background: var(--primary-color-2);
-  color: var(--primary-color-1);
+  color: white;
 
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   font-family: inherit;
 
