@@ -1,16 +1,25 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import TextareaUI from '~/client/components/shared/TextareaUI.vue';
 import { UseI18n } from '~/client/composables/useI18n';
+import { renderMarkdown } from '~/shared/utils/markdown/renderMarkdown';
+import MarkdownBody from '~/client/components/shared/MarkdownBody.vue';
+
+const html = ref('')
 
 const { $t } = UseI18n()
+async function handlerInput(input: string) {
+  html.value = await renderMarkdown(input)
+}
 </script>
 
 <template>
   <div class="new-article-viewer">
     <div class="viewer-input-block">
-      <TextareaUI :placeholder="$t('Input Here')" :rows="20"></TextareaUI>
+      <TextareaUI :placeholder="$t('Input Here')" :rows="20" @update:model-value="v => handlerInput(v)"></TextareaUI>
     </div>
     <div class="viewer-preview-block">
+      <MarkdownBody :html="html" :uuid="'none'" />
       <p>ТУТ БУДЕТ MARKDOWN TEMPLATE</p>
     </div>
   </div>

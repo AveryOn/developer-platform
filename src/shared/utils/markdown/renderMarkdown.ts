@@ -1,5 +1,5 @@
 import { marked } from 'marked'
-import { sanitizeHtml } from '~/server/utils/markdown/sanitizeHtml'
+import { sanitizeHtml } from '~/shared/utils/markdown/sanitizeHtml'
 
 export const renderMarkdown = async (
   markdown: string,

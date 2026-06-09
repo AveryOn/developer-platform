@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MarkdownBody from '~/client/components/news/MarkdownBody.vue'
+import MarkdownBody from '~/client/components/shared/MarkdownBody.vue'
 
 const props = defineProps<{
   uuid: string
