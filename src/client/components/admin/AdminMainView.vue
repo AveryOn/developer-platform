@@ -29,10 +29,18 @@ const { $t } = UseI18n()
     </header>
 
     <main class="main-admin-menu pt-[24px] overflow-hidden">
-      <MenuItem :icon="mdiCardAccountDetailsOutline" :title="$t('CV Management')" />
-      <MenuItem :icon="mdiFolderOpenOutline" :title="$t('Projects Management')" />
-      <MenuItem :icon="mdiNewspaperVariantMultipleOutline" :title="$t('Article Management')" />
-      <MenuItem :icon="mdiPalette" :title="$t('Adjust the color schema')" />
+      <a href="/admin/cv">
+        <MenuItem :icon="mdiCardAccountDetailsOutline" :title="$t('CV Management')" />
+      </a>
+      <a href="/admin/projects">
+        <MenuItem :icon="mdiFolderOpenOutline" :title="$t('Projects Management')" />
+      </a>
+      <a href="/admin/articles">
+        <MenuItem :icon="mdiNewspaperVariantMultipleOutline" :title="$t('Article Management')" />
+      </a>
+      <a href="/admin/settings">
+        <MenuItem :icon="mdiPalette" :title="$t('Adjust the color schema')" />
+      </a>
     </main>
   </div>
 </template>
