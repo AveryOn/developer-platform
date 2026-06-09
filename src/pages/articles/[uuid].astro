@@ -6,16 +6,16 @@ import { db } from '~/server/database/client'
 import { articlesTable } from '~/server/database/schema'
 import { renderMarkdown } from '~/server/utils/markdown/renderMarkdown'
 
-const { slug } = Astro.params
+const { uuid } = Astro.params
 
-if (!slug) {
-  return Astro.redirect('/notes')
+if (!uuid) {
+  return Astro.redirect('/')
 }
 
 const [article] = await db
   .select()
   .from(articlesTable)
-  .where(eq(articlesTable.slug, slug))
+  .where(eq(articlesTable.id, uuid))
   .limit(1)
 
 if (!article) {
