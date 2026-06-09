@@ -30,5 +30,5 @@ const html = await renderMarkdown(article.content)
 <Layout title={article.title}>
   <IndexHeader slot="header" />
   <ArticleView client:only="vue" html={html} uuid={uuid} slot="main" />
-  <IndexFooter />
+  <IndexFooter slot="footer" />
 </Layout>
