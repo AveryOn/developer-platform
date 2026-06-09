@@ -12,7 +12,7 @@ const appStore = useAppStore()
       <button @click="appStore.applyTheme(AppTheme['app-theme-package-2'])">Theme 2</button>
       <button @click="appStore.applyTheme(AppTheme['app-theme-package-3'])">Theme 3</button>
     </header>
-    <div class="main-admin-menu pt-[24px]">
+    <div class="main-admin-menu pt-[24px] overflow-hidden">
       <div class="menu-block">Adjust the color schema</div>
       <div class="menu-block">Article Management</div>
       <div class="menu-block">Projects Management</div>
@@ -31,6 +31,7 @@ const appStore = useAppStore()
   gap: 36px;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .menu-block {
