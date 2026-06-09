@@ -6,7 +6,7 @@ import AdminMainView from '~/client/components/admin/AdminMainView.vue'
 ---
 
 <Layout title={'PORTFOLIO--ADMIN'}>
-  <IndexHeader slot="header" />
+  <IndexHeader client:only="vue" slot="header" />
   <AdminMainView client:only="vue" slot="main" />
   <IndexFooter />
 </Layout>

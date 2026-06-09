@@ -28,7 +28,7 @@ const html = await renderMarkdown(article.content)
 ---
 
 <Layout title={article.title}>
-  <IndexHeader slot="header" />
+  <IndexHeader client:only="vue" slot="header" />
   <ArticleView client:only="vue" html={html} uuid={uuid} slot="main" />
-  <IndexFooter slot="footer" />
+  <IndexFooter client:only="vue" slot="footer" />
 </Layout>

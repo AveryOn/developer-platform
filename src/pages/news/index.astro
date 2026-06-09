@@ -9,7 +9,7 @@ const articles = await ArticleService.getList()
 ---
 
 <Layout title={'NEWS'}>
-  <IndexHeader slot="header" />
+  <IndexHeader client:only="vue" slot="header" />
   <NewsView client:only="vue" articles={articles} slot="main" />
-  <IndexFooter />
+  <IndexFooter client:only="vue" slot="footer" />
 </Layout>

@@ -1,10 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAppStore } from '~/client/stores/app.store';
+
+const appStore = useAppStore()
+</script>
 
 <template>
   <div>
     <header>
-      <button data-theme="1">Theme 1</button>
-      <button data-theme="2">Theme 2</button>
+      <button @click="appStore.applyTheme('app-theme-package-1')">Theme 1</button>
+      <button @click="appStore.applyTheme('app-theme-package-2')">Theme 2</button>
     </header>
     <div class="main-admin-menu">
       <div class="menu-block"></div>

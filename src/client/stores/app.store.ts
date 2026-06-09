@@ -1,9 +1,9 @@
 import type { Theme } from '~/client/types/app.types'
 import { defineStore } from 'pinia'
-import { themes } from '~/client/config/const'
+import { AppTheme, themes } from '~/client/config/const'
 import { CookieKey } from '~/shared/const'
 
-export const appStore = defineStore('APP_STORE', () => {
+export const useAppStore = defineStore('APP_STORE', () => {
   function setCookie(name: string, value: string, days = 365) {
     const maxAge = days * 24 * 60 * 60
 
@@ -26,32 +26,20 @@ export const appStore = defineStore('APP_STORE', () => {
 
   function initTheme() {
     const themeFromCookie = getCookie(CookieKey.APP_THEME)
+    console.debug('CALL', themeFromCookie)
 
     if (themes.includes(themeFromCookie as Theme)) {
       applyTheme(themeFromCookie as Theme)
       return
     }
 
-    applyTheme('app-theme-package-1')
+    applyTheme(AppTheme['app-theme-package-2'])
   }
-
-  initTheme()
-
-  document
-    .querySelector('[data-theme="1"]')
-    ?.addEventListener('click', () => {
-      applyTheme('app-theme-package-1')
-    })
-
-  document
-    .querySelector('[data-theme="2"]')
-    ?.addEventListener('click', () => {
-      applyTheme('app-theme-package-2')
-    })
 
   return {
     setCookie,
     getCookie,
     initTheme,
+    applyTheme,
   }
 })
