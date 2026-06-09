@@ -16,7 +16,7 @@ const clampRule: Rule = [
     const [, orientation, prop, ...values] = matched
     const unit = 'px'
     const [min, max, minW, maxW] = values.map((v) =>
-      Number.parseFloat(v.trim())
+      Number.parseFloat(v.trim()),
     )
 
     if ([min, max, maxW, minW].some(Number.isNaN) || maxW === minW) {
@@ -30,19 +30,19 @@ const clampRule: Rule = [
     const preferred = `${Number.parseFloat(y)}${unit} + ${Number.parseFloat(slopePercent)}v${orientation || 'w'}`
 
     return {
-      [prop]: `clamp(${min}${unit}, ${preferred}, ${max}${unit})`
+      [prop]: `clamp(${min}${unit}, ${preferred}, ${max}${unit})`,
     }
-  }
+  },
 ]
 
 export default defineConfig({
   shortcuts: [
     ['btn', 'rounded bg-blue-700 px-4 py-1 text-white'],
-    ['d-link', 'color-blue-400 cursor-pointer hover:color-blue-200']
+    ['d-link', 'color-blue-400 cursor-pointer hover:color-blue-200'],
   ],
   rules: [
     ['scrolling-touch', { '-webkit-overflow-scrolling': 'touch' }],
-    clampRule
+    clampRule,
   ],
-  presets: [presetWind3()]
+  presets: [presetWind3()],
 })

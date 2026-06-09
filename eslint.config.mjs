@@ -9,6 +9,7 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   ...vue.configs['flat/recommended'],
   ...astro.configs.recommended,
+  eslintConfigPrettier,
 
   {
     ignores: [
@@ -20,7 +21,6 @@ export default tseslint.config(
       '*.config.mjs',
     ],
   },
-
   {
     files: ['**/*.{ts,tsx,vue,astro}'],
     languageOptions: {
@@ -40,8 +40,12 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'warn',
       'vue/multi-word-component-names': 'off',
       'vue/no-v-html': 'off',
+      '@stylistic/newline-per-chained-call': [
+        'error',
+        {
+          ignoreChainWithDepth: 1,
+        },
+      ],
     },
   },
-
-  eslintConfigPrettier,
 )

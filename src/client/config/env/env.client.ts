@@ -2,12 +2,12 @@ import z from 'zod'
 
 export const clientEnvSchema = z.object({
   PUBLIC_APP_NAME: z.string().min(1),
-  PUBLIC_APP_URL: z.url()
+  PUBLIC_APP_URL: z.url(),
 })
 
 const parsed = clientEnvSchema.safeParse({
   PUBLIC_APP_NAME: import.meta.env.PUBLIC_APP_NAME,
-  PUBLIC_APP_URL: import.meta.env.PUBLIC_APP_URL
+  PUBLIC_APP_URL: import.meta.env.PUBLIC_APP_URL,
 })
 
 if (!parsed.success) {

@@ -6,8 +6,11 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div :id="`markdown-block-${props.uuid}`" class="markdown-body border-red border border-[2px]" v-html="props.html">
-  </div>
+  <div
+    :id="`markdown-block-${props.uuid}`"
+    class="markdown-body border-red border border-[2px]"
+    v-html="props.html"
+  ></div>
 </template>
 
 <style scoped></style>

@@ -1,0 +1,16 @@
+---
+import Layout from '~/client/layouts/Layout.astro'
+import { db } from '~/server/database/client'
+import { articlesTable } from '~/server/database/schema'
+import NewsView from '~/client/components/news/NewsView.vue'
+import IndexHeader from '~/client/components/common/IndexHeader.vue'
+import IndexFooter from '~/client/components/common/IndexFooter.vue'
+
+const articles = await db.select().from(articlesTable)
+---
+
+<Layout title={'NEWS'}>
+  <IndexHeader slot="header" />
+  <NewsView client:only="vue" articles={articles} slot="main" />
+  <IndexFooter />
+</Layout>

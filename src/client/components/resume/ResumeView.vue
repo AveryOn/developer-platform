@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UseI18n } from '~/client/composables/useI18n';
+import { UseI18n } from '~/client/composables/useI18n'
 
 const { $t, plural } = UseI18n()
 

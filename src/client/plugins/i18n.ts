@@ -5,7 +5,7 @@ import ru from '~/client/locales/ru.json'
 
 export enum AppLocaleEnum {
   en = 'en',
-  ru = 'ru'
+  ru = 'ru',
 }
 export type AppLocale = 'en' | 'ru'
 
@@ -28,7 +28,7 @@ export const i18n = createI18n({
 
   messages: {
     en,
-    ru
+    ru,
   },
 
   pluralRules: {
@@ -45,26 +45,26 @@ export const i18n = createI18n({
 
     en(choice) {
       return choice === 1 ? 0 : 1
-    }
-  }
+    },
+  },
 })
 
 type PluralTranslate = (
   key: string,
   plural: number,
-  named?: Record<string, unknown>
+  named?: Record<string, unknown>,
 ) => string
 
 export const plural = (
   key: string,
   count: number,
-  params: Record<string, unknown> = {}
+  params: Record<string, unknown> = {},
 ): string => {
   const t = i18n.global.t as unknown as PluralTranslate
 
   return t(key, count, {
     ...params,
-    count
+    count,
   })
 }
 export const setLocale = (locale: AppLocale): void => {

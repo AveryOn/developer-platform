@@ -42,6 +42,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "@types/better-sqlite3": "^7.6.13",
     "@types/sanitize-html": "^2.16.1",
     "@unocss/astro": "^66.7.0",

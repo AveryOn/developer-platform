@@ -5,7 +5,7 @@ export const serverEnvSchema = z.object({
     .enum(['development', 'production', 'test'])
     .default('development'),
 
-  DATABASE_URL: z.string().min(1)
+  DATABASE_URL: z.string().min(1),
 })
 
 const parsed = serverEnvSchema.safeParse(import.meta.env)

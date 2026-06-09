@@ -5,9 +5,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="header">
-    Projects View {{ props.uuid }}
-  </div>
+  <div class="header">Projects View {{ props.uuid }}</div>
 </template>
 
 <style scoped></style>

@@ -7,5 +7,5 @@ export const projectsTable = sqliteTable('project', {
   description: text('description').notNull(),
   stack: text('stack').notNull(),
   updatedAt: timestamp('updated_at', true),
-  createdAt: timestamp('created_at', true)
+  createdAt: timestamp('created_at', true),
 })

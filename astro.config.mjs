@@ -13,19 +13,19 @@ const rawEnv = loadEnv(mode, process.cwd(), '')
 
 const env = {
   ...process.env,
-  ...rawEnv
+  ...rawEnv,
 }
 
 const serverEnvSchema = z.object({
   NODE_ENV: z
     .enum(['development', 'production', 'test'])
     .default('development'),
-  DATABASE_URL: z.string().min(1)
+  DATABASE_URL: z.string().min(1),
 })
 
 const clientEnvSchema = z.object({
   PUBLIC_APP_NAME: z.string().min(1),
-  PUBLIC_APP_URL: z.url()
+  PUBLIC_APP_URL: z.url(),
 })
 
 const serverParsed = serverEnvSchema.safeParse(env)
@@ -47,30 +47,30 @@ console.log('ASTRO CONFIG LOADED')
 export default defineConfig({
   output: 'server',
   devToolbar: {
-    enabled: false
+    enabled: false,
   },
 
   adapter: node({
-    mode: 'standalone'
+    mode: 'standalone',
   }),
 
   integrations: [
     vue({
       appEntrypoint: '/src/client/_appVue.ts',
-      devtools: false
+      devtools: false,
     }),
     UnoCSS({
       injectReset: '@unocss/reset/tailwind.css',
-      inspector: false
-    })
+      inspector: false,
+    }),
   ],
 
   vite: {
     resolve: {
       alias: {
-        '~': fileURLToPath(new URL('./src', import.meta.url))
-      }
-    }
+        '~': fileURLToPath(new URL('./src', import.meta.url)),
+      },
+    },
   },
 
   plugins: [
@@ -81,7 +81,7 @@ export default defineConfig({
         './src/client/composables',
         './src/client/stores',
         './src/client/plugins',
-        './src/client/utils'
+        './src/client/utils',
       ],
 
       dts: './src/auto-imports.d.ts',
@@ -89,8 +89,8 @@ export default defineConfig({
       eslintrc: {
         enabled: true,
         filepath: './.eslintrc-auto-import.json',
-        globalsPropValue: true
-      }
+        globalsPropValue: true,
+      },
     }),
 
     Components({
@@ -100,7 +100,7 @@ export default defineConfig({
 
       deep: true,
 
-      dts: './src/components.d.ts'
-    })
-  ]
+      dts: './src/components.d.ts',
+    }),
+  ],
 })

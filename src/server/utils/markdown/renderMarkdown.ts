@@ -2,12 +2,12 @@ import { marked } from 'marked'
 import { sanitizeHtml } from '~/server/utils/markdown/sanitizeHtml'
 
 export const renderMarkdown = async (
-  markdown: string
+  markdown: string,
 ): Promise<string> => {
   const rawHtml = await marked.parse(markdown, {
     async: true,
     gfm: true,
-    breaks: false
+    breaks: false,
   })
 
   return sanitizeHtml(rawHtml)

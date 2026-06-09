@@ -36,13 +36,13 @@ export const sanitizeHtml = (html: string): string => {
       'tbody',
       'tr',
       'th',
-      'td'
+      'td',
     ],
 
     allowedAttributes: {
       a: ['href', 'title', 'target', 'rel'],
       code: ['class'],
-      pre: ['class']
+      pre: ['class'],
     },
 
     allowedSchemes: ['http', 'https', 'mailto'],
@@ -50,10 +50,10 @@ export const sanitizeHtml = (html: string): string => {
     transformTags: {
       a: sanitizeHtmlLib.simpleTransform('a', {
         target: '_blank',
-        rel: 'noopener noreferrer'
-      })
+        rel: 'noopener noreferrer',
+      }),
     },
 
-    disallowedTagsMode: 'discard'
+    disallowedTagsMode: 'discard',
   })
 }

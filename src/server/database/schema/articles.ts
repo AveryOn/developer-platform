@@ -7,5 +7,5 @@ export const articlesTable = sqliteTable('article', {
   title: text('title').notNull(),
   content: text('content').notNull(),
   updatedAt: timestamp('updated_at', true),
-  createdAt: timestamp('created_at', true)
+  createdAt: timestamp('created_at', true),
 })
