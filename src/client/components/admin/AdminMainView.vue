@@ -36,7 +36,7 @@ const { $t } = UseI18n()
         <MenuItem :icon="mdiFolderOpenOutline" :title="$t('Projects Management')" />
       </a>
       <a href="/admin/articles">
-        <MenuItem :icon="mdiNewspaperVariantMultipleOutline" :title="$t('Article Management')" />
+        <MenuItem :icon="mdiNewspaperVariantMultipleOutline" :title="$t('Articles Management')" />
       </a>
       <a href="/admin/settings">
         <MenuItem :icon="mdiPalette" :title="$t('Adjust the color schema')" />
