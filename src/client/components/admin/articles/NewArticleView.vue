@@ -65,7 +65,7 @@ async function submit() {
   height: max-content;
 
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-rows: 70px auto;
   grid-template-areas:
     'input block-right'
