@@ -1,7 +1,7 @@
 import type { Theme } from '~/client/types/app.types'
 import { defineStore } from 'pinia'
-import { AppTheme, themes } from '~/client/config/const'
 import { CookieKey } from '~/shared/const'
+import { AppTheme, themes } from '~/client/config/app-themes.config'
 
 export const useAppStore = defineStore('APP_STORE', () => {
   function setCookie(name: string, value: string, days = 365) {
@@ -33,7 +33,7 @@ export const useAppStore = defineStore('APP_STORE', () => {
       return
     }
 
-    applyTheme(AppTheme['app-theme-package-2'])
+    applyTheme(AppTheme['app-theme-package-1'])
   }
 
   return {

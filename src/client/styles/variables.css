@@ -21,3 +21,11 @@
 
   --border-color-1: #503535;
 }
+
+.app-theme-package-3 {
+  --primary-color-1: #5b7942;
+  --primary-color-2: #19251a60;
+  --primary-color-3: #2f412f60;
+
+  --border-color-1: #3b5035;
+}
