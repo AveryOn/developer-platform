@@ -6,7 +6,7 @@ import { renderMarkdown } from '~/shared/utils/markdown/renderMarkdown';
 import MarkdownBody from '~/client/components/shared/MarkdownBody.vue';
 import { ArticlesApi } from '~/client/api/articles.api';
 import InputUI from '~/client/components/shared/InputUI.vue';
-import Icon from '../../common/Icon.vue';
+import Icon from '~/client/components/common/Icon.vue';
 import { mdiLanguageMarkdownOutline } from '@mdi/js';
 
 const title = ref('')
