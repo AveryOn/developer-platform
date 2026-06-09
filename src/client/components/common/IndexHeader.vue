@@ -11,5 +11,3 @@ import { mdiConsole } from '@mdi/js';
     </h1>
   </div>
 </template>
-
-<style scoped></style>

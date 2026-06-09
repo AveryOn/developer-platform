@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import MarkdownBody from '~/client/components/news/MarkdownBody.vue';
+
 const props = defineProps<{
   uuid: string
   html: string
@@ -8,7 +10,7 @@ const props = defineProps<{
 <template>
   <div>
     <h1> Article View {{ props.uuid }}</h1>
-    <div class="markdown-body" v-html="props.html"></div>
+    <MarkdownBody v-bind="props" />
   </div>
 </template>
 

@@ -1,4 +1,5 @@
 import type { App } from 'vue'
+import '~/client/styles/variables.css'
 import '~/client/styles/normalize.css'
 import '~/client/styles/fonts.css'
 import '~/client/styles/markdown.css'

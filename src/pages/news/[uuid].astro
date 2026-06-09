@@ -5,6 +5,7 @@ import { db } from '~/server/database/client'
 import { articlesTable } from '~/server/database/schema'
 import { renderMarkdown } from '~/server/utils/markdown/renderMarkdown'
 import ArticleView from '~/client/components/news/ArticleView.vue'
+import IndexHeader from '~/client/components/common/IndexHeader.vue'
 
 const { uuid } = Astro.params
 
@@ -26,6 +27,7 @@ const html = await renderMarkdown(article.content)
 ---
 
 <Layout title={article.title}>
+  <IndexHeader slot="header" />
   <!-- <article slot="main" class="markdown-body" set:html={html} /> -->
   <ArticleView client:only="vue" html={html} uuid={uuid} slot="main" />
 </Layout>
