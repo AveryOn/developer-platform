@@ -1,4 +1,23 @@
 :root {
   --primary-color-1: #426e79;
   --primary-color-2: #19232560;
+  --primary-color-3: #2f3e4160;
+
+  --border-color-1: #354b50;
+}
+
+.app-theme-package-1 {
+  --primary-color-1: #426e79;
+  --primary-color-2: #19232560;
+  --primary-color-3: #2f3e4160;
+
+  --border-color-1: #354b50;
+}
+
+.app-theme-package-2 {
+  --primary-color-1: #794d42;
+  --primary-color-2: #251d1960;
+  --primary-color-3: #41392f60;
+
+  --border-color-1: #503535;
 }

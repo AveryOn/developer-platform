@@ -2,8 +2,42 @@
 
 <template>
   <div>
-    <h1>ADMIN VIEW</h1>
+    <header>
+      <button data-theme="1">Theme 1</button>
+      <button data-theme="2">Theme 2</button>
+    </header>
+    <div class="main-admin-menu">
+      <div class="menu-block"></div>
+      <div class="menu-block"></div>
+      <div class="menu-block"></div>
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.main-admin-menu {
+  width: 100%;
+  margin-left: auto;
+  height: max-content;
+  display: flex;
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-block {
+  width: 300px;
+  height: 300px;
+  border: 1px solid var(--border-color-1);
+  border-radius: 18px;
+  background-color: var(--primary-color-2);
+  transition: all 0.3s ease;
+}
+
+.menu-block:hover {
+  background-color: var(--primary-color-3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+</style>
