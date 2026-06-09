@@ -12,6 +12,7 @@ const { $t } = UseI18n()
 async function handlerInput(input: string) {
   html.value = await renderMarkdown(input)
 }
+
 </script>
 
 <template>
