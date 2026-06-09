@@ -8,6 +8,7 @@ import { ArticlesApi } from '~/client/api/articles.api';
 import InputUI from '~/client/components/shared/InputUI.vue';
 import Icon from '~/client/components/common/Icon.vue';
 import { mdiLanguageMarkdownOutline } from '@mdi/js';
+import ButtonUI from '../../shared/ButtonUI.vue';
 
 const title = ref('')
 const rawValue = ref('')
@@ -38,9 +39,7 @@ async function submit() {
       {{ $t('Title') }}:<span>{{ title }}</span>
     </div>
 
-    <button class="save-button" :disabled="rawValue.length <= 0 || title.length < 3" @click="submit">
-      SAVE
-    </button>
+    <ButtonUI :disabled="rawValue.length <= 0 || title.length < 3" :label="'SAVE'" @click="submit"/>
 
     <div class="viewer-input-block">
       <TextareaUI
@@ -112,26 +111,5 @@ async function submit() {
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--primary-color-1);
-}
-
-.save-button {
-  align-self: start;
-
-  height: 100%;
-  background-color: var(--button-color-1);
-  border-radius: 10px;
-  padding: 8px;
-  margin: 0 6px;
-  transition: all 0.4s ease;
-}
-
-.save-button:hover {
-  background-color: var(--button-color-1-hover);
-  margin: 0;
-}
-
-.save-button:disabled {
-  background-color: gray;
-  margin: 0;
 }
 </style>
