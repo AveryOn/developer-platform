@@ -1,20 +1,13 @@
 import { httpClient } from '~/client/api/http-client'
-
-export type Article = {
-  id: string
-  slug: string
-  title: string
-  contentMd: string
-  createdAt: string
-}
+import type { Article } from '~/shared/types'
 
 export type CreateArticleDto = {
   slug: string
   title: string
-  contentMd: string
+  content: string
 }
 
-export const articlesApi = {
+export const ArticlesApi = {
   getAll() {
     return httpClient.get<Article[]>('/articles')
   },
