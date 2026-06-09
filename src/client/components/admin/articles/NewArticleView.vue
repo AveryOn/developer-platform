@@ -62,11 +62,11 @@ async function submit() {
   height: max-content;
 
   display: grid;
-  grid-template-columns: 70px 1fr 1fr;
+  grid-template-columns: 50% 50%;
   grid-template-rows: 70px auto;
   grid-template-areas:
-    'empty-left input block-right'
-    'button textarea preview';
+    'input block-right'
+    'textarea preview';
 
   gap: 12px;
 
@@ -74,9 +74,6 @@ async function submit() {
   padding: 24px 8px;
 }
 
-.grid-empty-left {
-  grid-area: empty-left;
-}
 
 .grid-title-input {
   grid-area: input;
@@ -106,14 +103,13 @@ async function submit() {
 }
 
 .save-button {
-  grid-area: button;
   align-self: start;
 
   height: 100%;
   background-color: var(--button-color-1);
   border-radius: 10px;
   padding: 8px;
-  margin: 6px 0;
+  margin: 0 6px;
   transition: all 0.4s ease;
 }
 
