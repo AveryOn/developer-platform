@@ -17,8 +17,8 @@ export default tseslint.config(
       'node_modules',
       'drizzle',
       '*.config.js',
-      '*.config.mjs'
-    ]
+      '*.config.mjs',
+    ],
   },
 
   {
@@ -26,21 +26,22 @@ export default tseslint.config(
     languageOptions: {
       parserOptions: {
         parser: tseslint.parser,
-        extraFileExtensions: ['.astro', '.vue']
-      }
+        extraFileExtensions: ['.astro', '.vue'],
+      },
     },
     rules: {
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
           argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_'
-        }
+          varsIgnorePattern: '^_',
+        },
       ],
       '@typescript-eslint/no-explicit-any': 'warn',
-      'vue/multi-word-component-names': 'off'
-    }
+      'vue/multi-word-component-names': 'off',
+      'vue/no-v-html': 'off',
+    },
   },
 
-  eslintConfigPrettier
+  eslintConfigPrettier,
 )
