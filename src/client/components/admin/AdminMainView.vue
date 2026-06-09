@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { AppTheme } from '~/client/config/app-themes.config'
 import { useAppStore } from '~/client/stores/app.store'
-import { mdiPalette, mdiNewspaperVariantMultipleOutline, mdiFolderOpenOutline } from '@mdi/js'
+import {
+  mdiPalette,
+  mdiNewspaperVariantMultipleOutline,
+  mdiFolderOpenOutline,
+  mdiCardAccountDetailsOutline,
+} from '@mdi/js'
 import MenuItem from '~/client/components/admin/MenuItem.vue'
 import { UseI18n } from '~/client/composables/useI18n.ts'
 
 const appStore = useAppStore()
 const { $t } = UseI18n()
-
 </script>
 
 <template>
@@ -25,6 +29,7 @@ const { $t } = UseI18n()
     </header>
 
     <main class="main-admin-menu pt-[24px] overflow-hidden">
+      <MenuItem :icon="mdiCardAccountDetailsOutline" :title="$t('CV Management')" />
       <MenuItem :icon="mdiFolderOpenOutline" :title="$t('Projects Management')" />
       <MenuItem :icon="mdiNewspaperVariantMultipleOutline" :title="$t('Article Management')" />
       <MenuItem :icon="mdiPalette" :title="$t('Adjust the color schema')" />

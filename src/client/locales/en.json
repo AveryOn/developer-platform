@@ -4,5 +4,6 @@
   "You have {count} project": "You have {count} project | You have {count} projects",
   "Adjust the color schema": "Adjust the color schema",
   "Projects Management": "Projects Management",
-  "Article Management": "Article Management"
+  "Article Management": "Article Management",
+  "CV Management": "CV Management"
 }
