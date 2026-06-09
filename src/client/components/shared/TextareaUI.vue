@@ -1,4 +1,7 @@
+<!-- eslint-disable no-undef -->
 <script setup lang="ts">
+import { onBeforeUnmount, ref, watch } from 'vue'
+
 const model = defineModel<string>({
   default: '',
 })
@@ -11,6 +14,7 @@ const props = withDefaults(
     rows?: number
     disabled?: boolean
     error?: string
+    throttleMs?: number
   }>(),
   {
     id: undefined,
@@ -19,8 +23,57 @@ const props = withDefaults(
     rows: 6,
     disabled: false,
     error: undefined,
+    throttleMs: 0,
   },
 )
+
+const emit = defineEmits<{
+  input: [value: string]
+  throttledInput: [value: string]
+}>()
+
+const innerValue = ref(model.value)
+
+let timer: ReturnType<typeof setTimeout> | null = null
+let lastValue = innerValue.value
+
+watch(model, (value) => {
+  if (value !== innerValue.value) {
+    innerValue.value = value
+  }
+})
+
+function handleInput(event: Event) {
+  const target = event.target as HTMLTextAreaElement
+  const value = target.value
+
+  innerValue.value = value
+  lastValue = value
+
+  emit('input', value)
+
+  if (props.throttleMs <= 0) {
+    model.value = value
+    emit('throttledInput', value)
+    return
+  }
+
+  if (timer) {
+    return
+  }
+
+  timer = setTimeout(() => {
+    model.value = lastValue
+    emit('throttledInput', lastValue)
+    timer = null
+  }, props.throttleMs)
+}
+
+onBeforeUnmount(() => {
+  if (timer) {
+    clearTimeout(timer)
+  }
+})
 </script>
 
 <template>
@@ -29,8 +82,8 @@ const props = withDefaults(
       {{ props.label }}
     </label>
 
-    <textarea :id="props.id" v-model="model" class="app-textarea__field" :placeholder="props.placeholder"
-      :rows="props.rows" :disabled="props.disabled" />
+    <textarea :id="props.id" :value="innerValue" class="app-textarea__field" :placeholder="props.placeholder"
+      :rows="props.rows" :disabled="props.disabled" @input="handleInput" />
 
     <p v-if="props.error" class="app-textarea__error">
       {{ props.error }}

@@ -8,7 +8,7 @@ const props = defineProps<{
 <template>
   <div
     :id="`markdown-block-${props.uuid}`"
-    class="markdown-body border-red border border-[2px]"
+    class="markdown-body px-[12px] py-[12px]"
     v-html="props.html"
   ></div>
 </template>
