@@ -26,6 +26,7 @@ const serverEnvSchema = z.object({
 const clientEnvSchema = z.object({
   PUBLIC_APP_NAME: z.string().min(1),
   PUBLIC_APP_URL: z.url(),
+  PUBLIC_API_URL: z.url(),
 })
 
 const serverParsed = serverEnvSchema.safeParse(env)

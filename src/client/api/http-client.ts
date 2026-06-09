@@ -119,5 +119,5 @@ export class HttpClient {
 }
 
 export const httpClient = new HttpClient({
-  baseURL: '/api',
+  baseURL: import.meta.env.PUBLIC_API_URL ?? '/api',
 })

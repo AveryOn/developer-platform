@@ -12,6 +12,7 @@ interface ImportMetaEnv {
   readonly DATABASE_URL: string
   readonly PUBLIC_APP_NAME: string
   readonly PUBLIC_APP_URL: string
+  readonly PUBLIC_API_URL: string
 }
 
 interface ImportMeta {
@@ -27,4 +28,4 @@ declare global {
   }
 }
 
-declare module '@jamescoyle/vue-icon' {}
+declare module '@jamescoyle/vue-icon' { }
