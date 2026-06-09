@@ -16,10 +16,5 @@ const iconSize = computed(() => props.size)
 </script>
 
 <template>
-  <svg-icon
-    class="mr-[8px]"
-    type="mdi"
-    :path="props.icon"
-    :size="iconSize"
-  ></svg-icon>
+  <svg-icon class="mr-[8px]" type="mdi" :path="props.icon" :size="iconSize"></svg-icon>
 </template>

@@ -2,38 +2,32 @@
 import { AppTheme } from '~/client/config/app-themes.config'
 import { useAppStore } from '~/client/stores/app.store'
 import { mdiPalette } from '@mdi/js'
-import Icon from '~/client/components/common/Icon.vue'
+import MenuItem from './MenuItem.vue'
+import { UseI18n } from '~/client/composables/useI18n.ts'
 
 const appStore = useAppStore()
+const { $t } = UseI18n()
+
 </script>
 
 <template>
   <div>
     <header>
-      <button
-        @click="appStore.applyTheme(AppTheme['app-theme-package-1'])"
-      >
+      <button @click="appStore.applyTheme(AppTheme['app-theme-package-1'])">
         Theme 1
       </button>
-      <button
-        @click="appStore.applyTheme(AppTheme['app-theme-package-2'])"
-      >
+      <button @click="appStore.applyTheme(AppTheme['app-theme-package-2'])">
         Theme 2
       </button>
-      <button
-        @click="appStore.applyTheme(AppTheme['app-theme-package-3'])"
-      >
+      <button @click="appStore.applyTheme(AppTheme['app-theme-package-3'])">
         Theme 3
       </button>
     </header>
     <div class="main-admin-menu pt-[24px] overflow-hidden">
-      <div class="menu-block">
-        <Icon :icon="mdiPalette"></Icon>
-        Adjust the color schema
-      </div>
-      <div class="menu-block">Article Management</div>
-      <div class="menu-block">Projects Management</div>
-      <div class="menu-block">Projects Management</div>
+      <MenuItem :icon="mdiPalette" :title="$t('Adjust the color schema')" />
+      <MenuItem :icon="mdiPalette" :title="$t('Article Management')" />
+      <MenuItem :icon="mdiPalette" :title="$t('Projects Management')" />
+      <MenuItem :icon="mdiPalette" :title="$t('Projects Management')" />
     </div>
   </div>
 </template>
@@ -49,24 +43,5 @@ const appStore = useAppStore()
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-}
-
-.menu-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 300px;
-  height: 300px;
-  border: 1px solid var(--border-color-1);
-  border-radius: 18px;
-  background-color: var(--primary-color-2);
-  transition: all 0.3s ease;
-}
-
-.menu-block:hover {
-  background-color: var(--primary-color-3);
-  transition: all 0.3s ease;
-  cursor: pointer;
 }
 </style>

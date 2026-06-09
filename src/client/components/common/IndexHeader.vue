@@ -13,7 +13,7 @@ onMounted(() => {
 
 <template>
   <div class="my-[24px] flex justify-start items-center">
-    <icon :icon="mdiConsole"></icon>
+    <Icon :icon="mdiConsole" :size="42"></Icon>
     <h1 class="text-[36px] select-none">Everi Vladislav</h1>
   </div>
 </template>
