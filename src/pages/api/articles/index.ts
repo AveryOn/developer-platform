@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro'
 import { z } from 'zod'
+import { ArticleService } from '~/server/services'
 
 const createArticleSchema = z.object({
   slug: z.string().min(1),
@@ -39,16 +40,17 @@ export const POST: APIRoute = async ({ request }) => {
       },
     )
   }
+  const now = new Date().toISOString()
 
-  const article = {
-    id: crypto.randomUUID(),
-    slug: parsed.data.slug,
+  const newArticle = await ArticleService.create({
     title: parsed.data.title,
-    contentMd: parsed.data.content,
-    createdAt: new Date().toISOString(),
-  }
+    content: parsed.data.content,
+    slug: parsed.data.slug,
+    createdAt: now,
+    updatedAt: now,
+  })
 
-  return Response.json(article, {
+  return Response.json(newArticle, {
     status: 201,
   })
 }
