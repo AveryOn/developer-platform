@@ -1,13 +1,25 @@
 <script setup lang="ts">
 import SvgIcon from '@jamescoyle/vue-icon'
+import { computed } from 'vue'
 
+const props = withDefaults(
+  defineProps<{
+    icon: string
+    size?: number
+  }>(),
+  {
+    size: 24,
+  },
+)
 
-const props = defineProps<{
-  icon: string
-}>()
-
+const iconSize = computed(() => props.size)
 </script>
 
 <template>
-  <svg-icon class="w-[40px] h-[40px] mr-[8px]" type="mdi" :path="props.icon"></svg-icon>
+  <svg-icon
+    class="mr-[8px]"
+    type="mdi"
+    :path="props.icon"
+    :size="iconSize"
+  ></svg-icon>
 </template>

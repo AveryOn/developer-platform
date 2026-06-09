@@ -37,6 +37,7 @@ export default tseslint.config(
       ],
       '@typescript-eslint/no-explicit-any': 'warn',
       'vue/multi-word-component-names': 'off',
+      'vue/first-attribute-linebreak': 'off',
       'vue/no-v-html': 'off',
       '@stylistic/newline-per-chained-call': [
         'error',

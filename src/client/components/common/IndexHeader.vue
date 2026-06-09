@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { mdiConsole } from '@mdi/js'
-import { onMounted } from 'vue';
-import { useAppStore } from '~/client/stores/app.store';
-import Icon from './Icon.vue';
+import { onMounted } from 'vue'
+import { useAppStore } from '~/client/stores/app.store'
+import Icon from './Icon.vue'
 
 const appStore = useAppStore()
 
