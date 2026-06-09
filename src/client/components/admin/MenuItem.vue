@@ -10,7 +10,7 @@ const props = defineProps<{
 <template>
   <div class="menu-item">
     <Icon :icon="props.icon" :size="60"></Icon>
-    <h2>
+    <h2 class="mt-[48px]">
       {{ props.title }}
     </h2>
   </div>
