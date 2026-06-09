@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { AppTheme } from '~/client/config/app-themes.config'
 import { useAppStore } from '~/client/stores/app.store'
-import { mdiPalette } from '@mdi/js'
-import MenuItem from './MenuItem.vue'
+import { mdiPalette, mdiNewspaperVariantMultipleOutline } from '@mdi/js'
+import MenuItem from '~/client/components/admin/MenuItem.vue'
 import { UseI18n } from '~/client/composables/useI18n.ts'
 
 const appStore = useAppStore()
@@ -23,12 +23,13 @@ const { $t } = UseI18n()
         Theme 3
       </button>
     </header>
-    <div class="main-admin-menu pt-[24px] overflow-hidden">
+
+    <main class="main-admin-menu pt-[24px] overflow-hidden">
       <MenuItem :icon="mdiPalette" :title="$t('Adjust the color schema')" />
-      <MenuItem :icon="mdiPalette" :title="$t('Article Management')" />
+      <MenuItem :icon="mdiNewspaperVariantMultipleOutline" :title="$t('Article Management')" />
       <MenuItem :icon="mdiPalette" :title="$t('Projects Management')" />
       <MenuItem :icon="mdiPalette" :title="$t('Projects Management')" />
-    </div>
+    </main>
   </div>
 </template>
 
