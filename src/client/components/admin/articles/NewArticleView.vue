@@ -6,6 +6,8 @@ import { renderMarkdown } from '~/shared/utils/markdown/renderMarkdown';
 import MarkdownBody from '~/client/components/shared/MarkdownBody.vue';
 import { ArticlesApi } from '~/client/api/articles.api';
 import InputUI from '~/client/components/shared/InputUI.vue';
+import Icon from '../../common/Icon.vue';
+import { mdiLanguageMarkdownOutline } from '@mdi/js';
 
 const title = ref('')
 const rawValue = ref('')
@@ -36,7 +38,7 @@ async function submit() {
       {{ $t('Title') }}:<span>{{ title }}</span>
     </div>
 
-    <button class="save-button" :disabled="rawValue.length <= 0" @click="submit">
+    <button class="save-button" :disabled="rawValue.length <= 0 || title.length < 3" @click="submit">
       SAVE
     </button>
 
@@ -51,6 +53,7 @@ async function submit() {
     </div>
 
     <div class="viewer-preview-block">
+      <Icon v-if="html.length <= 0" class="markdown-placeholder-icon" :icon="mdiLanguageMarkdownOutline" :size="200"></Icon>
       <MarkdownBody :html="html" :uuid="'none'" />
     </div>
   </div>
@@ -94,12 +97,21 @@ async function submit() {
 }
 
 .viewer-preview-block {
+  position: relative;
   grid-area: preview;
   width: 100%;
 
   background-color: var(--primary-color-2);
   border-radius: 10px;
   border: 1px solid var(--border-color-1);
+}
+
+.markdown-placeholder-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--primary-color-1);
 }
 
 .save-button {
