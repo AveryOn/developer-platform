@@ -15,7 +15,7 @@ const props = defineProps<{
         :key="article.id"
         class="article-item"
       >
-        {{ article }}
+        {{ article.title }}
       </li>
     </ul>
   </div>

@@ -9,8 +9,6 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   ...vue.configs['flat/recommended'],
   ...astro.configs.recommended,
-  eslintConfigPrettier,
-
   {
     ignores: [
       'dist',
@@ -48,4 +46,5 @@ export default tseslint.config(
       ],
     },
   },
+  eslintConfigPrettier,
 )
