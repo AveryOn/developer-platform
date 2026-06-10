@@ -28,6 +28,19 @@ export enum SocialNetwork {
   instagram = 'instagram'
 }
 
+export const SocialNetworks = [
+  SocialNetwork.email,
+  SocialNetwork.facebook,
+  SocialNetwork.github,
+  SocialNetwork.instagram,
+  SocialNetwork.linkedin,
+  SocialNetwork.reddit,
+  SocialNetwork.telegram,
+  SocialNetwork.website,
+  SocialNetwork.x,
+  SocialNetwork.other,
+] as const
+
 export enum CVEmploymentType {
   fullTime = 'full_time',
   partTime = 'part_time',
