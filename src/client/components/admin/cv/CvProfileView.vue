@@ -2,6 +2,8 @@
 import { onMounted, ref } from 'vue';
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api';
 import type { Profile } from '~/shared/dto/admin/cv/profile.dto';
+import Icon from '~/client/components/common/Icon.vue';
+import { mdiPlus } from '@mdi/js';
 
 // import type { Profile } from '~/shared/dto/admin/cv/profile.dto';
 // import { ProfileLanguage } from '~/shared/types';
@@ -64,7 +66,11 @@ onMounted(async () => {
 
 <template>
   <section class="cv-admin__profile">
-    <div class="cv-profile__action-block"></div>
+    <div class="cv-profile__action-block">
+      <button class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]">
+        <Icon :icon="mdiPlus" :size="24"></Icon>
+      </button>
+    </div>
     <ul class="cv-profile__list-block">
       <li v-for="profile in profiles" :key="profile.id" class="profile-list-item">
         <h2 class="profile-item__header">{{ profile.title }}</h2>
@@ -84,10 +90,19 @@ onMounted(async () => {
   border: 1px dashed var(--border-color-1);
 }
 .cv-profile__action-block {
+  display: flex;
+  justify-content: end;
   width: 100%;
   height: 50px;
-  padding: 10px;
+  padding: 10px 24px;
   border-bottom: 1px dotted var(--border-color-1);
+}
+.action-button {
+  transition: all 0.3s ease;
+}
+.action-button:hover {
+  background-color: var(--primary-color-3-hover);
+  transition: all 0.3s ease;
 }
 
 .cv-profile__list-block {
@@ -102,11 +117,11 @@ onMounted(async () => {
   background-color: var(--primary-color-3);
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
 }
 .profile-list-item:hover {
-  transition: all 0.5s ease;
-  background-color: var(--primary-color-1);
+  transition: all 0.3s ease;
+  background-color: var(--primary-color-3-hover);
 }
 
 .profile-item__header {
