@@ -2,8 +2,9 @@ import { httpClient } from '~/client/api/http-client'
 import type { CreateCvProfileDto, Profile } from '~/shared/dto/admin/cv/profile.dto'
 
 export const CvProfileApi = {
-  getAll() {
-    return httpClient.get<Profile[]>('/cv/profiles')
+  async getAll() {
+    const result = await httpClient.get<{ data: Profile[] }>('/cv/profiles')
+    return result.data
   },
 
   getById(uuid: string) {
