@@ -8,7 +8,10 @@ export const ArticleService = {
   },
 
   async create(data: ArticleCreateInput): Promise<Article> {
-    const [article] = await db.insert(articlesTable).values(data).returning()
+    const [article] = await db
+      .insert(articlesTable)
+      .values(data)
+      .returning()
     return article
-  }
+  },
 }

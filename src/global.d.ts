@@ -28,4 +28,4 @@ declare global {
   }
 }
 
-declare module '@jamescoyle/vue-icon' { }
+declare module '@jamescoyle/vue-icon' {}

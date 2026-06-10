@@ -78,12 +78,23 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="app-textarea">
-    <label v-if="props.label" :for="props.id" class="app-textarea__label">
+    <label
+      v-if="props.label"
+      :for="props.id"
+      class="app-textarea__label"
+    >
       {{ props.label }}
     </label>
 
-    <textarea :id="props.id" :value="innerValue" class="app-textarea__field" :placeholder="props.placeholder"
-      :rows="props.rows" :disabled="props.disabled" @input="handleInput" />
+    <textarea
+      :id="props.id"
+      :value="innerValue"
+      class="app-textarea__field"
+      :placeholder="props.placeholder"
+      :rows="props.rows"
+      :disabled="props.disabled"
+      @input="handleInput"
+    />
 
     <p v-if="props.error" class="app-textarea__error">
       {{ props.error }}

@@ -22,8 +22,8 @@ export class HttpError extends Error {
 
     super(
       axiosError.response?.data?.message ||
-      axiosError.message ||
-      'HTTP request failed',
+        axiosError.message ||
+        'HTTP request failed',
     )
 
     this.name = 'HttpError'
@@ -101,7 +101,11 @@ export class HttpClient {
     body?: TBody,
     config?: AxiosRequestConfig,
   ): Promise<TResponse> {
-    const response = await this.client.patch<TResponse>(url, body, config)
+    const response = await this.client.patch<TResponse>(
+      url,
+      body,
+      config,
+    )
     return this.unwrap(response)
   }
 
@@ -113,7 +117,9 @@ export class HttpClient {
     return this.unwrap(response)
   }
 
-  private unwrap<TResponse>(response: AxiosResponse<TResponse>): TResponse {
+  private unwrap<TResponse>(
+    response: AxiosResponse<TResponse>,
+  ): TResponse {
     return response.data
   }
 }
