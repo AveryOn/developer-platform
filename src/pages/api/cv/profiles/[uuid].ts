@@ -3,12 +3,15 @@ import { HttpStatusCode } from 'axios'
 import { eq } from 'drizzle-orm'
 import { db } from '~/server/database/client'
 import { cvProfileTable } from '~/server/database/schema/cv-profile'
+import { _ } from '~/shared/const'
+import { Logger } from '~/shared/logger/logger.client'
 
 // Получить профиль по его ID
 export const GET: APIRoute = async ({ params, url }) => {
+  const logger = new Logger('HTTP:GET:PROFILE:GET_BY_ID')
   const uuid = params.uuid
+  logger.info(_, { uuid, url })
 
-  console.debug([url], { uuid })
   if (!uuid) {
     return Response.json(
       { error: 'Profile uuid is required' },

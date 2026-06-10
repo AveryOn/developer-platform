@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Icon from '~/client/components/common/Icon.vue'
 import { mdiAccountEdit } from '@mdi/js'
 import { useAppStore } from '~/client/stores/app.store'
+import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 
 const appStore = useAppStore()
 
@@ -74,6 +75,11 @@ function isActiveSection(item: NavItem) {
   activeSection.value = item.key
   return isActive
 }
+
+onMounted(async () => {
+  const profile = await CvProfileApi.getById('123asd')
+  console.log(profile)
+})
 </script>
 
 <template>
