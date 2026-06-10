@@ -1,8 +1,7 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { id, timestamp } from "~/server/database/helpers";
-import { cvProfileTable } from "~/server/database/schema/cv-profile";
-import { SocialNetworks } from "~/shared/types";
-
+import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { id, timestamp } from '~/server/database/helpers'
+import { cvProfileTable } from '~/server/database/schema/cv-profile'
+import { SocialNetworks } from '~/shared/types'
 
 export const cvProfileLinkTable = sqliteTable('cv_profile_link', {
   id: id(),
@@ -12,7 +11,7 @@ export const cvProfileLinkTable = sqliteTable('cv_profile_link', {
     .references(() => cvProfileTable.id, { onDelete: 'cascade' }),
 
   type: text('type', {
-    enum: SocialNetworks
+    enum: SocialNetworks,
   }).notNull(),
 
   label: text('label').notNull(),
@@ -21,5 +20,5 @@ export const cvProfileLinkTable = sqliteTable('cv_profile_link', {
   order: integer('order').notNull().default(0),
 
   createdAt: timestamp('created_at', true).notNull(),
-  updatedAt: timestamp('updated_at', true).notNull()
+  updatedAt: timestamp('updated_at', true).notNull(),
 })

@@ -9,9 +9,9 @@ export const id = () =>
 export const timestamp = (field: string, defaultNow: boolean = false) =>
   defaultNow
     ? text(field)
-      .notNull()
-      .default(sql`CURRENT_TIMESTAMP`)
+        .notNull()
+        .default(sql`CURRENT_TIMESTAMP`)
     : text(field).notNull()
 
-
-export const boolean = (field: string) => integer(field, { mode: 'boolean' })
+export const boolean = (field: string) =>
+  integer(field, { mode: 'boolean' })

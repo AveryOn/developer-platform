@@ -12,7 +12,7 @@ export const cvExperienceTable = sqliteTable('cv_experience', {
 
   employmentTypeId: text('employment_type_id').references(
     () => cvEmploymentTypeTable.id,
-    { onDelete: 'set null' }
+    { onDelete: 'set null' },
   ),
 
   company: text('company').notNull(),
@@ -29,5 +29,5 @@ export const cvExperienceTable = sqliteTable('cv_experience', {
   order: integer('order').notNull().default(0),
 
   createdAt: timestamp('created_at', true).notNull(),
-  updatedAt: timestamp('updated_at', true).notNull()
+  updatedAt: timestamp('updated_at', true).notNull(),
 })

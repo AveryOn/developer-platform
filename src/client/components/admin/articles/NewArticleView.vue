@@ -10,7 +10,6 @@ import Icon from '~/client/components/common/Icon.vue'
 import { mdiLanguageMarkdownOutline } from '@mdi/js'
 import ButtonUI from '../../shared/ButtonUI.vue'
 
-
 const loading = ref(false)
 const title = ref('')
 const rawValue = ref('')
@@ -29,8 +28,7 @@ async function submit() {
       slug: `slug-${Date.now()}`,
       title: title.value,
     })
-  }
-  finally {
+  } finally {
     loading.value = false
   }
 }

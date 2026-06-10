@@ -1,12 +1,7 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <section class="cv-admin__links">
-    LINKS
-  </section>
+  <section class="cv-admin__links">LINKS</section>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

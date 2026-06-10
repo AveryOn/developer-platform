@@ -8,7 +8,7 @@ export const cvEmploymentTypeTable = sqliteTable('cv_employment_type', {
   code: text('code').notNull().unique(),
 
   language: text('language', {
-    enum: ProfileLanguages
+    enum: ProfileLanguages,
   }).notNull(),
 
   label: text('label').notNull(),
@@ -16,5 +16,5 @@ export const cvEmploymentTypeTable = sqliteTable('cv_employment_type', {
   order: integer('order').notNull().default(0),
 
   createdAt: timestamp('created_at', true).notNull(),
-  updatedAt: timestamp('updated_at', true).notNull()
+  updatedAt: timestamp('updated_at', true).notNull(),
 })

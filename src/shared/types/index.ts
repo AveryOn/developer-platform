@@ -12,7 +12,7 @@ export enum ProfileLanguage {
 export const ProfileLanguages = [
   ProfileLanguage.en,
   ProfileLanguage.fr,
-  ProfileLanguage.ru
+  ProfileLanguage.ru,
 ] as const
 
 export enum SocialNetwork {
@@ -25,7 +25,7 @@ export enum SocialNetwork {
   email = 'email',
   other = 'other',
   facebook = 'facebook',
-  instagram = 'instagram'
+  instagram = 'instagram',
 }
 
 export const SocialNetworks = [
@@ -47,17 +47,17 @@ export enum CVEmploymentType {
   contract = 'contract',
   freelance = 'freelance',
   internship = 'internship',
-  selfEmployed = 'self_employed'
+  selfEmployed = 'self_employed',
 }
 
 export enum CVTemplateStatus {
   draft = 'draft',
   active = 'active',
-  archived = 'archived'
+  archived = 'archived',
 }
 
 export const CVTemplateStatuses = [
   CVTemplateStatus.draft,
   CVTemplateStatus.active,
-  CVTemplateStatus.archived
+  CVTemplateStatus.archived,
 ] as const

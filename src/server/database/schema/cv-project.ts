@@ -26,5 +26,5 @@ export const cvProjectTable = sqliteTable('cv_project', {
 
   createdAt: timestamp('created_at', true).notNull(),
   updatedAt: timestamp('updated_at', true).notNull(),
-  deletedAt: timestamp('deleted_at', true).notNull()
+  deletedAt: timestamp('deleted_at', true).notNull(),
 })

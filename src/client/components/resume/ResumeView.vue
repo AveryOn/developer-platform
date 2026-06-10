@@ -25,16 +25,19 @@ const skills = [
 const projects = [
   {
     title: 'Developer Platform',
-    description: 'Personal developer platform with Astro, Vue, SQLite, Drizzle, i18n, Markdown rendering, and SSR.'
+    description:
+      'Personal developer platform with Astro, Vue, SQLite, Drizzle, i18n, Markdown rendering, and SSR.',
   },
   {
     title: 'Express DI Example',
-    description: 'TypeScript backend architecture sandbox with explicit DI, decorator DI, clean modules, and transport separation.'
+    description:
+      'TypeScript backend architecture sandbox with explicit DI, decorator DI, clean modules, and transport separation.',
   },
   {
     title: 'Nodex',
-    description: 'Electron-based desktop application architecture with transport abstraction and backend-like main process.'
-  }
+    description:
+      'Electron-based desktop application architecture with transport abstraction and backend-like main process.',
+  },
 ]
 </script>
 
@@ -45,15 +48,13 @@ const projects = [
 
       <header class="resume-card__hero">
         <div>
-          <p class="resume-card__eyebrow">Backend / Fullstack Developer</p>
-
-          <h1 class="resume-card__title">
-            Everi Vladislav
-          </h1>
-
-          <p class="resume-card__subtitle">
-            Software Engineer
+          <p class="resume-card__eyebrow">
+            Backend / Fullstack Developer
           </p>
+
+          <h1 class="resume-card__title">Everi Vladislav</h1>
+
+          <p class="resume-card__subtitle">Software Engineer</p>
         </div>
 
         <div class="resume-card__contacts">
@@ -64,14 +65,22 @@ const projects = [
 
           <div>
             <span>G</span>
-            <a href="https://github.com/" target="_blank" rel="noreferrer">
+            <a
+              href="https://github.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
               github.com/your-profile
             </a>
           </div>
 
           <div>
             <span>L</span>
-            <a href="https://linkedin.com/" target="_blank" rel="noreferrer">
+            <a
+              href="https://linkedin.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
               linkedin.com/in/your-profile
             </a>
           </div>
@@ -88,12 +97,15 @@ const projects = [
           <section class="resume-section">
             <h2 class="resume-section__title">Summary</h2>
 
-            <div class="resume-section__body resume-section__body--bordered">
+            <div
+              class="resume-section__body resume-section__body--bordered"
+            >
               <p>
-                Backend-focused software engineer working with TypeScript,
-                Node.js, modular backend architecture, authentication, billing,
-                databases, and developer tooling. I build practical systems with
-                clear boundaries, maintainable structure, and production-oriented
+                Backend-focused software engineer working with
+                TypeScript, Node.js, modular backend architecture,
+                authentication, billing, databases, and developer
+                tooling. I build practical systems with clear boundaries,
+                maintainable structure, and production-oriented
                 engineering decisions.
               </p>
             </div>
@@ -105,21 +117,23 @@ const projects = [
             <div class="experience-item">
               <div class="experience-item__header">
                 <h3>Backend / Fullstack Engineer</h3>
-                <p>Production SaaS systems | Auth, Billing, Multi-tenant</p>
+                <p>
+                  Production SaaS systems | Auth, Billing, Multi-tenant
+                </p>
               </div>
 
               <ul>
                 <li>
-                  Worked on production authentication, user access, sessions,
-                  company-based ownership, and role separation.
+                  Worked on production authentication, user access,
+                  sessions, company-based ownership, and role separation.
                 </li>
                 <li>
                   Participated in billing and payment-related flows with
                   event-driven communication and production migrations.
                 </li>
                 <li>
-                  Designed backend modules with clear domain/application/database
-                  boundaries.
+                  Designed backend modules with clear
+                  domain/application/database boundaries.
                 </li>
               </ul>
             </div>
@@ -136,8 +150,8 @@ const projects = [
                   templates, snapshots, export flows, and API keys.
                 </li>
                 <li>
-                  Implemented scoped access logic, API contracts, and modular
-                  NestJS backend structure.
+                  Implemented scoped access logic, API contracts, and
+                  modular NestJS backend structure.
                 </li>
               </ul>
             </div>
@@ -161,24 +175,29 @@ const projects = [
 
         <aside class="resume-card__sidebar">
           <div class="profile-photo">
-            <div class="profile-photo__placeholder">
-              EV
-            </div>
+            <div class="profile-photo__placeholder">EV</div>
           </div>
 
           <section class="resume-section">
-            <h2 class="resume-section__title resume-section__title--line">
+            <h2
+              class="resume-section__title resume-section__title--line"
+            >
               Education
             </h2>
 
             <div class="side-block">
               <h3>Software Engineering</h3>
-              <p>Self-directed backend, system design, architecture, and production engineering.</p>
+              <p>
+                Self-directed backend, system design, architecture, and
+                production engineering.
+              </p>
             </div>
           </section>
 
           <section class="resume-section">
-            <h2 class="resume-section__title resume-section__title--line">
+            <h2
+              class="resume-section__title resume-section__title--line"
+            >
               Skills
             </h2>
 
@@ -194,7 +213,9 @@ const projects = [
           </section>
 
           <section class="resume-section">
-            <h2 class="resume-section__title resume-section__title--line">
+            <h2
+              class="resume-section__title resume-section__title--line"
+            >
               Languages
             </h2>
 

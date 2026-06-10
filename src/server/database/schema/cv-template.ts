@@ -1,6 +1,10 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { id, timestamp } from '~/server/database/helpers'
-import { CVTemplateStatus, CVTemplateStatuses, ProfileLanguages } from '~/shared/types'
+import {
+  CVTemplateStatus,
+  CVTemplateStatuses,
+  ProfileLanguages,
+} from '~/shared/types'
 
 export const cvTemplateTable = sqliteTable('cv_template', {
   id: id(),
@@ -9,14 +13,14 @@ export const cvTemplateTable = sqliteTable('cv_template', {
   slug: text('slug').notNull().unique(),
 
   language: text('language', {
-    enum: ProfileLanguages
+    enum: ProfileLanguages,
   }).notNull(),
 
   html: text('html').notNull(),
   css: text('css').notNull(),
 
   status: text('status', {
-    enum: CVTemplateStatuses
+    enum: CVTemplateStatuses,
   })
     .notNull()
     .default(CVTemplateStatus.draft),
@@ -24,5 +28,5 @@ export const cvTemplateTable = sqliteTable('cv_template', {
   order: integer('order').notNull().default(0),
 
   createdAt: timestamp('created_at', true).notNull(),
-  updatedAt: timestamp('updated_at', true).notNull()
+  updatedAt: timestamp('updated_at', true).notNull(),
 })

@@ -16,5 +16,5 @@ export const cvLanguageTable = sqliteTable('cv_language', {
   order: integer('order').notNull().default(0),
 
   createdAt: timestamp('created_at', true).notNull(),
-  updatedAt: timestamp('updated_at', true).notNull()
+  updatedAt: timestamp('updated_at', true).notNull(),
 })

@@ -49,9 +49,7 @@ onMounted(() => {
     <a href="/" class="app-header__brand">
       <Icon :icon="mdiConsole" :size="50" />
 
-      <h1 class="app-header__title">
-        Everi Vladislav
-      </h1>
+      <h1 class="app-header__title">Everi Vladislav</h1>
     </a>
 
     <nav class="app-header__nav" aria-label="Main navigation">

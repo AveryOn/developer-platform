@@ -1,12 +1,7 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <section class="cv-admin__versions">
-    VERSIONS
-  </section>
+  <section class="cv-admin__versions">VERSIONS</section>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Icon from '~/client/components/common/Icon.vue';
-import { mdiAccountEdit } from '@mdi/js';
-import { useAppStore } from '~/client/stores/app.store';
+import Icon from '~/client/components/common/Icon.vue'
+import { mdiAccountEdit } from '@mdi/js'
+import { useAppStore } from '~/client/stores/app.store'
 
 const appStore = useAppStore()
 
@@ -11,22 +11,62 @@ const activeSection = ref('')
 const ADMIN_CV_PATH_PREFIX = '/admin/cv'
 
 interface NavItem {
-  key: string;
-  label: string;
-  href: string;
+  key: string
+  label: string
+  href: string
 }
 
 const navItems = [
-  { key: 'profile', label: 'Profile', href: (ADMIN_CV_PATH_PREFIX + '/profile') },
-  { key: 'links', label: 'Links', href: (ADMIN_CV_PATH_PREFIX + '/links') },
-  { key: 'experience', label: 'Experience', href: (ADMIN_CV_PATH_PREFIX + '/experience') },
-  { key: 'projects', label: 'Projects', href: (ADMIN_CV_PATH_PREFIX + '/projects') },
-  { key: 'skills', label: 'Skills', href: (ADMIN_CV_PATH_PREFIX + '/skills') },
-  { key: 'languages', label: 'Languages', href: (ADMIN_CV_PATH_PREFIX + '/languages') },
-  { key: 'employment-types', label: 'Employment Types', href: (ADMIN_CV_PATH_PREFIX + '/employment-types') },
-  { key: 'templates', label: 'Templates', href: (ADMIN_CV_PATH_PREFIX + '/templates') },
-  { key: 'preview', label: 'Preview', href: (ADMIN_CV_PATH_PREFIX + '/preview') },
-  { key: 'versions', label: 'Versions', href: (ADMIN_CV_PATH_PREFIX + '/versions') }
+  {
+    key: 'profile',
+    label: 'Profile',
+    href: ADMIN_CV_PATH_PREFIX + '/profile',
+  },
+  {
+    key: 'links',
+    label: 'Links',
+    href: ADMIN_CV_PATH_PREFIX + '/links',
+  },
+  {
+    key: 'experience',
+    label: 'Experience',
+    href: ADMIN_CV_PATH_PREFIX + '/experience',
+  },
+  {
+    key: 'projects',
+    label: 'Projects',
+    href: ADMIN_CV_PATH_PREFIX + '/projects',
+  },
+  {
+    key: 'skills',
+    label: 'Skills',
+    href: ADMIN_CV_PATH_PREFIX + '/skills',
+  },
+  {
+    key: 'languages',
+    label: 'Languages',
+    href: ADMIN_CV_PATH_PREFIX + '/languages',
+  },
+  {
+    key: 'employment-types',
+    label: 'Employment Types',
+    href: ADMIN_CV_PATH_PREFIX + '/employment-types',
+  },
+  {
+    key: 'templates',
+    label: 'Templates',
+    href: ADMIN_CV_PATH_PREFIX + '/templates',
+  },
+  {
+    key: 'preview',
+    label: 'Preview',
+    href: ADMIN_CV_PATH_PREFIX + '/preview',
+  },
+  {
+    key: 'versions',
+    label: 'Versions',
+    href: ADMIN_CV_PATH_PREFIX + '/versions',
+  },
 ]
 
 function isActiveSection(item: NavItem) {
@@ -41,7 +81,9 @@ function isActiveSection(item: NavItem) {
     <header class="cv-admin__header">
       <div>
         <h1 class="cv-admin__title">CV Management</h1>
-        <p class="cv-admin__subtitle">Manage resume content, templates and versions.</p>
+        <p class="cv-admin__subtitle">
+          Manage resume content, templates and versions.
+        </p>
       </div>
 
       <nav class="cv-admin__nav">
@@ -50,7 +92,9 @@ function isActiveSection(item: NavItem) {
           :key="item.key"
           :href="item.href"
           class="cv-admin__nav-item"
-          :class="{ 'cv-admin__nav-item--active': isActiveSection(item) }"
+          :class="{
+            'cv-admin__nav-item--active': isActiveSection(item),
+          }"
           type="button"
           @click="activeSection = item.key"
         >
@@ -63,8 +107,15 @@ function isActiveSection(item: NavItem) {
       <div class="cv-admin__placeholder">
         {{ navItems.find((item) => item.key === activeSection)?.label }}
       </div>
-      <div v-if="!activeSection" class="min-h-[500px] flex items-center justify-center">
-        <Icon :icon="mdiAccountEdit" :size="200" class="text-[--primary-color-1]"></Icon>
+      <div
+        v-if="!activeSection"
+        class="min-h-[500px] flex items-center justify-center"
+      >
+        <Icon
+          :icon="mdiAccountEdit"
+          :size="200"
+          class="text-[--primary-color-1]"
+        ></Icon>
       </div>
       <div v-else>
         <slot></slot>

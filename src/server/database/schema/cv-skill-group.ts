@@ -14,5 +14,5 @@ export const cvSkillGroupTable = sqliteTable('cv_skill_group', {
   order: integer('order').notNull().default(0),
 
   createdAt: timestamp('created_at', true).notNull(),
-  updatedAt: timestamp('updated_at', true).notNull()
+  updatedAt: timestamp('updated_at', true).notNull(),
 })
