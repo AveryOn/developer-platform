@@ -27,17 +27,11 @@ export class Logger {
     const bg = this.bgColor
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)(
-      '[INFO]',
-    ),
+      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)('[INFO]'),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(
-        `[${now}]`,
-      ),
+      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(`[${now}]`),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex(fg)(
-        `{${this.context}}`,
-      ),
+      /* CONTEXT */ chalk.bold.black.bgHex(fg)(`{${this.context}}`),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.hex(fg)(msg),
       this.details,
@@ -49,17 +43,11 @@ export class Logger {
     const bg = this.bgColor
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)(
-      '[DEBUG]',
-    ),
+      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)('[DEBUG]'),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(
-        `[${now}]`,
-      ),
+      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(`[${now}]`),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex(fg)(
-        `{${this.context}}`,
-      ),
+      /* CONTEXT */ chalk.bold.black.bgHex(fg)(`{${this.context}}`),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.hex(fg)(msg),
       this.details,
@@ -71,17 +59,11 @@ export class Logger {
     const bg = this.bgColor
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)(
-      '[WARN]',
-    ),
+      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)('[WARN]'),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(
-        `[${now}]`,
-      ),
+      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(`[${now}]`),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex(fg)(
-        `{${this.context}}`,
-      ),
+      /* CONTEXT */ chalk.bold.black.bgHex(fg)(`{${this.context}}`),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.hex(fg)(msg),
       this.details,
@@ -93,17 +75,11 @@ export class Logger {
     const bg = this.bgColor
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)(
-      '[ERROR]',
-    ),
+      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)('[ERROR]'),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(
-        `[${now}]`,
-      ),
+      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(`[${now}]`),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex(fg)(
-        `{${this.context}}`,
-      ),
+      /* CONTEXT */ chalk.bold.black.bgHex(fg)(`{${this.context}}`),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.hex(fg)(msg),
       this.details,
@@ -114,17 +90,11 @@ export class Logger {
     const fg = this.colors.fatal
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.black.bgHex(fg)(
-      '[FATAL]',
-    ),
+      /* LOG_LEVEL */ chalk.bold.black.bgHex(fg)('[FATAL]'),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.black.bgHex(fg)(
-        `[${now}]`,
-      ),
+      /* DATETIME */ chalk.bold.black.bgHex(fg)(`[${now}]`),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex(fg)(
-        `{${this.context}}`,
-      ),
+      /* CONTEXT */ chalk.bold.black.bgHex(fg)(`{${this.context}}`),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.bold.black.bgHex(fg)(msg),
       this.details,
