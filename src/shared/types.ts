@@ -9,6 +9,12 @@ export enum ProfileLanguage {
   fr = 'fr',
 }
 
+export const ProfileLanguages = [
+  ProfileLanguage.en,
+  ProfileLanguage.fr,
+  ProfileLanguage.ru
+] as const
+
 export enum SocialNetwork {
   github = 'github',
   linkedin = 'linkedin',
@@ -20,4 +26,13 @@ export enum SocialNetwork {
   other = 'other',
   facebook = 'facebook',
   instagram = 'instagram'
+}
+
+export enum CVEmploymentType {
+  fullTime = 'full_time',
+  partTime = 'part_time',
+  contract = 'contract',
+  freelance = 'freelance',
+  internship = 'internship',
+  selfEmployed = 'self_employed'
 }

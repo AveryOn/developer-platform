@@ -1,12 +1,12 @@
 import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { boolean, id, timestamp } from '~/server/database/helpers'
-import { ProfileLanguage } from '~/shared/types'
+import { ProfileLanguages } from '~/shared/types'
 
 export const cvProfileTable = sqliteTable('cv_profile', {
   id: id(),
 
   language: text('language', {
-    enum: [ProfileLanguage.en, ProfileLanguage.ru, ProfileLanguage.fr],
+    enum: ProfileLanguages,
   }).notNull(),
 
   firstName: text('first_name').notNull(),

@@ -4,7 +4,7 @@ import { cvProfileTable } from "~/server/database/schema/cv-profile";
 import { SocialNetwork } from "~/shared/types";
 
 
-export const cvProfileLinks = sqliteTable('cv_profile_links', {
+export const cvProfileLinkTable = sqliteTable('cv_profile_link', {
   id: id(),
 
   profileId: text('profile_id')
