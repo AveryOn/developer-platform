@@ -3,7 +3,7 @@ import chalk from 'chalk'
 export type LoggerDetails = Record<string, unknown>
 export type LogLevel = 'info' | 'error' | 'debug' | 'fatal' | 'warn'
 
-const SEPARATOR = '::'
+const SEPARATOR = chalk.hex('#ba86b7')('::')
 
 export class Logger {
   details: LoggerDetails
@@ -56,19 +56,19 @@ export class Logger {
   warn(msg?: string) {
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.hex('#a2f4bf').bgHex('#232323')(
+      /* LOG_LEVEL */ chalk.bold.hex('#efc945').bgHex('#232323')(
       '[DEBUG]',
     ),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.hex('#a2f4bf').bgHex('#232323')(
+      /* DATETIME */ chalk.bold.hex('#efc945').bgHex('#232323')(
         `[${now}]`,
       ),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex('#92edb2')(
+      /* CONTEXT */ chalk.bold.black.bgHex('#e9b500')(
         `{${this.context}}`,
       ),
       SEPARATOR,
-      /* MSG + DETAILS */ chalk.hex('#67fe9d')(msg),
+      /* MSG + DETAILS */ chalk.hex('#ffd542')(msg),
       this.details,
     )
   }
