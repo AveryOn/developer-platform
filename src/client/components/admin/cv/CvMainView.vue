@@ -73,7 +73,9 @@ const navItems = [
 
 function isActiveSection(item: NavItem) {
   const isActive = item.href === appStore.getCurrentPath()
-  activeSection.value = item.key
+  if(isActive) {
+    activeSection.value = item.key
+  }
   return isActive
 }
 
@@ -125,9 +127,6 @@ async function click() {
     </header>
 
     <main class="cv-admin__content">
-      <div class="cv-admin__placeholder">
-        {{ navItems.find((item) => item.key === activeSection)?.label }}
-      </div>
       <div
         v-if="!activeSection"
         class="min-h-[500px] flex items-center justify-center"

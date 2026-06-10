@@ -8,6 +8,13 @@
       "when": 1781095781192,
       "tag": "0000_shiny_calypso",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1781112351572,
+      "tag": "0001_lame_spot",
+      "breakpoints": true
     }
   ]
 }
