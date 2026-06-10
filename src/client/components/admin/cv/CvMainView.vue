@@ -72,7 +72,7 @@ const navItems = [
 ]
 
 function isActiveSection(item: NavItem) {
-  const isActive = item.href === appStore.getCurrentPath()
+  const isActive = appStore.getCurrentPath().startsWith(item.href)
   if(isActive) {
     activeSection.value = item.key
   }

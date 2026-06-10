@@ -67,9 +67,9 @@ onMounted(async () => {
 <template>
   <section class="cv-admin__profile">
     <div class="cv-profile__action-block">
-      <button class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]">
+      <a href="/admin/cv/profile/new" class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]">
         <Icon :icon="mdiPlus" :size="24"></Icon>
-      </button>
+      </a>
     </div>
     <ul class="cv-profile__list-block">
       <li v-for="profile in profiles" :key="profile.id" class="profile-list-item">
