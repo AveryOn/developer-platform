@@ -6,6 +6,6 @@ export const articlesTable = sqliteTable('article', {
   slug: text('slug').notNull().unique(),
   title: text('title').notNull(),
   content: text('content').notNull(),
-  updatedAt: timestamp('updated_at', true),
-  createdAt: timestamp('created_at', true),
+  updatedAt: timestamp('updated_at', true).notNull(),
+  createdAt: timestamp('created_at', true).notNull(),
 })

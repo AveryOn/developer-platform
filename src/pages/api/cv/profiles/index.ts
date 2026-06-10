@@ -1,37 +1,40 @@
 import type { APIRoute } from 'astro'
-import { desc } from 'drizzle-orm'
 import { db } from '~/server/database/client'
 import { cvProfileTable } from '~/server/database/schema/cv-profile'
-import { Logger } from '~/shared/logger/logger.client'
+import { CvProfileService } from '~/server/services/admin/cv/profile.service'
+import { Logger, type LoggerDetails } from '~/shared/logger/logger.client'
 
 export const GET: APIRoute = async () => {
   const logger = new Logger('Get.profile.list')
-  const profiles = await db
-    .select()
-    .from(cvProfileTable)
-    .orderBy(desc(cvProfileTable.createdAt))
+  try {
+    const profiles = await CvProfileService.getList()
 
-  logger.info('GET: profiles', { count: profiles.length })
+    logger.info('GET: profiles', { count: profiles.length })
 
-  return Response.json({ data: profiles })
+    return Response.json({ data: profiles })
+  } catch (err) {
+    logger.error('ERROR', err as LoggerDetails)
+    throw err
+  }
+
 }
 
-// export const POST: APIRoute = async ({ request }) => {
-//   const body = await request.json()
+export const POST: APIRoute = async ({ request }) => {
+  const body = await request.json()
 
-//   const [profile] = await db
-//     .insert(cvProfileTable)
-//     .values({
-//       language: body.language,
-//       firstName: body.firstName,
-//       lastName: body.lastName,
-//       title: body.title,
-//       location: body.location,
-//       summary: body.summary,
-//       email: body.email,
-//       phone: body.phone,
-//     })
-//     .returning()
+  const [profile] = await db
+    .insert(cvProfileTable)
+    .values({
+      language: body.language,
+      firstName: body.firstName,
+      lastName: body.lastName,
+      title: body.title,
+      location: body.location,
+      summary: body.summary,
+      email: body.email,
+      phone: body.phone,
+    })
+    .returning()
 
-//   return Response.json({ data: profile }, { status: 201 })
-// }
+  return Response.json({ data: profile }, { status: 201 })
+}
