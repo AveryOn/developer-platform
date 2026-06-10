@@ -8,3 +8,16 @@ export enum ProfileLanguage {
   ru = 'ru',
   fr = 'fr',
 }
+
+export enum SocialNetwork {
+  github = 'github',
+  linkedin = 'linkedin',
+  telegram = 'telegram',
+  website = 'website',
+  reddit = 'reddit',
+  x = 'x',
+  email = 'email',
+  other = 'other',
+  facebook = 'facebook',
+  instagram = 'instagram'
+}
