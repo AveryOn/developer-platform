@@ -49,3 +49,15 @@ export enum CVEmploymentType {
   internship = 'internship',
   selfEmployed = 'self_employed'
 }
+
+export enum CVTemplateStatus {
+  draft = 'draft',
+  active = 'active',
+  archived = 'archived'
+}
+
+export const CVTemplateStatuses = [
+  CVTemplateStatus.draft,
+  CVTemplateStatus.active,
+  CVTemplateStatus.archived
+] as const
