@@ -57,7 +57,7 @@ export class Logger {
     const now = new Date().toISOString()
     console.log(
       /* LOG_LEVEL */ chalk.bold.hex('#efc945').bgHex('#232323')(
-      '[DEBUG]',
+      '[WARN]',
     ),
       SEPARATOR,
       /* DATETIME */ chalk.bold.hex('#efc945').bgHex('#232323')(
@@ -69,6 +69,26 @@ export class Logger {
       ),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.hex('#ffd542')(msg),
+      this.details,
+    )
+  }
+
+  fatal(msg?: string) {
+    const now = new Date().toISOString()
+    console.log(
+      /* LOG_LEVEL */ chalk.bold.black.bgHex('#e5002b')(
+      '[FATAL]',
+    ),
+      SEPARATOR,
+      /* DATETIME */ chalk.bold.black.bgHex('#e5002b')(
+        `[${now}]`,
+      ),
+      SEPARATOR,
+      /* CONTEXT */ chalk.bold.black.bgHex('#e5002b')(
+        `{${this.context}}`,
+      ),
+      SEPARATOR,
+      /* MSG + DETAILS */ chalk.bold.black.bgHex('#e5002b')(msg),
       this.details,
     )
   }
