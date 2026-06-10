@@ -1,8 +1,11 @@
 import type { APIRoute } from 'astro'
-import { db } from '~/server/database/client'
-import { cvProfileTable } from '~/server/database/schema/cv-profile'
+import { createCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
 import { CvProfileService } from '~/server/services/admin/cv/profile.service'
-import { Logger, type LoggerDetails } from '~/shared/logger/logger.client'
+import {
+  Logger,
+  type LoggerDetails,
+} from '~/shared/logger/logger.client'
+import { throwZodError } from '~/server/plugins/zod.plugin'
 
 export const GET: APIRoute = async () => {
   const logger = new Logger('Get.profile.list')
@@ -16,25 +19,16 @@ export const GET: APIRoute = async () => {
     logger.error('ERROR', err as LoggerDetails)
     throw err
   }
-
 }
 
 export const POST: APIRoute = async ({ request }) => {
+  const logger = new Logger('HTTP:POST:Profile.Create')
   const body = await request.json()
+  const { success, data, error } = createCvProfileDto.safeParse(body)
+  if (!success) {
+    throwZodError(error, logger, 'Validation Error')
+  }
+  const newProfile = await CvProfileService.create(data!)
 
-  const [profile] = await db
-    .insert(cvProfileTable)
-    .values({
-      language: body.language,
-      firstName: body.firstName,
-      lastName: body.lastName,
-      title: body.title,
-      location: body.location,
-      summary: body.summary,
-      email: body.email,
-      phone: body.phone,
-    })
-    .returning()
-
-  return Response.json({ data: profile }, { status: 201 })
+  return Response.json({ data: newProfile }, { status: 201 })
 }

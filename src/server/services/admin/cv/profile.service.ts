@@ -1,10 +1,12 @@
 import { cvProfileTable } from '~/server/database/schema'
 import { db } from '~/server/database/client'
-import type {
-  Profile,
-  ProfileInput,
-} from '~/shared/types/cv/profile.type'
 import { eq } from 'drizzle-orm'
+import type {
+  CreateCvProfileDto,
+  Profile,
+  UpdateCvProfileDto,
+} from '~/shared/dto/admin/cv/profile.dto'
+import { dateISO } from '~/shared/utils/datetime'
 
 export const CvProfileService = {
   async getById(uuid: string): Promise<Profile | null> {
@@ -30,18 +32,28 @@ export const CvProfileService = {
     return profile ?? null
   },
 
-  async create(data: ProfileInput): Promise<Profile> {
+  async create(data: CreateCvProfileDto): Promise<Profile> {
+    const now = dateISO()
     const [profile] = await db
       .insert(cvProfileTable)
-      .values(data)
+      .values({
+        ...data,
+        createdAt: now,
+        updatedAt: now,
+      })
       .returning()
     return profile
   },
 
-  async update(data: Partial<ProfileInput>) {
+  async update(data: Partial<UpdateCvProfileDto>) {
+    const now = dateISO()
+
     const [profile] = await db
       .update(cvProfileTable)
-      .set(data)
+      .set({
+        ...data,
+        updatedAt: now,
+      })
       .returning()
     return profile
   },

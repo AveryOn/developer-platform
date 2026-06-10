@@ -7,10 +7,7 @@ export const id = () =>
     .$defaultFn(() => crypto.randomUUID())
 
 export const timestamp = (field: string, defaultNow: boolean = false) =>
-  defaultNow
-    ? text(field)
-      .default(sql`CURRENT_TIMESTAMP`)
-    : text(field)
+  defaultNow ? text(field).default(sql`CURRENT_TIMESTAMP`) : text(field)
 
 export const boolean = (field: string) =>
   integer(field, { mode: 'boolean' })
