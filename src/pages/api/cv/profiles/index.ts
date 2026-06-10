@@ -7,6 +7,7 @@ import {
 } from '~/shared/logger/logger.client'
 import { throwZodError } from '~/server/plugins/zod.plugin'
 import { _ } from '~/shared/const'
+import { HttpStatusCode } from 'axios'
 
 export const GET: APIRoute = async ({ url }) => {
   const logger = new Logger('HTTP:GET:Profile.GET_LIST_OR_ACTIVE')
@@ -18,7 +19,7 @@ export const GET: APIRoute = async ({ url }) => {
       const profile = await CvProfileService.getActive()
 
       logger.info('Fetched Profile', { profile })
-      return Response.json({ data: profile })
+      return Response.json({ data: profile }, { status: HttpStatusCode.Ok })
     }
 
     // GET LIST
@@ -43,5 +44,5 @@ export const POST: APIRoute = async ({ request }) => {
   }
   const newProfile = await CvProfileService.create(data!)
 
-  return Response.json({ data: newProfile }, { status: 201 })
+  return Response.json({ data: newProfile }, { status: HttpStatusCode.Created })
 }
