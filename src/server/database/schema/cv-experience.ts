@@ -1,5 +1,6 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
-import { id, timestamp, boolean } from '~/server/database/helpers'
+import { boolean, id, timestamp } from '~/server/database/helpers'
+import { cvEmploymentTypeTable } from '~/server/database/schema/cv-employment-type'
 import { cvProfileTable } from '~/server/database/schema/cv-profile'
 
 export const cvExperienceTable = sqliteTable('cv_experience', {
@@ -9,12 +10,14 @@ export const cvExperienceTable = sqliteTable('cv_experience', {
     .notNull()
     .references(() => cvProfileTable.id, { onDelete: 'cascade' }),
 
+  employmentTypeId: text('employment_type_id').references(
+    () => cvEmploymentTypeTable.id,
+    { onDelete: 'set null' }
+  ),
+
   company: text('company').notNull(),
   position: text('position').notNull(),
-
   location: text('location'),
-
-  employmentType: text('employment_type'),
 
   startDate: text('start_date').notNull(),
   endDate: text('end_date'),
