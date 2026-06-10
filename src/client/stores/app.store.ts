@@ -36,10 +36,15 @@ export const useAppStore = defineStore('APP_STORE', () => {
     applyTheme(AppTheme['app-theme-package-1'])
   }
 
+  function getCurrentPath() {
+    return window.location.pathname
+  }
+
   return {
     setCookie,
     getCookie,
     initTheme,
     applyTheme,
+    getCurrentPath,
   }
 })
