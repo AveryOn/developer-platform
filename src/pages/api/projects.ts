@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro'
 import { db } from '~/server/database/client'
-import { projectsTable } from '~/server/database/schema'
+import { cvProjectTable } from '~/server/database/schema'
 
 export const GET: APIRoute = async () => {
-  const data = await db.select().from(projectsTable)
+  const data = await db.select().from(cvProjectTable)
 
   return Response.json(data)
 }
