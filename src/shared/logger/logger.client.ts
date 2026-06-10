@@ -6,7 +6,6 @@ export type LogLevel = 'info' | 'error' | 'debug' | 'fatal' | 'warn'
 const SEPARATOR = chalk.hex('#ba86b7')('::')
 
 export class Logger {
-  details: LoggerDetails
   context: string | null
   private colors = {
     info: '#87d1f3',
@@ -17,12 +16,11 @@ export class Logger {
   }
   private bgColor = '#232323'
 
-  constructor(details: LoggerDetails, context?: string) {
-    this.details = details
+  constructor(context?: string) {
     this.context = context ?? null
   }
 
-  info(msg?: string) {
+  info(msg?: string, details?: LoggerDetails) {
     const fg = this.colors.info
     const bg = this.bgColor
     const now = new Date().toISOString()
@@ -34,11 +32,11 @@ export class Logger {
       /* CONTEXT */ chalk.bold.black.bgHex(fg)(`{${this.context}}`),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.hex(fg)(msg),
-      this.details,
+      details,
     )
   }
 
-  debug(msg?: string) {
+  debug(msg?: string, details?: LoggerDetails) {
     const fg = this.colors.debug
     const bg = this.bgColor
     const now = new Date().toISOString()
@@ -50,11 +48,11 @@ export class Logger {
       /* CONTEXT */ chalk.bold.black.bgHex(fg)(`{${this.context}}`),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.hex(fg)(msg),
-      this.details,
+      details,
     )
   }
 
-  warn(msg?: string) {
+  warn(msg?: string, details?: LoggerDetails) {
     const fg = this.colors.warn
     const bg = this.bgColor
     const now = new Date().toISOString()
@@ -66,11 +64,11 @@ export class Logger {
       /* CONTEXT */ chalk.bold.black.bgHex(fg)(`{${this.context}}`),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.hex(fg)(msg),
-      this.details,
+      details,
     )
   }
 
-  error(msg?: string) {
+  error(msg?: string, details?: LoggerDetails) {
     const fg = this.colors.error
     const bg = this.bgColor
     const now = new Date().toISOString()
@@ -82,11 +80,11 @@ export class Logger {
       /* CONTEXT */ chalk.bold.black.bgHex(fg)(`{${this.context}}`),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.hex(fg)(msg),
-      this.details,
+      details,
     )
   }
 
-  fatal(msg?: string) {
+  fatal(msg?: string, details?: LoggerDetails) {
     const fg = this.colors.fatal
     const now = new Date().toISOString()
     console.log(
@@ -97,7 +95,7 @@ export class Logger {
       /* CONTEXT */ chalk.bold.black.bgHex(fg)(`{${this.context}}`),
       SEPARATOR,
       /* MSG + DETAILS */ chalk.bold.black.bgHex(fg)(msg),
-      this.details,
+      details,
     )
   }
 }

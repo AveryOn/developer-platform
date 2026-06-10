@@ -4,13 +4,14 @@ import { db } from '~/server/database/client'
 import { cvProfileTable } from '~/server/database/schema/cv-profile'
 import { Logger } from '~/shared/logger/logger.client'
 
-export const GET: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async () => {
+  const logger = new Logger('Get.profile.list')
   const profiles = await db
     .select()
     .from(cvProfileTable)
     .orderBy(desc(cvProfileTable.createdAt))
 
-  new Logger({ url }, 'Get.profile.list').warn('ЗАПРОС ПРОФИЛЕЙ')
+  logger.info('GET: profiles', { count: profiles.length })
 
   return Response.json({ data: profiles })
 }
