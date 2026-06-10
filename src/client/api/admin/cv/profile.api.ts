@@ -19,7 +19,7 @@ export const CvProfileApi = {
   },
 
   create(data: CreateCvProfileDto) {
-    return httpClient.get<Profile[]>(`/cv/profiles/`, {
+    return httpClient.post<Profile[]>(`/cv/profiles`, {
       data
     })
   },

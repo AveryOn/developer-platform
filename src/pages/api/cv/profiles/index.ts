@@ -37,9 +37,13 @@ export const GET: APIRoute = async ({ url }) => {
 
 export const POST: APIRoute = async ({ request }) => {
   const logger = new Logger('HTTP:POST:Profile.Create')
+
   const body = await request.json()
-  const { success, data, error } = createCvProfileDto.safeParse(body)
+  logger.info('Pick up BODY', { body: body.data })
+  const { success, data, error } = createCvProfileDto.safeParse(body.data)
+
   if (!success) {
+    logger.error('Validation Failed', { error })
     throwZodError(error, logger, 'Validation Error')
   }
   const newProfile = await CvProfileService.create(data!)

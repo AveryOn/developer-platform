@@ -78,20 +78,20 @@ function isActiveSection(item: NavItem) {
 }
 
 async function click() {
-  // const profile = await CvProfileApi.create({
-  //   firstName: 'Vladislav',
-  //   lastName: 'Everi',
-  //   isActive: true,
-  //   language: ProfileLanguage.en,
-  //   summary: 'THIS IS EXAMPLE FOR SUMMARY',
-  //   title: 'PROFILE TITLE',
-  //   email: 'example@ex.com',
-  //   location: 'Georgia',
-  //   phone: '+995555346316',
-  // })
-  // console.log(profile)
+  const profile = await CvProfileApi.create({
+    firstName: 'Vladislav',
+    lastName: 'Everi',
+    isActive: true,
+    language: ProfileLanguage.en,
+    summary: 'THIS IS EXAMPLE FOR SUMMARY',
+    title: 'PROFILE TITLE',
+    email: 'example@ex.com',
+    location: 'Georgia',
+    phone: '+995555346316',
+  })
+  console.log(profile)
 
-  await CvProfileApi.getActive()
+  // await CvProfileApi.getActive()
 }
 
 </script>
