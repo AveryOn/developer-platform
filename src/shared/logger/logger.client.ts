@@ -73,6 +73,26 @@ export class Logger {
     )
   }
 
+  error(msg?: string) {
+    const now = new Date().toISOString()
+    console.log(
+      /* LOG_LEVEL */ chalk.bold.hex('#ea4162').bgHex('#232323')(
+      '[ERROR]',
+    ),
+      SEPARATOR,
+      /* DATETIME */ chalk.bold.hex('#ea4162').bgHex('#232323')(
+        `[${now}]`,
+      ),
+      SEPARATOR,
+      /* CONTEXT */ chalk.bold.black.bgHex('#ea4162')(
+        `{${this.context}}`,
+      ),
+      SEPARATOR,
+      /* MSG + DETAILS */ chalk.hex('#ea4162')(msg),
+      this.details,
+    )
+  }
+
   fatal(msg?: string) {
     const now = new Date().toISOString()
     console.log(

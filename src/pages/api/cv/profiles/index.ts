@@ -10,7 +10,7 @@ export const GET: APIRoute = async ({ url }) => {
     .from(cvProfileTable)
     .orderBy(desc(cvProfileTable.createdAt))
 
-  new Logger({ url }, 'Get.profile.list').fatal('ЗАПРОС ПРОФИЛЕЙ')
+  new Logger({ url }, 'Get.profile.list').error('ЗАПРОС ПРОФИЛЕЙ')
 
   return Response.json({ data: profiles })
 }
