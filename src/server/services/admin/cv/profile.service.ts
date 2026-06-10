@@ -7,11 +7,14 @@ import type {
 import { eq } from 'drizzle-orm'
 
 export const CvProfileService = {
-  async getById(uuid: string): Promise<Profile[]> {
-    return await db
+  async getById(uuid: string): Promise<Profile | null> {
+    const [profile] = await db
       .select()
       .from(cvProfileTable)
       .where(eq(cvProfileTable.id, uuid))
+      .limit(1)
+
+    return profile ?? null
   },
 
   async getList(): Promise<Profile[]> {
