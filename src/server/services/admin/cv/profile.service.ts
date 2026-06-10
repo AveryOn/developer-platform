@@ -11,6 +11,15 @@ export const CvProfileService = {
     return await db.select().from(cvProfileTable)
   },
 
+  async getActive(): Promise<Profile | null> {
+    const [profile] = await db
+      .select()
+      .from(cvProfileTable)
+      .where(eq(cvProfileTable.isActive, true))
+
+    return profile ?? null
+  },
+
   async create(data: ProfileInput): Promise<Profile> {
     const [profile] = await db
       .insert(cvProfileTable)
@@ -19,12 +28,11 @@ export const CvProfileService = {
     return profile
   },
 
-  async getActive(): Promise<Profile | null> {
+  async update(data: Partial<ProfileInput>) {
     const [profile] = await db
-      .select()
-      .from(cvProfileTable)
-      .where(eq(cvProfileTable.isActive, true))
-
-    return profile ?? null
+      .update(cvProfileTable)
+      .set(data)
+      .returning()
+    return profile
   },
 }
