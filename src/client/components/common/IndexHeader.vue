@@ -97,7 +97,7 @@ onMounted(() => {
   font-weight: 600;
   line-height: 1;
 
-  color: #ffffff;
+  color: var(--text-color-1);
   user-select: none;
 }
 

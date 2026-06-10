@@ -218,7 +218,7 @@ const projects = [
   min-height: 1120px;
   padding: 64px 72px;
   /* border: 1px solid rgba(255, 255, 255, 0.12); */
-  background-color: var(--cv-bg-color-1);
+  background-color: var(--primary-color-2);
   /* background:
     radial-gradient(circle at 15% 0%, var(--bg-color-1), transparent 28%),
     linear-gradient(135deg, #f6f6f3 0%, #e8e7e1 48%, #f8f8f5 100%); */
@@ -274,7 +274,7 @@ const projects = [
   gap: 8px;
   padding-top: 8px;
   font-size: 14px;
-  color: #333;
+  color: var(--text-color-2);
 }
 
 .resume-card__contacts div {
@@ -348,7 +348,7 @@ const projects = [
 }
 
 .resume-section__body {
-  color: #555;
+  color: var(--text-color-2);
   font-size: 15px;
   line-height: 1.48;
 }
@@ -384,7 +384,7 @@ const projects = [
 
 .experience-item p {
   margin: 5px 0 0;
-  color: #555;
+  color: var(--text-color-2);
   font-size: 15px;
   font-weight: 700;
 }
@@ -398,7 +398,7 @@ const projects = [
 .experience-item li,
 .skill-list li {
   margin-bottom: 8px;
-  color: #555;
+  color: var(--text-color-2);
   font-size: 14px;
   line-height: 1.45;
 }
@@ -416,7 +416,7 @@ const projects = [
 
 .project-item p {
   margin: 0;
-  color: #555;
+  color: var(--text-color-2);
   font-size: 14px;
   line-height: 1.45;
 }
@@ -436,7 +436,7 @@ const projects = [
   background:
     linear-gradient(135deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.22)),
     #d9d8d2;
-  color: #111;
+  color: var(--bg-color-1);
   font-family: var(--font-heading);
   font-size: 54px;
   font-weight: 900;

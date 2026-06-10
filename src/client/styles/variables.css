@@ -10,7 +10,7 @@
 
   /* RESUME */
   --cv-bg-color-1: #19232560;
-  --cv-bg-color-2: rgb(34, 34, 34);
+  --cv-bg-color-2: #222222;
   --cv-text-color-1: #ffffff;
 
   /* BASE */
@@ -18,6 +18,11 @@
 
   --text-color-1: #ffffff;
   --text-color-2: #d8d8d8;
+
+  /* > border */
+  --base-border-color-1: #808080;
+  --base-border-color-2: #5a5959;
+  --base-border-color-3: #4e4e4e7c;
 }
 
 /* BLUE */
