@@ -22,6 +22,10 @@ const navItems = [
     href: '/news',
   },
   {
+    label: 'About Me',
+    href: '/about-me',
+  },
+  {
     label: 'Admin',
     href: '/admin',
   },

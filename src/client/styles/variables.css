@@ -7,8 +7,14 @@
 
   --button-color-1: #569e56;
   --button-color-1-hover: #68ca68;
+
+  /* RESUME */
+  --bg-color-1: rgb(255, 255, 255);
+  --bg-color-2: rgb(34, 34, 34);
+  --text-color-1: rgb(0, 0, 0);
 }
 
+/* BLUE */
 .app-theme-package-1 {
   --primary-color-1: #426e79;
   --primary-color-2: #19232560;
@@ -17,6 +23,7 @@
   --border-color-1: #354b50;
 }
 
+/* RED */
 .app-theme-package-2 {
   --primary-color-1: #794d42;
   --primary-color-2: #251d1960;
@@ -25,6 +32,7 @@
   --border-color-1: #503535;
 }
 
+/* GREEN */
 .app-theme-package-3 {
   --primary-color-1: #5b7942;
   --primary-color-2: #19251a60;

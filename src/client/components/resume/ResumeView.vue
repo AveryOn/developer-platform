@@ -7,7 +7,19 @@ const skills = [
   'Auth / RBAC / Multi-tenant',
   'Billing / Payments',
   'Redis / Queues',
-  'Docker / Deployment'
+  'Docker / Deployment',
+  'Docker / Deployment2',
+  'Docker / Deployment23',
+  'Docker / Deployment234',
+  'Docker / Deployment2345',
+  'Docker / Deployment23456',
+  'Docker / Deployment212',
+  'Docker / Deployment99',
+  'Docker / Deployment00',
+  'Docker / Deployment01',
+  'Docker / Deployment02',
+  'Docker / Deployment03',
+  'Docker / Deployment04',
 ]
 
 const projects = [
@@ -206,13 +218,11 @@ const projects = [
   min-height: 1120px;
   padding: 64px 72px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background:
-    radial-gradient(circle at 15% 0%, rgba(255, 255, 255, 0.96), transparent 28%),
-    linear-gradient(135deg, #f6f6f3 0%, #e8e7e1 48%, #f8f8f5 100%);
-  color: #151515;
-  box-shadow:
-    0 30px 120px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  background-color: var(--bg-color-1);
+  /* background:
+    radial-gradient(circle at 15% 0%, var(--bg-color-1), transparent 28%),
+    linear-gradient(135deg, #f6f6f3 0%, #e8e7e1 48%, #f8f8f5 100%); */
+  color: var(--text-color-1);
 }
 
 .resume-card__accent {
@@ -255,7 +265,7 @@ const projects = [
   font-family: var(--font-heading);
   font-size: 17px;
   font-weight: 700;
-  letter-spacing: 0.55em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
