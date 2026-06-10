@@ -14,12 +14,12 @@ const navItems = [
     href: '/',
   },
   {
-    label: 'News',
-    href: '/news',
-  },
-  {
     label: 'Projects',
     href: '/projects',
+  },
+  {
+    label: 'News',
+    href: '/news',
   },
   {
     label: 'Admin',
