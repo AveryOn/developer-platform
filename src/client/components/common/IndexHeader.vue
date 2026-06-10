@@ -73,7 +73,7 @@ onMounted(() => {
   justify-content: space-between;
   gap: 24px;
 
-  margin: 24px 0;
+  margin: 12px 0;
   padding: 0 14px;
 }
 
