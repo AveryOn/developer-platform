@@ -8,107 +8,125 @@ const SEPARATOR = chalk.hex('#ba86b7')('::')
 export class Logger {
   details: LoggerDetails
   context: string | null
+  private colors = {
+    info: '#87d1f3',
+    debug: '#a2f4bf',
+    warn: '#efc945',
+    error: '#ea4162',
+    fatal: '#e5002b',
+  }
+  private bgColor = '#232323'
+
   constructor(details: LoggerDetails, context?: string) {
     this.details = details
     this.context = context ?? null
   }
 
   info(msg?: string) {
+    const fg = this.colors.info
+    const bg = this.bgColor
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.hex('#a2f4bf').bgHex('#232323')(
+      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)(
       '[INFO]',
     ),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.hex('#87d1f3').bgHex('#232323')(
+      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(
         `[${now}]`,
       ),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex('#9bd9fd')(
+      /* CONTEXT */ chalk.bold.black.bgHex(fg)(
         `{${this.context}}`,
       ),
       SEPARATOR,
-      /* MSG + DETAILS */ chalk.hex('#87d1f3')(msg),
+      /* MSG + DETAILS */ chalk.hex(fg)(msg),
       this.details,
     )
   }
 
   debug(msg?: string) {
+    const fg = this.colors.debug
+    const bg = this.bgColor
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.hex('#a2f4bf').bgHex('#232323')(
+      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)(
       '[DEBUG]',
     ),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.hex('#a2f4bf').bgHex('#232323')(
+      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(
         `[${now}]`,
       ),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex('#92edb2')(
+      /* CONTEXT */ chalk.bold.black.bgHex(fg)(
         `{${this.context}}`,
       ),
       SEPARATOR,
-      /* MSG + DETAILS */ chalk.hex('#67fe9d')(msg),
+      /* MSG + DETAILS */ chalk.hex(fg)(msg),
       this.details,
     )
   }
 
   warn(msg?: string) {
+    const fg = this.colors.warn
+    const bg = this.bgColor
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.hex('#efc945').bgHex('#232323')(
+      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)(
       '[WARN]',
     ),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.hex('#efc945').bgHex('#232323')(
+      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(
         `[${now}]`,
       ),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex('#e9b500')(
+      /* CONTEXT */ chalk.bold.black.bgHex(fg)(
         `{${this.context}}`,
       ),
       SEPARATOR,
-      /* MSG + DETAILS */ chalk.hex('#ffd542')(msg),
+      /* MSG + DETAILS */ chalk.hex(fg)(msg),
       this.details,
     )
   }
 
   error(msg?: string) {
+    const fg = this.colors.error
+    const bg = this.bgColor
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.hex('#ea4162').bgHex('#232323')(
+      /* LOG_LEVEL */ chalk.bold.hex(fg).bgHex(bg)(
       '[ERROR]',
     ),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.hex('#ea4162').bgHex('#232323')(
+      /* DATETIME */ chalk.bold.hex(fg).bgHex(bg)(
         `[${now}]`,
       ),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex('#ea4162')(
+      /* CONTEXT */ chalk.bold.black.bgHex(fg)(
         `{${this.context}}`,
       ),
       SEPARATOR,
-      /* MSG + DETAILS */ chalk.hex('#ea4162')(msg),
+      /* MSG + DETAILS */ chalk.hex(fg)(msg),
       this.details,
     )
   }
 
   fatal(msg?: string) {
+    const fg = this.colors.fatal
     const now = new Date().toISOString()
     console.log(
-      /* LOG_LEVEL */ chalk.bold.black.bgHex('#e5002b')(
+      /* LOG_LEVEL */ chalk.bold.black.bgHex(fg)(
       '[FATAL]',
     ),
       SEPARATOR,
-      /* DATETIME */ chalk.bold.black.bgHex('#e5002b')(
+      /* DATETIME */ chalk.bold.black.bgHex(fg)(
         `[${now}]`,
       ),
       SEPARATOR,
-      /* CONTEXT */ chalk.bold.black.bgHex('#e5002b')(
+      /* CONTEXT */ chalk.bold.black.bgHex(fg)(
         `{${this.context}}`,
       ),
       SEPARATOR,
-      /* MSG + DETAILS */ chalk.bold.black.bgHex('#e5002b')(msg),
+      /* MSG + DETAILS */ chalk.bold.black.bgHex(fg)(msg),
       this.details,
     )
   }
