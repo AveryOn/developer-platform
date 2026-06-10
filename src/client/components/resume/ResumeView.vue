@@ -231,7 +231,7 @@ const projects = [
   left: 0;
   width: 28px;
   height: 120px;
-  background: #0e0e0e;
+  background: var(--text-color-1);
 }
 
 .resume-card__hero {
