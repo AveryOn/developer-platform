@@ -6,10 +6,23 @@ import {
   type LoggerDetails,
 } from '~/shared/logger/logger.client'
 import { throwZodError } from '~/server/plugins/zod.plugin'
+import { _ } from '~/shared/const'
 
-export const GET: APIRoute = async () => {
-  const logger = new Logger('Get.profile.list')
+export const GET: APIRoute = async ({ url }) => {
+  const logger = new Logger('HTTP:GET:Profile.GET_LIST_OR_ACTIVE')
   try {
+    // GET IS ACTIVE
+    const isActive = url.searchParams.get('isActive')
+    if (isActive) {
+      logger.info('request isActive profile')
+      const profile = await CvProfileService.getActive()
+
+      logger.info('Fetched Profile', { profile })
+      return Response.json({ data: profile })
+    }
+
+    // GET LIST
+    logger.info('request profiles list')
     const profiles = await CvProfileService.getList()
 
     logger.info('GET: profiles', { count: profiles.length })

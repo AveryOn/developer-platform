@@ -1,6 +1,6 @@
 import { cvProfileTable } from '~/server/database/schema'
 import { db } from '~/server/database/client'
-import { eq } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 import type {
   CreateCvProfileDto,
   Profile,
@@ -28,6 +28,8 @@ export const CvProfileService = {
       .select()
       .from(cvProfileTable)
       .where(eq(cvProfileTable.isActive, true))
+      .orderBy(desc(cvProfileTable.createdAt))
+      .limit(1)
 
     return profile ?? null
   },

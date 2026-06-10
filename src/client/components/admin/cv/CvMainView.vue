@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import Icon from '~/client/components/common/Icon.vue'
 import { mdiAccountEdit } from '@mdi/js'
 import { useAppStore } from '~/client/stores/app.store'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
+import { ProfileLanguage } from '~/shared/types'
 
 const appStore = useAppStore()
 
@@ -76,10 +77,23 @@ function isActiveSection(item: NavItem) {
   return isActive
 }
 
-onMounted(async () => {
-  const profile = await CvProfileApi.getById('123asd')
-  console.log(profile)
-})
+async function click() {
+  // const profile = await CvProfileApi.create({
+  //   firstName: 'Vladislav',
+  //   lastName: 'Everi',
+  //   isActive: true,
+  //   language: ProfileLanguage.en,
+  //   summary: 'THIS IS EXAMPLE FOR SUMMARY',
+  //   title: 'PROFILE TITLE',
+  //   email: 'example@ex.com',
+  //   location: 'Georgia',
+  //   phone: '+995555346316',
+  // })
+  // console.log(profile)
+
+  await CvProfileApi.getActive()
+}
+
 </script>
 
 <template>
@@ -89,6 +103,7 @@ onMounted(async () => {
         <h1 class="cv-admin__title">CV Management</h1>
         <p class="cv-admin__subtitle">
           Manage resume content, templates and versions.
+          <button class="bg-white text-black" @click="click">CLICK</button>
         </p>
       </div>
 
