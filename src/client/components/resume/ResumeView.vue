@@ -217,12 +217,12 @@ const projects = [
   overflow: hidden;
   min-height: 1120px;
   padding: 64px 72px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background-color: var(--bg-color-1);
+  /* border: 1px solid rgba(255, 255, 255, 0.12); */
+  background-color: var(--cv-bg-color-1);
   /* background:
     radial-gradient(circle at 15% 0%, var(--bg-color-1), transparent 28%),
     linear-gradient(135deg, #f6f6f3 0%, #e8e7e1 48%, #f8f8f5 100%); */
-  color: var(--text-color-1);
+  color: var(--cv-text-color-1);
 }
 
 .resume-card__accent {

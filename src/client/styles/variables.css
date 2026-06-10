@@ -9,9 +9,15 @@
   --button-color-1-hover: #68ca68;
 
   /* RESUME */
-  --bg-color-1: rgb(255, 255, 255);
-  --bg-color-2: rgb(34, 34, 34);
-  --text-color-1: rgb(0, 0, 0);
+  --cv-bg-color-1: #19232560;
+  --cv-bg-color-2: rgb(34, 34, 34);
+  --cv-text-color-1: rgb(255, 255, 255);
+
+  /* BASE */
+  --bg-color-1: #0a0a0a;
+
+  --text-color-1: white;
+  --text-color-2: rgb(216, 216, 216);
 }
 
 /* BLUE */

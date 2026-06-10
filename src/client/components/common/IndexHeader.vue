@@ -109,7 +109,7 @@ onMounted(() => {
   padding: 6px;
 
   border: 1px solid var(--border-color-1);
-  border-radius: 999px;
+  border-radius: 8px;
 
   background: var(--primary-color-2);
   backdrop-filter: blur(10px);
@@ -124,7 +124,7 @@ onMounted(() => {
   height: 36px;
   padding: 0 14px;
 
-  border-radius: 999px;
+  border-radius: 8px;
 
   color: color-mix(in srgb, #ffffff 78%, transparent);
   text-decoration: none;
