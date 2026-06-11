@@ -1,6 +1,6 @@
 <!-- eslint-disable no-undef -->
 <script setup lang="ts">
-import { onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 type SelectOption = {
   label: string
@@ -19,97 +19,115 @@ const props = withDefaults(
     placeholder?: string
     disabled?: boolean
     error?: string
-    throttleMs?: number
     options: SelectOption[]
   }>(),
   {
     id: undefined,
     label: undefined,
-    placeholder: undefined,
+    placeholder: 'Select option',
     disabled: false,
     error: undefined,
-    throttleMs: 0,
   },
 )
 
 const emit = defineEmits<{
   input: [value: string]
-  throttledInput: [value: string]
 }>()
 
-const innerValue = ref(model.value)
+const isOpen = ref(false)
+const rootRef = ref<HTMLElement | null>(null)
 
-let timer: ReturnType<typeof setTimeout> | null = null
-let lastValue = innerValue.value
-
-watch(model, (value) => {
-  if (value !== innerValue.value) {
-    innerValue.value = value
-  }
+const selectedOption = computed(() => {
+  return props.options.find((option) => option.value === model.value)
 })
 
-function handleChange(event: Event) {
-  const target = event.target as HTMLSelectElement
-  const value = target.value
-
-  innerValue.value = value
-  lastValue = value
-
-  emit('input', value)
-
-  if (props.throttleMs <= 0) {
-    model.value = value
-    emit('throttledInput', value)
+function toggleDropdown() {
+  if (props.disabled) {
     return
   }
 
-  if (timer) {
-    return
-  }
-
-  timer = setTimeout(() => {
-    model.value = lastValue
-    emit('throttledInput', lastValue)
-    timer = null
-  }, props.throttleMs)
+  isOpen.value = !isOpen.value
 }
 
-onBeforeUnmount(() => {
-  if (timer) {
-    clearTimeout(timer)
+function selectOption(option: SelectOption) {
+  if (option.disabled) {
+    return
   }
+
+  model.value = option.value
+  emit('input', option.value)
+  isOpen.value = false
+}
+
+function handleClickOutside(event: MouseEvent) {
+  if (!rootRef.value) {
+    return
+  }
+
+  if (!rootRef.value.contains(event.target as Node)) {
+    isOpen.value = false
+  }
+}
+
+watch(
+  () => props.disabled,
+  (disabled) => {
+    if (disabled) {
+      isOpen.value = false
+    }
+  },
+)
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside)
 })
 </script>
 
 <template>
-  <div class="app-select">
+  <div ref="rootRef" class="app-select">
     <label v-if="props.label" :for="props.id" class="app-select__label">
       {{ props.label }}
     </label>
 
-    <div class="app-select__control">
-      <select
-        :id="props.id"
-        :value="innerValue"
-        class="app-select__field"
-        :disabled="props.disabled"
-        @change="handleChange"
+    <button
+      :id="props.id"
+      type="button"
+      class="app-select__field"
+      :class="{
+        'app-select__field--open': isOpen,
+        'app-select__field--empty': !selectedOption,
+      }"
+      :disabled="props.disabled"
+      @click="toggleDropdown"
+    >
+      <span class="app-select__value">
+        {{ selectedOption?.label ?? props.placeholder }}
+      </span>
+
+      <span class="app-select__arrow">
+        ⌄
+      </span>
+    </button>
+
+    <div v-if="isOpen" class="app-select__dropdown">
+      <button
+        v-for="option in props.options"
+        :key="option.value"
+        type="button"
+        class="app-select__option"
+        :class="{
+          'app-select__option--selected': option.value === model,
+          'app-select__option--disabled': option.disabled,
+        }"
+        :disabled="option.disabled"
+        @click="selectOption(option)"
       >
-        <option v-if="props.placeholder" value="" disabled>
-          {{ props.placeholder }}
-        </option>
-
-        <option
-          v-for="option in props.options"
-          :key="option.value"
-          :value="option.value"
-          :disabled="option.disabled"
-        >
-          {{ option.label }}
-        </option>
-      </select>
-
-      <span class="app-select__arrow">⌄</span>
+        {{ option.label }}
+      </button>
     </div>
 
     <p v-if="props.error" class="app-select__error">
@@ -120,6 +138,8 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .app-select {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -132,17 +152,17 @@ onBeforeUnmount(() => {
   color: var(--primary-color-1);
 }
 
-.app-select__control {
-  position: relative;
-  width: 100%;
-}
-
 .app-select__field {
   width: 100%;
   min-height: 44px;
   height: 100%;
 
-  padding: 0 42px 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 0 14px;
 
   border: 1px solid var(--border-color-1);
   border-radius: 10px;
@@ -153,9 +173,10 @@ onBeforeUnmount(() => {
   font-size: 16px;
   line-height: 1;
   font-family: inherit;
+  text-align: left;
 
   outline: none;
-  appearance: none;
+  cursor: pointer;
 
   transition:
     border-color 0.15s ease,
@@ -163,9 +184,22 @@ onBeforeUnmount(() => {
     box-shadow 0.15s ease;
 }
 
+.app-select__field:hover:not(:disabled) {
+  border-color: var(--primary-color-1);
+}
+
 .app-select__field:focus {
   border-color: var(--primary-color-1);
   box-shadow: 0 0 0 3px var(--primary-color-3);
+}
+
+.app-select__field--open {
+  border-color: var(--primary-color-1);
+  box-shadow: 0 0 0 3px var(--primary-color-3);
+}
+
+.app-select__field--empty {
+  color: color-mix(in srgb, var(--primary-color-1) 55%, transparent);
 }
 
 .app-select__field:disabled {
@@ -173,23 +207,83 @@ onBeforeUnmount(() => {
   opacity: 0.55;
 }
 
-.app-select__field option {
-  background: var(--primary-color-2);
-  color: white;
+.app-select__value {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .app-select__arrow {
-  position: absolute;
-  top: 50%;
-  right: 14px;
-
-  transform: translateY(-55%);
-
   color: var(--primary-color-1);
   font-size: 18px;
   line-height: 1;
 
-  pointer-events: none;
+  transition: transform 0.15s ease;
+}
+
+.app-select__field--open .app-select__arrow {
+  transform: rotate(180deg);
+}
+
+.app-select__dropdown {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  max-height: 220px;
+  overflow-y: auto;
+
+  padding: 6px;
+
+  border: 1px solid var(--border-color-1);
+  border-radius: 10px;
+
+  background: var(--primary-color-3);
+  box-shadow: 0 14px 35px rgb(0 0 0 / 35%);
+}
+
+.app-select__option {
+  width: 100%;
+  min-height: 38px;
+
+  padding: 0 10px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: transparent;
+  color: white;
+
+  font-size: 15px;
+  font-family: inherit;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.app-select__option:hover:not(:disabled) {
+  background: var(--primary-color-3);
+  color: var(--primary-color-1);
+}
+
+.app-select__option--selected {
+  background: var(--primary-color-3);
+  color: var(--primary-color-1);
+}
+
+.app-select__option--disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .app-select__error {

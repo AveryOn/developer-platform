@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import InputUI from '~/client/components/shared/InputUI.vue';
+import SelectInputUI from '~/client/components/shared/SelectInputUI.vue';
 import { ProfileLanguage } from '~/shared/types';
 
 // export const createCvProfileDto = z.object({
@@ -26,12 +27,29 @@ const formData = reactive({
   phone: null,
   isActive: false,
 })
+
+const languageOptions = [
+  {
+    label: 'English',
+    value: ProfileLanguage.en,
+  },
+  {
+    label: 'Russian',
+    value: ProfileLanguage.ru,
+  },
+  {
+    label: 'French',
+    value: ProfileLanguage.fr,
+  },
+]
+
 </script>
 
 <template>
   <section class="cv-admin__profile-new">
     <form class="profile-new-form" @submit.prevent>
       <InputUI v-model="formData.title" type="text" placeholder="Title"></InputUI>
+      <SelectInputUI v-model="formData.language" :options="languageOptions"></SelectInputUI>
     </form>
   </section>
 </template>
