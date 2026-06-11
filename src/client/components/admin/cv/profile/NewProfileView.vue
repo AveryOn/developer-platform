@@ -63,7 +63,6 @@ const languageOptions = [
           label="Profile Title"
           placeholder="The coolest profile!"
         />
-
         <!-- FIRST NAME -->
         <InputUI
           v-model="formData.firstName"
@@ -71,7 +70,6 @@ const languageOptions = [
           label="First Name"
           placeholder="Alex"
         />
-
          <!-- LAST NAME -->
         <InputUI
           v-model="formData.lasName"
@@ -79,14 +77,12 @@ const languageOptions = [
           label="Last Name"
           placeholder="Mercer"
         />
-
         <!-- LANGUAGE -->
         <SelectInputUI
           v-model="formData.language"
           :options="languageOptions"
           label="Profile Language"
-        ></SelectInputUI>
-
+        />
         <!-- LOCATION -->
         <InputUI
           id="location"
@@ -105,7 +101,6 @@ const languageOptions = [
           v-model="formData.isActive"
           label="Active profile"
         />
-
         <!-- PHONE NUMBER -->
         <PhoneInputUI
           id="profile-phone"
@@ -116,7 +111,6 @@ const languageOptions = [
           :error="phoneError"
           @phone-change="(payload) => console.log(payload)"
         />
-
         <!-- EMAIL -->
         <EmailInputUI
           id="profile-email"
@@ -128,7 +122,6 @@ const languageOptions = [
           required
           @email-change="(payload) => console.log(payload)"
         />
-
         <!-- SUMMARY -->
         <TextareaUI
           id="summary"
@@ -138,7 +131,6 @@ const languageOptions = [
           description="Short professional summary that will be shown in your CV profile."
         />
       </div>
-
     </form>
   </section>
 </template>
