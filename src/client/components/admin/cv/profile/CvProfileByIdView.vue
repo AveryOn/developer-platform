@@ -2,7 +2,6 @@
 import { computed, reactive, ref, watch } from 'vue'
 import {
   mdiArrowLeft,
-  mdiCheckCircleOutline,
   mdiClose,
   mdiContentSaveOutline,
   mdiPencilOutline,
@@ -516,21 +515,21 @@ function formatDate(value: string | null) {
             <span class="cv-profile-meta__label">Created at</span>
             <span class="cv-profile-meta__value">{{
               formatDate(profile.createdAt)
-              }}</span>
+            }}</span>
           </div>
 
           <div class="cv-profile-meta__item">
             <span class="cv-profile-meta__label">Updated at</span>
             <span class="cv-profile-meta__value">{{
               formatDate(profile.updatedAt)
-              }}</span>
+            }}</span>
           </div>
 
           <div class="cv-profile-meta__item">
             <span class="cv-profile-meta__label">Deleted at</span>
             <span class="cv-profile-meta__value">{{
               formatDate(profile.deletedAt)
-              }}</span>
+            }}</span>
           </div>
         </div>
       </section>
