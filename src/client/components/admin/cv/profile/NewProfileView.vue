@@ -25,7 +25,12 @@ const formData = reactive({
   isActive: false,
 })
 
-const { errors, setErrors } = useFormValidator(formData)
+const {
+  errors,
+  isSomeError,
+  setErrors,
+  undoError,
+} = useFormValidator(formData)
 
 const isSubmitLoading = ref(false)
 
@@ -89,6 +94,7 @@ async function submit() {
           :error="errors.title"
           label="Profile Title"
           placeholder="The coolest profile!"
+          @input="undoError('title')"
         />
         <!-- FIRST NAME -->
         <InputUI
@@ -169,6 +175,7 @@ async function submit() {
         class="w-[30%]"
         type="submit"
         variant="primary"
+        :disabled="isSomeError"
         :loading="isSubmitLoading"
         @click="submit"
       >Save profile</ButtonBaseUI>
