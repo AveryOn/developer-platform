@@ -3,7 +3,10 @@ import { HttpStatusCode } from 'axios'
 import { eq } from 'drizzle-orm'
 import { db } from '~/server/database/client'
 import { cvProfileTable } from '~/server/database/schema/cv-profile'
+import { ZodBundleErrors } from '~/server/plugins/zod.plugin'
+import { CvProfileService } from '~/server/services/admin/cv/profile.service'
 import { _ } from '~/shared/const'
+import { updateCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
 import { Logger } from '~/shared/logger/logger.client'
 
 // Получить профиль по его ID
@@ -32,6 +35,8 @@ export const GET: APIRoute = async ({ params, url }) => {
 }
 
 export const PATCH: APIRoute = async ({ params, request }) => {
+  const logger = new Logger('HTTP:PATCH:UPDATE_CV_PROFILE')
+
   const uuid = params.uuid
 
   if (!uuid) {
@@ -42,28 +47,26 @@ export const PATCH: APIRoute = async ({ params, request }) => {
   }
 
   const body = await request.json()
+  logger.info('Excludes request body', { body })
 
-  const [profile] = await db
-    .update(cvProfileTable)
-    .set({
-      language: body.language,
-      firstName: body.firstName,
-      lastName: body.lastName,
-      title: body.title,
-      location: body.location,
-      summary: body.summary,
-      email: body.email,
-      phone: body.phone,
-      updatedAt: new Date().toISOString(),
-    })
-    .where(eq(cvProfileTable.id, uuid))
-    .returning()
+  const { success, data, error } = updateCvProfileDto.safeParse(body?.data)
 
+  if (!success) {
+    return Response.json(
+      { error: ZodBundleErrors(error) },
+      { status: 400 },
+    )
+  }
+
+  const profile = await CvProfileService.getById(uuid)
   if (!profile) {
     return Response.json({ error: 'Profile not found' }, { status: 404 })
   }
 
-  return Response.json({ data: profile })
+  const updatedProfile = await CvProfileService.update(data)
+
+
+  return Response.json({ data: updatedProfile })
 }
 
 export const DELETE: APIRoute = async ({ params }) => {

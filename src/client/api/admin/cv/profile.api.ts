@@ -2,6 +2,7 @@ import { httpClient } from '~/client/api/http-client'
 import type {
   CreateCvProfileDto,
   Profile,
+  UpdateCvProfileDto,
 } from '~/shared/dto/admin/cv/profile.dto'
 
 export const CvProfileApi = {
@@ -26,6 +27,12 @@ export const CvProfileApi = {
 
   create(data: CreateCvProfileDto) {
     return httpClient.post<Profile[]>(`/cv/profiles`, {
+      data,
+    })
+  },
+
+  update(uuid: string, data: UpdateCvProfileDto) {
+    return httpClient.patch<Profile[]>(`/cv/profiles/${uuid}`, {
       data,
     })
   },

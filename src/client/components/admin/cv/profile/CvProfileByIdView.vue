@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import {
   mdiArrowLeft,
   mdiCheckCircleOutline,
@@ -7,10 +7,14 @@ import {
   mdiContentSaveOutline,
   mdiPencilOutline,
   mdiPlus,
+  mdiRadioactiveCircleOutline,
 } from '@mdi/js'
 
 import Icon from '~/client/components/common/Icon.vue'
-import type { Profile } from '~/shared/dto/admin/cv/profile.dto'
+import { updateCvProfileDto, type Profile } from '~/shared/dto/admin/cv/profile.dto'
+import { useToast } from '~/client/composables/useToast'
+import z from 'zod'
+import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 
 type EditableProfileField =
   | 'title'
@@ -62,6 +66,9 @@ const props = withDefaults(
   },
 )
 
+const toast = useToast()
+
+const isSubmitLoading = ref(false)
 const draft = reactive<EditableProfileDraft>(createDraft(props.profile))
 
 const editing = reactive<Record<EditableProfileField, boolean>>({
@@ -254,15 +261,37 @@ function cancelEdit(field: EditableProfileField) {
   editing[field] = false
 }
 
-function saveField(field: EditableProfileField) {
-  editing[field] = false
+async function saveField(field: EditableProfileField) {
+  try {
+    isSubmitLoading.value = true
+    const data = updateCvProfileDto.safeParse(draft)
+    if (!data.success) {
+      const details = z.treeifyError(data.error)
+      console.debug(details)
+      throw new Error('INVALID DATA')
+    }
+    const updatedProfile = await CvProfileApi.update(props.uuid, {
+      [field]: editing[field]
+    })
+    toast.success('Профиль успешно создан!', {
+      duration: 3000,
+      title: 'Профиль успешно создан!',
+    })
+    console.debug('UPDATE PROFILE', { updatedProfile })
+    isSubmitLoading.value = false
+    editing[field] = false
 
-  console.debug("СОХРАНЕНИЕ НА СЕРВЕРЕ. ОДНО")
-  // emit('saveField', {
-  //   uuid: props.uuid,
-  //   field,
-  //   value: draft[field],
-  // })
+    // await sleep('2.5s')
+  } catch (err) {
+    toast.error('Произошла ошибка при редактировании профиля', {
+      duration: 3000,
+      title: 'Ошибка',
+    })
+    console.error(err)
+  }
+  finally {
+    isSubmitLoading.value = false
+  }
 }
 
 function saveProfile() {
@@ -304,6 +333,12 @@ function formatDate(value: string | null) {
 
 <template>
   <section class="cv-profile-by-id">
+    <Transition name="loading-overlay-fade">
+      <div v-if="isSubmitLoading" class="loading-overlay">
+        <Icon class="loading-overlay__icon text-[--primary-color-4]" :icon="mdiRadioactiveCircleOutline" :size="180" />
+      </div>
+    </Transition>
+
     <header class="cv-profile-by-id__header">
       <div class="cv-profile-by-id__header-main">
         <a :href="backHref" class="cv-profile-by-id__back-link">
@@ -327,13 +362,10 @@ function formatDate(value: string | null) {
       </div>
 
       <div class="cv-profile-by-id__actions">
-        <span
-          class="cv-profile-by-id__status"
-          :class="{
-            'cv-profile-by-id__status--active': draft.isActive,
-            'cv-profile-by-id__status--inactive': !draft.isActive,
-          }"
-        >
+        <span class="cv-profile-by-id__status" :class="{
+          'cv-profile-by-id__status--active': draft.isActive,
+          'cv-profile-by-id__status--inactive': !draft.isActive,
+        }">
           <Icon :icon="mdiCheckCircleOutline" :size="16" />
           {{ draft.isActive ? 'Active' : 'Inactive' }}
         </span>
@@ -342,11 +374,7 @@ function formatDate(value: string | null) {
           <Icon :icon="mdiPlus" :size="22" />
         </a>
 
-        <button
-          type="button"
-          class="cv-profile-by-id__save-button"
-          @click="saveProfile"
-        >
+        <button type="button" class="cv-profile-by-id__save-button" @click="saveProfile">
           <Icon :icon="mdiContentSaveOutline" :size="18" />
           Save all
         </button>
@@ -374,11 +402,7 @@ function formatDate(value: string | null) {
     </div>
 
     <div class="cv-profile-by-id__content">
-      <section
-        v-for="group in fieldGroups"
-        :key="group.title"
-        class="cv-profile-card"
-      >
+      <section v-for="group in fieldGroups" :key="group.title" class="cv-profile-card">
         <header class="cv-profile-card__header">
           <div>
             <h2 class="cv-profile-card__title">
@@ -392,14 +416,9 @@ function formatDate(value: string | null) {
         </header>
 
         <div class="cv-profile-fields">
-          <article
-            v-for="field in group.fields"
-            :key="field.key"
-            class="cv-profile-field"
-            :class="{
-              'cv-profile-field--wide': field.kind === 'textarea',
-            }"
-          >
+          <article v-for="field in group.fields" :key="field.key" class="cv-profile-field" :class="{
+            'cv-profile-field--wide': field.kind === 'textarea',
+          }">
             <div class="cv-profile-field__top">
               <div>
                 <h3 class="cv-profile-field__label">
@@ -413,93 +432,54 @@ function formatDate(value: string | null) {
 
               <div class="cv-profile-field__controls">
                 <template v-if="editing[field.key]">
-                  <button
-                    type="button"
-                    class="cv-profile-field__control cv-profile-field__control--save"
-                    @click="saveField(field.key)"
-                  >
+                  <button type="button" class="cv-profile-field__control cv-profile-field__control--save"
+                    @click="saveField(field.key)">
                     Save
                   </button>
 
-                  <button
-                    type="button"
-                    class="cv-profile-field__icon-control"
-                    aria-label="Cancel editing"
-                    @click="cancelEdit(field.key)"
-                  >
+                  <button type="button" class="cv-profile-field__icon-control" aria-label="Cancel editing"
+                    @click="cancelEdit(field.key)">
                     <Icon :icon="mdiClose" :size="18" />
                   </button>
                 </template>
 
-                <button
-                  v-else
-                  type="button"
-                  class="cv-profile-field__icon-control"
-                  aria-label="Edit field"
-                  @click="startEdit(field.key)"
-                >
+                <button v-else type="button" class="cv-profile-field__icon-control" aria-label="Edit field"
+                  @click="startEdit(field.key)">
                   <Icon :icon="mdiPencilOutline" :size="18" />
                 </button>
               </div>
             </div>
 
             <div v-if="editing[field.key]" class="cv-profile-field__editor">
-              <textarea
-                v-if="field.kind === 'textarea'"
-                class="cv-profile-field__textarea"
-                rows="6"
-                :placeholder="field.placeholder"
-                :value="getInputValue(field.key)"
-                @input="setInputValue(field.key, ($event.target as HTMLTextAreaElement).value)"
-              />
+              <textarea v-if="field.kind === 'textarea'" class="cv-profile-field__textarea" rows="6"
+                :placeholder="field.placeholder" :value="getInputValue(field.key)"
+                @input="setInputValue(field.key, ($event.target as HTMLTextAreaElement).value)" />
 
-              <select
-                v-else-if="field.kind === 'select'"
-                class="cv-profile-field__input"
+              <select v-else-if="field.kind === 'select'" class="cv-profile-field__input"
                 :value="getInputValue(field.key)"
-                @change="setInputValue(field.key, ($event.target as HTMLSelectElement).value)"
-              >
-                <option
-                  v-for="option in languageOptions"
-                  :key="String(option)"
-                  :value="option"
-                >
+                @change="setInputValue(field.key, ($event.target as HTMLSelectElement).value)">
+                <option v-for="option in languageOptions" :key="String(option)" :value="option">
                   {{ option }}
                 </option>
               </select>
 
-              <label
-                v-else-if="field.kind === 'checkbox'"
-                class="cv-profile-field__checkbox"
-              >
-                <input
-                  type="checkbox"
-                  :checked="draft.isActive"
-                  @change="setCheckboxValue"
-                >
+              <label v-else-if="field.kind === 'checkbox'" class="cv-profile-field__checkbox">
+                <input type="checkbox" :checked="draft.isActive" @change="setCheckboxValue">
 
                 <span>
                   This profile is active
                 </span>
               </label>
 
-              <input
-                v-else
-                class="cv-profile-field__input"
-                :type="field.kind"
-                :placeholder="field.placeholder"
+              <input v-else class="cv-profile-field__input" :type="field.kind" :placeholder="field.placeholder"
                 :value="getInputValue(field.key)"
-                @input="setInputValue(field.key, ($event.target as HTMLInputElement).value)"
-              >
+                @input="setInputValue(field.key, ($event.target as HTMLInputElement).value)">
             </div>
 
             <div v-else class="cv-profile-field__value">
-              <span
-                class="cv-profile-field__text"
-                :class="{
-                  'cv-profile-field__text--empty': getDisplayValue(field.key) === '—',
-                }"
-              >
+              <span class="cv-profile-field__text" :class="{
+                'cv-profile-field__text--empty': getDisplayValue(field.key) === '—',
+              }">
                 {{ getDisplayValue(field.key) }}
               </span>
             </div>
@@ -547,12 +527,59 @@ function formatDate(value: string | null) {
 </template>
 
 <style scoped>
+.loading-overlay {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  margin: 0 auto;
+
+  border-radius: 10px;
+  background-color: var(--primary-color-6);
+}
+
+.loading-overlay__icon {
+  animation: loading-rotate 1s linear infinite;
+}
+
+.loading-overlay-fade-enter-active,
+.loading-overlay-fade-leave-active {
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+.loading-overlay-fade-enter-from,
+.loading-overlay-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-80px) scale(0.98);
+}
+
+.loading-overlay-fade-enter-to,
+.loading-overlay-fade-leave-from {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@keyframes loading-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .cv-profile-by-id {
+  position: relative;
   display: flex;
   min-height: 60vh;
   flex-direction: column;
   overflow: hidden;
-
   border: 1px dashed var(--border-color-1);
   border-radius: 10px;
 
