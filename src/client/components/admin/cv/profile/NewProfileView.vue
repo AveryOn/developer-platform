@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import z from 'zod'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
@@ -8,6 +9,7 @@ import InputUI from '~/client/components/shared/InputUI.vue'
 import PhoneInputUI from '~/client/components/shared/PhoneInputUI.vue'
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue'
 import TextareaUI from '~/client/components/shared/TextareaUI.vue'
+import { createCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
 import { ProfileLanguage } from '~/shared/types'
 
 const formData = reactive({
@@ -44,6 +46,11 @@ const languageOptions = [
 async function submit() {
   try {
     isSubmitLoading.value = true
+    const data = createCvProfileDto.safeParse(formData)
+    if(!data.success) {
+      console.error(z.treeifyError(data.error))
+      throw new Error('INVALID DATA')
+    }
     const newProfile = await CvProfileApi.create({
       firstName: formData.firstName,
       isActive: formData.isActive,
@@ -149,7 +156,8 @@ async function submit() {
       </div>
     </form>
     <ButtonBaseUI
-        class="" type="submit"
+        class="w-[30%]"
+        type="submit"
         variant="primary"
         :loading="isSubmitLoading"
         @click="submit"
