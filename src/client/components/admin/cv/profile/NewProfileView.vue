@@ -65,21 +65,22 @@ async function submit() {
       console.debug(details)
       throw new Error('INVALID DATA')
     }
-    // const newProfile = await CvProfileApi.create({
-    //   firstName: formData.firstName,
-    //   isActive: formData.isActive,
-    //   language: formData.language,
-    //   lastName: formData.lasName,
-    //   summary: formData.summary,
-    //   title: formData.title,
-    //   email: formData.email,
-    //   location: formData.location,
-    //   phone: formData.phone,
-    // })
-    toast.success('HELLO', { duration: 3000 })
+    const newProfile = await CvProfileApi.create({
+      firstName: formData.firstName,
+      isActive: formData.isActive,
+      language: formData.language,
+      lastName: formData.lastName,
+      summary: formData.summary,
+      title: formData.title,
+      email: formData.email,
+      location: formData.location,
+      phone: formData.phone,
+    })
+    toast.success('Профиль успешно создан!', { duration: 3000, title: 'Профиль успешно создан!' })
     // console.debug('CREATE NEW PROFILE', { newProfile })
   }
   catch (err) {
+    toast.error('Произошла ошибка при создании профиля', { duration: 3000, title: 'Ошибка' })
     console.error(err)
   }
   finally {

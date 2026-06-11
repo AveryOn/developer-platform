@@ -221,7 +221,7 @@ function handleAction(toast: ToastItem) {
 .toast-card__title {
   margin: 0 0 4px;
 
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
   line-height: 1.35;
 
