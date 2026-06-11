@@ -14,6 +14,9 @@ if (!uuid) {
 }
 
 const profile = await CvProfileService.getById(uuid)
+if (!profile) {
+  return Astro.redirect(AppRoutes.api.CvProfiles)
+}
 ---
 
 <Layout title={'PORTFOLIO--ADMIN'}>
