@@ -40,7 +40,7 @@ function setErrors(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   details: any
 ) {
-  Object.keys(errors).forEach(([k]) => {
+  Object.keys(errors).forEach((k) => {
     const key = k as keyof typeof errors
     errors[key] = details.properties?.[key]?.errors[0] ?? ''
   })
@@ -70,7 +70,6 @@ async function submit() {
     console.debug(formData)
     if(!data.success) {
       const details = z.treeifyError(data.error)
-      console.debug(details)
       setErrors(details)
       throw new Error('INVALID DATA')
     }
