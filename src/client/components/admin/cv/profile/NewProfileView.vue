@@ -16,10 +16,10 @@ import { ProfileLanguage } from '~/shared/types';
 // })
 
 const formData = reactive({
-  language: ProfileLanguage.en,
+  title: '',
   firstName: '',
   lasName: '',
-  title: '',
+  language: ProfileLanguage.en,
   location: null,
   summary: '',
   email: null,
