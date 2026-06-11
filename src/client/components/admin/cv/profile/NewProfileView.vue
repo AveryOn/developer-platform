@@ -66,7 +66,7 @@ const languageOptions = [
         id="phone"
         v-model="formData.phone"
         label="Phone"
-        default-country="GE"
+        default-country="FR"
         :error="phoneError"
         @phone-change="(payload) => console.log(payload)"
       />
