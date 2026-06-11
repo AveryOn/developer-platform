@@ -15,6 +15,13 @@
       "when": 1781112351572,
       "tag": "0001_lame_spot",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1781184874793,
+      "tag": "0002_rich_mauler",
+      "breakpoints": true
     }
   ]
 }

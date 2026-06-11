@@ -1,0 +1,1 @@
+ALTER TABLE `cv_profile_link` ADD `is_visible` integer DEFAULT true NOT NULL;
