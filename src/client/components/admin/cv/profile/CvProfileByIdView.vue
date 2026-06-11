@@ -273,9 +273,9 @@ async function saveField(field: EditableProfileField) {
     const updatedProfile = await CvProfileApi.update(props.uuid, {
       [field]: draft[field]
     })
-    toast.success('Профиль успешно создан!', {
+    toast.success('Профиль обновлен', {
       duration: 3000,
-      title: 'Профиль успешно создан!',
+      title: 'Success!',
     })
     console.debug('UPDATE PROFILE', { updatedProfile })
     isSubmitLoading.value = false
