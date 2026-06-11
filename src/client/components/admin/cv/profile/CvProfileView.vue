@@ -4,6 +4,7 @@ import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import type { Profile } from '~/shared/dto/admin/cv/profile.dto'
 import Icon from '~/client/components/common/Icon.vue'
 import { mdiPlus } from '@mdi/js'
+import { AppRoutes } from '~/shared/router'
 
 // import type { Profile } from '~/shared/dto/admin/cv/profile.dto';
 // import { ProfileLanguage } from '~/shared/types';
@@ -79,10 +80,12 @@ onMounted(async () => {
         :key="profile.id"
         class="profile-list-item"
       >
-        <h2 class="profile-item__header">{{ profile.title }}</h2>
-        <div class="text-[--text-color-3] py-[8px] px-[8px]">
-          > {{ profile.summary }}
-        </div>
+        <a :href="AppRoutes.admin.CvProfileById(profile.id)">
+          <h2 class="profile-item__header">{{ profile.title }}</h2>
+          <div class="text-[--text-color-3] py-[8px] px-[8px]">
+            > {{ profile.summary }}
+          </div>
+        </a>
       </li>
     </ul>
   </section>
