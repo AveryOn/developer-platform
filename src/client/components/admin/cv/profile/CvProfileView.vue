@@ -7,57 +7,6 @@ import { mdiPlus } from '@mdi/js'
 import { AppRoutes } from '~/shared/router'
 import ProfileActiveBadge from '~/client/components/shared/ProfileActiveBadge.vue'
 
-// import type { Profile } from '~/shared/dto/admin/cv/profile.dto';
-// import { ProfileLanguage } from '~/shared/types';
-
-// const profiles: Profile[] = [
-//   {
-//     id: 'b7f3a8c2-2f4e-4b1a-9f6d-8a2e3c1d5f10',
-//     language: ProfileLanguage.en,
-//     firstName: 'Vladislav',
-//     lastName: 'Everi',
-//     title: 'Backend Engineer',
-//     location: 'Tbilisi, Georgia',
-//     summary: 'Backend engineer focused on Node.js, TypeScript, API design, authentication, billing systems, and database architecture.',
-//     email: 'vladislav@example.com',
-//     phone: '+995 555 123 456',
-//     isActive: true,
-//     createdAt: '2026-06-01T10:00:00.000Z',
-//     updatedAt: '2026-06-05T14:30:00.000Z',
-//     deletedAt: null,
-//   },
-//   {
-//     id: 'd3a91f77-4b9c-4e8d-a6a7-6d23c7f4a901',
-//     language: ProfileLanguage.ru,
-//     firstName: 'Владислав',
-//     lastName: 'Эвери',
-//     title: 'Backend-разработчик',
-//     location: 'Тбилиси, Грузия',
-//     summary: 'Backend-разработчик с опытом работы с Node.js, TypeScript, REST API, авторизацией, биллингом и реляционными базами данных.',
-//     email: 'vladislav@example.com',
-//     phone: '+995 555 123 456',
-//     isActive: false,
-//     createdAt: '2026-06-02T09:15:00.000Z',
-//     updatedAt: '2026-06-06T11:20:00.000Z',
-//     deletedAt: null,
-//   },
-//   {
-//     id: '8c1e43b6-fbb2-43d2-9a2e-7fd9d94c3a5b',
-//     language: ProfileLanguage.en,
-//     firstName: 'Vlad',
-//     lastName: 'Everi',
-//     title: 'Fullstack Developer',
-//     location: null,
-//     summary: 'Fullstack developer working with Astro, Vue, Node.js, SQLite, Drizzle ORM, and server-side application architecture.',
-//     email: null,
-//     phone: null,
-//     isActive: false,
-//     createdAt: '2026-06-03T12:45:00.000Z',
-//     updatedAt: '2026-06-07T16:10:00.000Z',
-//     deletedAt: null,
-//   },
-// ]
-
 const profiles = ref<Profile[]>([])
 
 onMounted(async () => {
