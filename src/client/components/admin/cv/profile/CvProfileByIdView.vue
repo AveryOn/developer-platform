@@ -62,22 +62,6 @@ const props = withDefaults(
   },
 )
 
-const emit = defineEmits<{
-  saveField: [
-    payload: {
-      uuid: string
-      field: EditableProfileField
-      value: EditableProfileDraft[EditableProfileField]
-    },
-  ]
-  saveProfile: [
-    payload: {
-      uuid: string
-      profile: EditableProfileDraft
-    },
-  ]
-}>()
-
 const draft = reactive<EditableProfileDraft>(createDraft(props.profile))
 
 const editing = reactive<Record<EditableProfileField, boolean>>({
@@ -273,20 +257,22 @@ function cancelEdit(field: EditableProfileField) {
 function saveField(field: EditableProfileField) {
   editing[field] = false
 
-  emit('saveField', {
-    uuid: props.uuid,
-    field,
-    value: draft[field],
-  })
+  console.debug("СОХРАНЕНИЕ НА СЕРВЕРЕ. ОДНО")
+  // emit('saveField', {
+  //   uuid: props.uuid,
+  //   field,
+  //   value: draft[field],
+  // })
 }
 
 function saveProfile() {
   closeAllEditors()
 
-  emit('saveProfile', {
-    uuid: props.uuid,
-    profile: { ...draft },
-  })
+  console.debug("СОХРАНЕНИЕ НА СЕРВЕРЕ. ВСЁ")
+  // emit('saveProfile', {
+  //   uuid: props.uuid,
+  //   profile: { ...draft },
+  // })
 }
 
 function closeAllEditors() {
@@ -916,7 +902,7 @@ function formatDate(value: string | null) {
 
 .cv-profile-field__control--save {
   background-color: var(--primary-color-4);
-  color: var(--primary-color-1, #fff);
+  color: var(--primary-color-6);
 }
 
 .cv-profile-field__icon-control {
