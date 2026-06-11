@@ -24,9 +24,29 @@ const formData = reactive({
   isActive: false,
 })
 
+const errors = reactive({
+  title: '',
+  firstName: '',
+  lasName: '',
+  language: '',
+  location: '',
+  summary: '',
+  email: '',
+  phone: '',
+  isActive: '',
+})
+
+function setErrors(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  details: any
+) {
+  Object.keys(errors).forEach(([k]) => {
+    const key = k as keyof typeof errors
+    errors[key] = details.properties?.[key]?.errors[0] ?? ''
+  })
+}
+
 const isSubmitLoading = ref(false)
-const phoneError = ref('')
-const emailError = ref('')
 
 const languageOptions = [
   {
@@ -50,10 +70,8 @@ async function submit() {
     console.debug(formData)
     if(!data.success) {
       const details = z.treeifyError(data.error)
-      emailError.value = details.properties?.email?.errors[0] ?? ''
-      phoneError.value = details.properties?.phone?.errors[0] ?? ''
-
       console.debug(details)
+      setErrors(details)
       throw new Error('INVALID DATA')
     }
     const newProfile = await CvProfileApi.create({
@@ -88,6 +106,7 @@ async function submit() {
         <InputUI
           v-model="formData.title"
           type="text"
+          :error="errors.title"
           label="Profile Title"
           placeholder="The coolest profile!"
         />
@@ -95,6 +114,7 @@ async function submit() {
         <InputUI
           v-model="formData.firstName"
           type="text"
+          :error="errors.firstName"
           label="First Name"
           placeholder="Alex"
         />
@@ -102,12 +122,14 @@ async function submit() {
         <InputUI
           v-model="formData.lasName"
           type="text"
+          :error="errors.lasName"
           label="Last Name"
           placeholder="Mercer"
         />
         <!-- LANGUAGE -->
         <SelectInputUI
           v-model="formData.language"
+          :error="errors.language"
           :options="languageOptions"
           label="Profile Language"
         />
@@ -115,6 +137,7 @@ async function submit() {
         <InputUI
           id="location"
           v-model="formData.location"
+          :error="errors.location"
           label="Location"
           placeholder="Tbilisi, Georgia"
         />
@@ -127,6 +150,7 @@ async function submit() {
         <CheckboxUI
           id="profile-is-active"
           v-model="formData.isActive"
+          :error="errors.isActive"
           label="Active profile"
         />
         <!-- PHONE NUMBER -->
@@ -136,7 +160,7 @@ async function submit() {
           label="Phone Number"
           placeholder="+33 6 12 34 56 78"
           default-country="FR"
-          :error="phoneError"
+          :error="errors.phone"
           @phone-change="(payload) => console.log(payload)"
         />
         <!-- EMAIL -->
@@ -146,7 +170,7 @@ async function submit() {
           label="Email"
           placeholder="your@email.com"
           hint="Used as contact email in CV profile."
-          :error="emailError"
+          :error="errors.email"
           :required="false"
           @email-change="(payload) => console.log(payload)"
         />
@@ -154,6 +178,7 @@ async function submit() {
         <TextareaUI
           id="summary"
           v-model="formData.summary"
+          :error="errors.summary"
           placeholder="Write profile summary..."
           label="Summary"
           description="Short professional summary that will be shown in your CV profile."
