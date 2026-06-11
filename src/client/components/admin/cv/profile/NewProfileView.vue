@@ -9,6 +9,7 @@ import InputUI from '~/client/components/shared/InputUI.vue'
 import PhoneInputUI from '~/client/components/shared/PhoneInputUI.vue'
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue'
 import TextareaUI from '~/client/components/shared/TextareaUI.vue'
+import { useFormValidator } from '~/client/composables/UseFormValidator'
 import { createCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
 import { ProfileLanguage } from '~/shared/types'
 
@@ -24,27 +25,7 @@ const formData = reactive({
   isActive: false,
 })
 
-const errors = reactive({
-  title: '',
-  firstName: '',
-  lasName: '',
-  language: '',
-  location: '',
-  summary: '',
-  email: '',
-  phone: '',
-  isActive: '',
-})
-
-function setErrors(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  details: any
-) {
-  Object.keys(errors).forEach((k) => {
-    const key = k as keyof typeof errors
-    errors[key] = details.properties?.[key]?.errors[0] ?? ''
-  })
-}
+const { errors, setErrors } = useFormValidator(formData)
 
 const isSubmitLoading = ref(false)
 
