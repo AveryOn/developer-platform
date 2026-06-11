@@ -3,8 +3,9 @@ import { onMounted, ref } from 'vue'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import type { Profile } from '~/shared/dto/admin/cv/profile.dto'
 import Icon from '~/client/components/common/Icon.vue'
-import { mdiCheckCircleOutline, mdiPlus } from '@mdi/js'
+import { mdiPlus } from '@mdi/js'
 import { AppRoutes } from '~/shared/router'
+import ProfileActiveBadge from '~/client/components/shared/ProfileActiveBadge.vue'
 
 // import type { Profile } from '~/shared/dto/admin/cv/profile.dto';
 // import { ProfileLanguage } from '~/shared/types';
@@ -79,13 +80,7 @@ onMounted(async () => {
             <h2 class="profile-item__header w-full">
               {{ profile.title }}
             </h2>
-            <span class="cv-profile-by-id__status" :class="{
-              'cv-profile-by-id__status--active': profile.isActive,
-              'cv-profile-by-id__status--inactive': !profile.isActive,
-            }">
-              <Icon :icon="mdiCheckCircleOutline" :size="16" />
-              {{ profile.isActive ? 'Active' : 'Inactive' }}
-            </span>
+            <ProfileActiveBadge :is-active="profile.isActive" />
           </div>
           <div class="flex items-center gap-[14px] w-full text-[--text-color-3] py-[8px] px-[8px]">
             <div class="bg-[--primary-color-3-100] px-[8px] py-[4px] rounded-[4px] font-bold">
@@ -156,29 +151,5 @@ onMounted(async () => {
   padding-bottom: 6px;
   padding-left: 4px;
   border-bottom: 1px solid var(--border-color-1);
-}
-
-.cv-profile-by-id__status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  min-height: 34px;
-  padding: 0 10px;
-
-  border-radius: 999px;
-
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.cv-profile-by-id__status--active {
-  background-color: rgb(22 163 74 / 12%);
-  color: #16a34a;
-}
-
-.cv-profile-by-id__status--inactive {
-  background-color: rgb(107 114 128 / 12%);
-  color: var(--text-color-3);
 }
 </style>
