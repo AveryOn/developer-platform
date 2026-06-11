@@ -49,13 +49,14 @@ const languageOptions = [
 <template>
   <section class="cv-admin__profile-new">
     <form class="profile-new-form" @submit.prevent>
+      <!-- TITLE -->
       <InputUI v-model="formData.title" type="text" placeholder="Title"></InputUI>
+
+      <!-- LANGUAGE -->
       <SelectInputUI v-model="formData.language" :options="languageOptions"></SelectInputUI>
-      <CheckboxUI
-        id="profile-is-active"
-        v-model="formData.isActive"
-        label="Active profile"
-      />
+
+      <!-- IS ACTIVE PROFILE -->
+      <CheckboxUI id="profile-is-active" v-model="formData.isActive" label="Active profile" />
     </form>
   </section>
 </template>
