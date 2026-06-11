@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
+import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
 import EmailInputUI from '~/client/components/shared/EmailInputUI.vue'
 import InputUI from '~/client/components/shared/InputUI.vue'
@@ -20,6 +22,7 @@ const formData = reactive({
   isActive: false,
 })
 
+const isSubmitLoading = ref(false)
 const phoneError = ref('')
 const emailError = ref('')
 
@@ -37,6 +40,31 @@ const languageOptions = [
     value: ProfileLanguage.fr,
   },
 ]
+
+async function submit() {
+  try {
+    isSubmitLoading.value = true
+    const newProfile = await CvProfileApi.create({
+      firstName: formData.firstName,
+      isActive: formData.isActive,
+      language: formData.language,
+      lastName: formData.lasName,
+      summary: formData.summary,
+      title: formData.title,
+      email: formData.email,
+      location: formData.location,
+      phone: formData.phone,
+    })
+    console.debug('CREATE NEW PROFILE', { newProfile })
+  }
+  catch (err) {
+    console.error(err)
+  }
+  finally {
+    isSubmitLoading.value = false
+  }
+}
+
 </script>
 
 <template>
@@ -119,6 +147,9 @@ const languageOptions = [
           description="Short professional summary that will be shown in your CV profile."
         />
       </div>
+      <ButtonBaseUI type="submit" :loading="isSubmitLoading" @click="submit">
+        Save profile
+      </ButtonBaseUI>
     </form>
   </section>
 </template>
