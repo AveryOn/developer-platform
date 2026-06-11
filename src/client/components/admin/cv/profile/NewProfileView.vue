@@ -61,12 +61,16 @@ const languageOptions = [
         label="Profile Title"
         placeholder="The coolest profile!"
       />
+
+      <!-- FIRST NAME -->
       <InputUI
         v-model="formData.firstName"
         type="text"
         label="First Name"
         placeholder="Alex"
       />
+
+       <!-- LAST NAME -->
       <InputUI
         v-model="formData.lasName"
         type="text"
