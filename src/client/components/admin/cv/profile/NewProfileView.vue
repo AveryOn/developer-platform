@@ -77,7 +77,7 @@ async function submit() {
       phone: formData.phone,
     })
     toast.success('Профиль успешно создан!', { duration: 3000, title: 'Профиль успешно создан!' })
-    // console.debug('CREATE NEW PROFILE', { newProfile })
+    console.debug('CREATE NEW PROFILE', { newProfile })
   }
   catch (err) {
     toast.error('Произошла ошибка при создании профиля', { duration: 3000, title: 'Ошибка' })
