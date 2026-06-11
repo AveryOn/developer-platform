@@ -16,8 +16,6 @@ import { createCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
 import { AppRoutes } from '~/shared/router'
 import { ProfileLanguage } from '~/shared/types'
 
-
-
 const formData = reactive({
   title: '',
   firstName: '',
@@ -46,23 +44,17 @@ const languageOptions = [
   },
 ]
 
-const {
-  errors,
-  isSomeError,
-  setErrors,
-  undoError,
-} = useFormValidator(formData)
+const { errors, isSomeError, setErrors, undoError } =
+  useFormValidator(formData)
 
 const toast = useToast()
-
-
 
 async function submit() {
   try {
     isSubmitLoading.value = true
     const data = createCvProfileDto.safeParse(formData)
     console.debug(formData)
-    if(!data.success) {
+    if (!data.success) {
       const details = z.treeifyError(data.error)
       setErrors(details)
       console.debug(details)
@@ -79,22 +71,25 @@ async function submit() {
       location: formData.location,
       phone: formData.phone,
     })
-    toast.success('Профиль успешно создан!', { duration: 3000, title: 'Профиль успешно создан!' })
+    toast.success('Профиль успешно создан!', {
+      duration: 3000,
+      title: 'Профиль успешно создан!',
+    })
     console.debug('CREATE NEW PROFILE', { newProfile })
     isSubmitLoading.value = false
     isSubmitDisabled.value = true
     await sleep('2.5s')
     window.location.href = AppRoutes.admin.AdminCvProfile
-  }
-  catch (err) {
-    toast.error('Произошла ошибка при создании профиля', { duration: 3000, title: 'Ошибка' })
+  } catch (err) {
+    toast.error('Произошла ошибка при создании профиля', {
+      duration: 3000,
+      title: 'Ошибка',
+    })
     console.error(err)
-  }
-  finally {
+  } finally {
     isSubmitLoading.value = false
   }
 }
-
 </script>
 
 <template>
@@ -120,7 +115,7 @@ async function submit() {
           placeholder="Alex"
           @input="undoError('firstName')"
         />
-         <!-- LAST NAME -->
+        <!-- LAST NAME -->
         <InputUI
           v-model="formData.lastName"
           type="text"
@@ -195,13 +190,14 @@ async function submit() {
       </div>
     </form>
     <ButtonBaseUI
-        class="w-[30%]"
-        type="submit"
-        variant="primary"
-        :disabled="isSomeError || isSubmitDisabled"
-        :loading="isSubmitLoading"
-        @click="submit"
-      >Save profile</ButtonBaseUI>
+      class="w-[30%]"
+      type="submit"
+      variant="primary"
+      :disabled="isSomeError || isSubmitDisabled"
+      :loading="isSubmitLoading"
+      @click="submit"
+      >Save profile</ButtonBaseUI
+    >
   </section>
 </template>
 

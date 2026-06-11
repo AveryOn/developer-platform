@@ -33,5 +33,5 @@ export const AppRoutes = {
     CvProfiles: '/api/cv/profiles',
     CvProfilesActive: '/api/cv/profiles/active',
     cvProfileByUuid: (uuid: string) => `/api/cv/profiles/${uuid}`,
-  }
+  },
 }

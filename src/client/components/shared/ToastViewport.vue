@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useToast, type ToastItem, type ToastPosition, type ToastVariant } from '~/client/composables/useToast'
+import {
+  useToast,
+  type ToastItem,
+  type ToastPosition,
+  type ToastVariant,
+} from '~/client/composables/useToast'
 
 const props = withDefaults(
   defineProps<{
@@ -11,12 +16,7 @@ const props = withDefaults(
   },
 )
 
-const {
-  toasts,
-  remove,
-  pause,
-  resume,
-} = useToast()
+const { toasts, remove, pause, resume } = useToast()
 
 const positionClass = computed(() => {
   return `toast-viewport--${props.position}`

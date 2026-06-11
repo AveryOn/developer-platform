@@ -50,8 +50,10 @@ const toasts = ref<ToastItem[]>([])
 const timers = new Map<string, ToastTimerState>()
 
 function createToastId() {
-  return globalThis.crypto?.randomUUID?.()
-    ?? `toast-${Date.now()}-${Math.random().toString(16).slice(2)}`
+  return (
+    globalThis.crypto?.randomUUID?.() ??
+    `toast-${Date.now()}-${Math.random().toString(16).slice(2)}`
+  )
 }
 
 function clearTimer(id: string) {

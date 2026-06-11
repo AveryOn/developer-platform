@@ -1,12 +1,12 @@
 type TimeUnit =
-  | 'ms'  // milliseconds
-  | 's'   // seconds
-  | 'm'   // minutes
-  | 'h'   // hours
-  | 'd'   // days
-  | 'w'   // weeks
-  | 'mo'  // months, approx 30 days
-  | 'y'   // years, approx 365 days
+  | 'ms' // milliseconds
+  | 's' // seconds
+  | 'm' // minutes
+  | 'h' // hours
+  | 'd' // days
+  | 'w' // weeks
+  | 'mo' // months, approx 30 days
+  | 'y' // years, approx 365 days
 
 export type SleepDuration = `${number}${TimeUnit}`
 
