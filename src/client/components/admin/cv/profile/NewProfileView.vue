@@ -148,9 +148,12 @@ async function submit() {
         />
       </div>
     </form>
-    <ButtonBaseUI class="" type="submit" variant="primary" :loading="isSubmitLoading" @click="submit">
-      Save profile
-    </ButtonBaseUI>
+    <ButtonBaseUI
+        class="" type="submit"
+        variant="primary"
+        :loading="isSubmitLoading"
+        @click="submit"
+      >Save profile</ButtonBaseUI>
   </section>
 </template>
 
