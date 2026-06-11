@@ -25,7 +25,7 @@ const formData = reactive({
   firstName: '',
   lasName: '',
   language: ProfileLanguage.en,
-  location: null,
+  location: '',
   summary: '',
   email: '',
   phone: '',
@@ -58,14 +58,34 @@ const languageOptions = [
       <InputUI
         v-model="formData.title"
         type="text"
+        label="Profile Title"
         placeholder="Title"
-      ></InputUI>
+      />
+      <InputUI
+        v-model="formData.firstName"
+        type="text"
+        label="First Name"
+        placeholder="Alex"
+      />
+      <InputUI
+        v-model="formData.lasName"
+        type="text"
+        label="Last Name"
+        placeholder="Mercer"
+      />
 
       <!-- LANGUAGE -->
       <SelectInputUI
         v-model="formData.language"
         :options="languageOptions"
       ></SelectInputUI>
+
+      <InputUI
+        id="location"
+        v-model="formData.location"
+        label="Location"
+        placeholder="Tbilisi, Georgia"
+      />
 
       <!-- IS ACTIVE PROFILE -->
       <CheckboxUI
