@@ -52,85 +52,93 @@ const languageOptions = [
 </script>
 
 <template>
-  <section class="cv-admin__profile-new">
-    <form class="profile-new-form" @submit.prevent>
-      <!-- TITLE -->
-      <InputUI
-        v-model="formData.title"
-        type="text"
-        label="Profile Title"
-        placeholder="The coolest profile!"
-      />
+  <section class="cv-admin__profile-new py-[14px]">
+    <h2 class="text-[24px]">CREATE NEW PROFILE</h2>
+    <form class="profile-new-form relative" @submit.prevent>
+      <div class="flex flex-col w-[50%]">
+        <!-- TITLE -->
+        <InputUI
+          v-model="formData.title"
+          type="text"
+          label="Profile Title"
+          placeholder="The coolest profile!"
+        />
 
-      <!-- FIRST NAME -->
-      <InputUI
-        v-model="formData.firstName"
-        type="text"
-        label="First Name"
-        placeholder="Alex"
-      />
+        <!-- FIRST NAME -->
+        <InputUI
+          v-model="formData.firstName"
+          type="text"
+          label="First Name"
+          placeholder="Alex"
+        />
 
-       <!-- LAST NAME -->
-      <InputUI
-        v-model="formData.lasName"
-        type="text"
-        label="Last Name"
-        placeholder="Mercer"
-      />
+         <!-- LAST NAME -->
+        <InputUI
+          v-model="formData.lasName"
+          type="text"
+          label="Last Name"
+          placeholder="Mercer"
+        />
 
-      <!-- LANGUAGE -->
-      <SelectInputUI
-        v-model="formData.language"
-        :options="languageOptions"
-        label="Profile Language"
-      ></SelectInputUI>
+        <!-- LANGUAGE -->
+        <SelectInputUI
+          v-model="formData.language"
+          :options="languageOptions"
+          label="Profile Language"
+        ></SelectInputUI>
 
-      <!-- LOCATION -->
-      <InputUI
-        id="location"
-        v-model="formData.location"
-        label="Location"
-        placeholder="Tbilisi, Georgia"
-      />
+        <!-- LOCATION -->
+        <InputUI
+          id="location"
+          v-model="formData.location"
+          label="Location"
+          placeholder="Tbilisi, Georgia"
+        />
+      </div>
 
-      <!-- IS ACTIVE PROFILE -->
-      <CheckboxUI
-        id="profile-is-active"
-        v-model="formData.isActive"
-        label="Active profile"
-      />
+      <div class="px-[4px] bg-[--primary-color-5] top-0 bottom-0"></div>
 
-      <!-- PHONE NUMBER -->
-      <PhoneInputUI
-        id="profile-phone"
-        v-model="formData.phone"
-        label="Phone Number"
-        placeholder="+33 6 12 34 56 78"
-        default-country="FR"
-        :error="phoneError"
-        @phone-change="(payload) => console.log(payload)"
-      />
+      <div class="flex flex-col w-[50%]">
+        <!-- IS ACTIVE PROFILE -->
+        <CheckboxUI
+          id="profile-is-active"
+          v-model="formData.isActive"
+          label="Active profile"
+        />
 
-      <!-- EMAIL -->
-      <EmailInputUI
-        id="profile-email"
-        v-model="formData.email"
-        label="Email"
-        placeholder="your@email.com"
-        hint="Used as contact email in CV profile."
-        :error="emailError"
-        required
-        @email-change="(payload) => console.log(payload)"
-      />
+        <!-- PHONE NUMBER -->
+        <PhoneInputUI
+          id="profile-phone"
+          v-model="formData.phone"
+          label="Phone Number"
+          placeholder="+33 6 12 34 56 78"
+          default-country="FR"
+          :error="phoneError"
+          @phone-change="(payload) => console.log(payload)"
+        />
 
-      <!-- SUMMARY -->
-      <TextareaUI
-        id="summary"
-        v-model="formData.summary"
-        placeholder="Write profile summary..."
-        label="Summary"
-        description="Short professional summary that will be shown in your CV profile."
-      />
+        <!-- EMAIL -->
+        <EmailInputUI
+          id="profile-email"
+          v-model="formData.email"
+          label="Email"
+          placeholder="your@email.com"
+          hint="Used as contact email in CV profile."
+          :error="emailError"
+          required
+          @email-change="(payload) => console.log(payload)"
+        />
+
+        <!-- SUMMARY -->
+        <TextareaUI
+          id="summary"
+          v-model="formData.summary"
+          placeholder="Write profile summary..."
+          label="Summary"
+          description="Short professional summary that will be shown in your CV profile."
+        />
+      </div>
+
     </form>
   </section>
 </template>
@@ -147,9 +155,10 @@ const languageOptions = [
 
 .profile-new-form {
   display: flex;
-  flex-direction: column;
-  border: 1px solid gray;
-  width: 420px;
+  justify-content: center;
+  gap: 14px;
+  border: 1px dashed var(--border-color-2);
+  width: 800px;
   padding: 12px 20px;
 }
 </style>
