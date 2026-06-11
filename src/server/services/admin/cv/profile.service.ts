@@ -56,9 +56,7 @@ export const CvProfileService = {
         ...data,
         updatedAt: now,
       })
-      .where(
-        eq(cvProfileTable.id, uuid)
-      )
+      .where(eq(cvProfileTable.id, uuid))
       .returning()
     return profile
   },

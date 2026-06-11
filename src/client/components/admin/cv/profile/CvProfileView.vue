@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import type { Profile } from '~/shared/dto/admin/cv/profile.dto'
 import Icon from '~/client/components/common/Icon.vue'
-import { mdiPlus } from '@mdi/js'
+import { mdiCheckCircleOutline, mdiPlus } from '@mdi/js'
 import { AppRoutes } from '~/shared/router'
 
 // import type { Profile } from '~/shared/dto/admin/cv/profile.dto';
@@ -67,23 +67,36 @@ onMounted(async () => {
 <template>
   <section class="cv-admin__profile">
     <div class="cv-profile__action-block">
-      <a
-        href="/admin/cv/profile/new"
-        class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]"
-      >
+      <a href="/admin/cv/profile/new"
+        class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]">
         <Icon :icon="mdiPlus" :size="24"></Icon>
       </a>
     </div>
     <ul class="cv-profile__list-block">
-      <li
-        v-for="profile in profiles"
-        :key="profile.id"
-        class="profile-list-item"
-      >
+      <li v-for="profile in profiles" :key="profile.id" class="profile-list-item">
         <a :href="AppRoutes.admin.CvProfileById(profile.id)">
-          <h2 class="profile-item__header">{{ profile.title }}</h2>
-          <div class="text-[--text-color-3] py-[8px] px-[8px]">
-            > {{ profile.summary }}
+          <div class="flex w-full justify-between">
+            <h2 class="profile-item__header w-full">
+              {{ profile.title }}
+            </h2>
+            <span class="cv-profile-by-id__status" :class="{
+              'cv-profile-by-id__status--active': profile.isActive,
+              'cv-profile-by-id__status--inactive': !profile.isActive,
+            }">
+              <Icon :icon="mdiCheckCircleOutline" :size="16" />
+              {{ profile.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </div>
+          <div class="flex items-center gap-[14px] w-full text-[--text-color-3] py-[8px] px-[8px]">
+            <div class="bg-[--primary-color-3-100] px-[8px] py-[4px] rounded-[4px] font-bold">
+              {{
+                `${profile.firstName}
+              ${profile.lastName}`
+              }}
+            </div>
+            <div>
+              {{ profile.summary }}
+            </div>
           </div>
         </a>
       </li>
@@ -99,6 +112,7 @@ onMounted(async () => {
   border-radius: 10px;
   border: 1px dashed var(--border-color-1);
 }
+
 .cv-profile__action-block {
   display: flex;
   justify-content: end;
@@ -107,9 +121,11 @@ onMounted(async () => {
   padding: 10px 24px;
   border-bottom: 1px dotted var(--border-color-1);
 }
+
 .action-button {
   transition: all 0.3s ease;
 }
+
 .action-button:hover {
   background-color: var(--primary-color-3-hover);
   transition: all 0.3s ease;
@@ -122,6 +138,7 @@ onMounted(async () => {
   padding: 12px 24px;
   gap: 8px;
 }
+
 .profile-list-item {
   padding: 12px;
   background-color: var(--primary-color-3);
@@ -129,6 +146,7 @@ onMounted(async () => {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
 .profile-list-item:hover {
   transition: all 0.3s ease;
   background-color: var(--primary-color-3-hover);
@@ -138,5 +156,29 @@ onMounted(async () => {
   padding-bottom: 6px;
   padding-left: 4px;
   border-bottom: 1px solid var(--border-color-1);
+}
+
+.cv-profile-by-id__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  min-height: 34px;
+  padding: 0 10px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cv-profile-by-id__status--active {
+  background-color: rgb(22 163 74 / 12%);
+  color: #16a34a;
+}
+
+.cv-profile-by-id__status--inactive {
+  background-color: rgb(107 114 128 / 12%);
+  color: var(--text-color-3);
 }
 </style>

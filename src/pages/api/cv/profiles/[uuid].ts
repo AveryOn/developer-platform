@@ -37,7 +37,6 @@ export const GET: APIRoute = async ({ params, url }) => {
 export const PATCH: APIRoute = async ({ params, request }) => {
   const logger = new Logger('HTTP:PATCH:UPDATE_CV_PROFILE')
   try {
-
     const uuid = params.uuid
 
     if (!uuid) {
@@ -50,7 +49,9 @@ export const PATCH: APIRoute = async ({ params, request }) => {
     const body = await request.json()
     logger.info('Excludes request body', { body })
 
-    const { success, data, error } = updateCvProfileDto.safeParse(body?.data)
+    const { success, data, error } = updateCvProfileDto.safeParse(
+      body?.data,
+    )
 
     if (!success) {
       logger.error(_, { error })
@@ -62,18 +63,19 @@ export const PATCH: APIRoute = async ({ params, request }) => {
 
     const profile = await CvProfileService.getById(uuid)
     if (!profile) {
-      return Response.json({ error: 'Profile not found' }, { status: 404 })
+      return Response.json(
+        { error: 'Profile not found' },
+        { status: 404 },
+      )
     }
 
     const updatedProfile = await CvProfileService.update(uuid, data)
-
 
     return Response.json({ data: updatedProfile })
   } catch (err) {
     logger.error(_, { err })
     throw err
   }
-
 }
 
 export const DELETE: APIRoute = async ({ params }) => {
