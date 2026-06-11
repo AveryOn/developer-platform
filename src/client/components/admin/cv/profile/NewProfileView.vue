@@ -9,7 +9,7 @@ import InputUI from '~/client/components/shared/InputUI.vue'
 import PhoneInputUI from '~/client/components/shared/PhoneInputUI.vue'
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue'
 import TextareaUI from '~/client/components/shared/TextareaUI.vue'
-import { useFormValidator } from '~/client/composables/UseFormValidator'
+import { useFormValidator } from '~/client/composables/useFormValidator'
 import { createCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
 import { ProfileLanguage } from '~/shared/types'
 

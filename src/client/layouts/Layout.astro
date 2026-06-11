@@ -1,4 +1,6 @@
 ---
+import ToastViewport from '~/client/components/shared/ToastViewport.vue'
+
 export interface Props {
   title?: string
   description?: string
@@ -46,6 +48,7 @@ const {
           <slot name="footer" />
         </footer>
       </div>
+      <ToastViewport client:only="vue" position="bottom-right" />
     </div>
   </body>
 </html>
