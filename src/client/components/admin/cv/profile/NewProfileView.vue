@@ -103,6 +103,7 @@ async function submit() {
           :error="errors.firstName"
           label="First Name"
           placeholder="Alex"
+          @input="undoError('firstName')"
         />
          <!-- LAST NAME -->
         <InputUI
@@ -111,6 +112,7 @@ async function submit() {
           :error="errors.lasName"
           label="Last Name"
           placeholder="Mercer"
+          @input="undoError('lasName')"
         />
         <!-- LANGUAGE -->
         <SelectInputUI
@@ -118,6 +120,7 @@ async function submit() {
           :error="errors.language"
           :options="languageOptions"
           label="Profile Language"
+          @input="undoError('language')"
         />
         <!-- LOCATION -->
         <InputUI
@@ -126,6 +129,7 @@ async function submit() {
           :error="errors.location"
           label="Location"
           placeholder="Tbilisi, Georgia"
+          @input="undoError('location')"
         />
       </div>
 
@@ -138,6 +142,7 @@ async function submit() {
           v-model="formData.isActive"
           :error="errors.isActive"
           label="Active profile"
+          @input="undoError('isActive')"
         />
         <!-- PHONE NUMBER -->
         <PhoneInputUI
@@ -148,6 +153,7 @@ async function submit() {
           default-country="FR"
           :error="errors.phone"
           @phone-change="(payload) => console.log(payload)"
+          @input="undoError('phone')"
         />
         <!-- EMAIL -->
         <EmailInputUI
@@ -159,6 +165,7 @@ async function submit() {
           :error="errors.email"
           :required="false"
           @email-change="(payload) => console.log(payload)"
+          @input="undoError('email')"
         />
         <!-- SUMMARY -->
         <TextareaUI
@@ -168,6 +175,7 @@ async function submit() {
           placeholder="Write profile summary..."
           label="Summary"
           description="Short professional summary that will be shown in your CV profile."
+          @input="undoError('summary')"
         />
       </div>
     </form>
