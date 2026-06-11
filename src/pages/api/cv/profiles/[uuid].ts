@@ -65,7 +65,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
       return Response.json({ error: 'Profile not found' }, { status: 404 })
     }
 
-    const updatedProfile = await CvProfileService.update(data)
+    const updatedProfile = await CvProfileService.update(uuid, data)
 
 
     return Response.json({ data: updatedProfile })

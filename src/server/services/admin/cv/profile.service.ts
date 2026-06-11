@@ -47,7 +47,7 @@ export const CvProfileService = {
     return profile
   },
 
-  async update(data: Partial<UpdateCvProfileDto>) {
+  async update(uuid: string, data: Partial<UpdateCvProfileDto>) {
     const now = dateISO()
 
     const [profile] = await db
@@ -56,6 +56,9 @@ export const CvProfileService = {
         ...data,
         updatedAt: now,
       })
+      .where(
+        eq(cvProfileTable.id, uuid)
+      )
       .returning()
     return profile
   },
