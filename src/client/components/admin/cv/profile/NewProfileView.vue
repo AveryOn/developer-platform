@@ -79,7 +79,7 @@ async function submit() {
     isSubmitLoading.value = false
     isSubmitDisabled.value = true
     await sleep('2.5s')
-    window.location.href = AppRoutes.admin.AdminCvProfile
+    window.location.href = AppRoutes.admin.CvProfile
   } catch (err) {
     toast.error('Произошла ошибка при создании профиля', {
       duration: 3000,
