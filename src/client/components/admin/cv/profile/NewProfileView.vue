@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue';
+import EmailInputUI from '~/client/components/shared/EmailInputUI.vue';
 import InputUI from '~/client/components/shared/InputUI.vue';
 import PhoneInputUI from '~/client/components/shared/PhoneInputUI.vue';
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue';
@@ -25,12 +26,13 @@ const formData = reactive({
   language: ProfileLanguage.en,
   location: null,
   summary: '',
-  email: null,
+  email: '',
   phone: '',
   isActive: false,
 })
 
 const phoneError = ref('')
+const emailError = ref('')
 
 const languageOptions = [
   {
@@ -63,12 +65,24 @@ const languageOptions = [
 
       <!-- PHONE NUMBER -->
       <PhoneInputUI
-        id="phone"
+        id="profile-phone"
         v-model="formData.phone"
         label="Phone"
         default-country="FR"
         :error="phoneError"
         @phone-change="(payload) => console.log(payload)"
+      />
+
+      <!-- EMAIL -->
+      <EmailInputUI
+        id="profile-email"
+        v-model="formData.email"
+        label="Email"
+        placeholder="your@email.com"
+        hint="Used as contact email in CV profile."
+        :error="emailError"
+        required
+        @email-change="(payload) => console.log(payload)"
       />
     </form>
   </section>
