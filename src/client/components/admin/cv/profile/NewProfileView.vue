@@ -59,7 +59,7 @@ const languageOptions = [
         v-model="formData.title"
         type="text"
         label="Profile Title"
-        placeholder="Title"
+        placeholder="The coolest profile!"
       />
       <InputUI
         v-model="formData.firstName"
@@ -78,8 +78,10 @@ const languageOptions = [
       <SelectInputUI
         v-model="formData.language"
         :options="languageOptions"
+        label="Profile Language"
       ></SelectInputUI>
 
+      <!-- LOCATION -->
       <InputUI
         id="location"
         v-model="formData.location"
@@ -98,7 +100,8 @@ const languageOptions = [
       <PhoneInputUI
         id="profile-phone"
         v-model="formData.phone"
-        label="Phone"
+        label="Phone Number"
+        placeholder="+33 6 12 34 56 78"
         default-country="FR"
         :error="phoneError"
         @phone-change="(payload) => console.log(payload)"
