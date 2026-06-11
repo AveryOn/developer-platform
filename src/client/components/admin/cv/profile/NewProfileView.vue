@@ -147,10 +147,10 @@ async function submit() {
           description="Short professional summary that will be shown in your CV profile."
         />
       </div>
-      <ButtonBaseUI type="submit" :loading="isSubmitLoading" @click="submit">
-        Save profile
-      </ButtonBaseUI>
     </form>
+    <ButtonBaseUI class="" type="submit" variant="primary" :loading="isSubmitLoading" @click="submit">
+      Save profile
+    </ButtonBaseUI>
   </section>
 </template>
 

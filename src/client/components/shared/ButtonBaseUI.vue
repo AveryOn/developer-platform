@@ -116,14 +116,14 @@ function handleClick(event: MouseEvent) {
 }
 
 .base-button--primary {
-  background: #111827;
+  background: var(--primary-color-1);
   border-color: #111827;
   color: #ffffff;
 }
 
 .base-button--primary:hover:not(:disabled) {
-  background: #1f2937;
-  border-color: #1f2937;
+  background: var(--primary-color-4);
+  border-color: var(--border-color-2);
 }
 
 .base-button--secondary {
