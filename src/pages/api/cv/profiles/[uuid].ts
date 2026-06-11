@@ -36,37 +36,44 @@ export const GET: APIRoute = async ({ params, url }) => {
 
 export const PATCH: APIRoute = async ({ params, request }) => {
   const logger = new Logger('HTTP:PATCH:UPDATE_CV_PROFILE')
+  try {
 
-  const uuid = params.uuid
+    const uuid = params.uuid
 
-  if (!uuid) {
-    return Response.json(
-      { error: 'Profile uuid is required' },
-      { status: 400 },
-    )
+    if (!uuid) {
+      return Response.json(
+        { error: 'Profile uuid is required' },
+        { status: 400 },
+      )
+    }
+
+    const body = await request.json()
+    logger.info('Excludes request body', { body })
+
+    const { success, data, error } = updateCvProfileDto.safeParse(body?.data)
+
+    if (!success) {
+      logger.error(_, { error })
+      return Response.json(
+        { error: ZodBundleErrors(error) },
+        { status: 400 },
+      )
+    }
+
+    const profile = await CvProfileService.getById(uuid)
+    if (!profile) {
+      return Response.json({ error: 'Profile not found' }, { status: 404 })
+    }
+
+    const updatedProfile = await CvProfileService.update(data)
+
+
+    return Response.json({ data: updatedProfile })
+  } catch (err) {
+    logger.error(_, { err })
+    throw err
   }
 
-  const body = await request.json()
-  logger.info('Excludes request body', { body })
-
-  const { success, data, error } = updateCvProfileDto.safeParse(body?.data)
-
-  if (!success) {
-    return Response.json(
-      { error: ZodBundleErrors(error) },
-      { status: 400 },
-    )
-  }
-
-  const profile = await CvProfileService.getById(uuid)
-  if (!profile) {
-    return Response.json({ error: 'Profile not found' }, { status: 404 })
-  }
-
-  const updatedProfile = await CvProfileService.update(data)
-
-
-  return Response.json({ data: updatedProfile })
 }
 
 export const DELETE: APIRoute = async ({ params }) => {

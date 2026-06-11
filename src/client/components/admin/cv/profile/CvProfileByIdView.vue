@@ -271,7 +271,7 @@ async function saveField(field: EditableProfileField) {
       throw new Error('INVALID DATA')
     }
     const updatedProfile = await CvProfileApi.update(props.uuid, {
-      [field]: editing[field]
+      [field]: draft[field]
     })
     toast.success('Профиль успешно создан!', {
       duration: 3000,
