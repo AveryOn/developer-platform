@@ -91,7 +91,7 @@ export function useFormValidator<TForm extends object>(form: TForm) {
    * Для каждого поля формы создает ключ в объекте `errors`
    * и записывает туда пустую строку.
    */
-  for (const key of Object.keys(form) as Array<keyof TForm>) {
+  for (const key of Object.keys({ ...form }) as Array<keyof TForm>) {
     errors[key] = ''
   }
 

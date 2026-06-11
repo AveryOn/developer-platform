@@ -10,13 +10,16 @@ import PhoneInputUI from '~/client/components/shared/PhoneInputUI.vue'
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue'
 import TextareaUI from '~/client/components/shared/TextareaUI.vue'
 import { useFormValidator } from '~/client/composables/useFormValidator'
+import { useToast } from '~/client/composables/useToast'
 import { createCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
 import { ProfileLanguage } from '~/shared/types'
+
+
 
 const formData = reactive({
   title: '',
   firstName: '',
-  lasName: '',
+  lastName: '',
   language: ProfileLanguage.en,
   location: '',
   summary: '',
@@ -24,16 +27,7 @@ const formData = reactive({
   phone: undefined,
   isActive: false,
 })
-
-const {
-  errors,
-  isSomeError,
-  setErrors,
-  undoError,
-} = useFormValidator(formData)
-
 const isSubmitLoading = ref(false)
-
 const languageOptions = [
   {
     label: 'English',
@@ -49,6 +43,17 @@ const languageOptions = [
   },
 ]
 
+const {
+  errors,
+  isSomeError,
+  setErrors,
+  undoError,
+} = useFormValidator(formData)
+
+const toast = useToast()
+
+
+
 async function submit() {
   try {
     isSubmitLoading.value = true
@@ -57,20 +62,22 @@ async function submit() {
     if(!data.success) {
       const details = z.treeifyError(data.error)
       setErrors(details)
+      console.debug(details)
       throw new Error('INVALID DATA')
     }
-    const newProfile = await CvProfileApi.create({
-      firstName: formData.firstName,
-      isActive: formData.isActive,
-      language: formData.language,
-      lastName: formData.lasName,
-      summary: formData.summary,
-      title: formData.title,
-      email: formData.email,
-      location: formData.location,
-      phone: formData.phone,
-    })
-    console.debug('CREATE NEW PROFILE', { newProfile })
+    // const newProfile = await CvProfileApi.create({
+    //   firstName: formData.firstName,
+    //   isActive: formData.isActive,
+    //   language: formData.language,
+    //   lastName: formData.lasName,
+    //   summary: formData.summary,
+    //   title: formData.title,
+    //   email: formData.email,
+    //   location: formData.location,
+    //   phone: formData.phone,
+    // })
+    toast.success('HELLO', { duration: 3000 })
+    // console.debug('CREATE NEW PROFILE', { newProfile })
   }
   catch (err) {
     console.error(err)
@@ -107,12 +114,12 @@ async function submit() {
         />
          <!-- LAST NAME -->
         <InputUI
-          v-model="formData.lasName"
+          v-model="formData.lastName"
           type="text"
-          :error="errors.lasName"
+          :error="errors.lastName"
           label="Last Name"
           placeholder="Mercer"
-          @input="undoError('lasName')"
+          @input="undoError('lastName')"
         />
         <!-- LANGUAGE -->
         <SelectInputUI
