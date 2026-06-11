@@ -19,8 +19,8 @@ const formData = reactive({
   language: ProfileLanguage.en,
   location: '',
   summary: '',
-  email: '',
-  phone: '',
+  email: undefined,
+  phone: undefined,
   isActive: false,
 })
 
@@ -47,8 +47,13 @@ async function submit() {
   try {
     isSubmitLoading.value = true
     const data = createCvProfileDto.safeParse(formData)
+    console.debug(formData)
     if(!data.success) {
-      console.error(z.treeifyError(data.error))
+      const details = z.treeifyError(data.error)
+      emailError.value = details.properties?.email?.errors[0] ?? ''
+      phoneError.value = details.properties?.phone?.errors[0] ?? ''
+
+      console.debug(details)
       throw new Error('INVALID DATA')
     }
     const newProfile = await CvProfileApi.create({
@@ -142,7 +147,7 @@ async function submit() {
           placeholder="your@email.com"
           hint="Used as contact email in CV profile."
           :error="emailError"
-          required
+          :required="false"
           @email-change="(payload) => console.log(payload)"
         />
         <!-- SUMMARY -->
