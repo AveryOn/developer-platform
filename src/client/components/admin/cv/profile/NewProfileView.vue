@@ -52,10 +52,10 @@ const languageOptions = [
 </script>
 
 <template>
-  <section class="cv-admin__profile-new py-[14px]">
+  <section class="cv-admin__profile-new py-[24px]">
     <h2 class="text-[24px]">CREATE NEW PROFILE</h2>
     <form class="profile-new-form relative" @submit.prevent>
-      <div class="flex flex-col w-[50%]">
+      <div class="flex flex-col w-[50%] gap-[18px]">
         <!-- TITLE -->
         <InputUI
           v-model="formData.title"
@@ -94,7 +94,7 @@ const languageOptions = [
 
       <div class="px-[4px] bg-[--primary-color-5] top-0 bottom-0"></div>
 
-      <div class="flex flex-col w-[50%]">
+      <div class="flex flex-col w-[50%] gap-[18px]">
         <!-- IS ACTIVE PROFILE -->
         <CheckboxUI
           id="profile-is-active"
@@ -139,6 +139,7 @@ const languageOptions = [
 .cv-admin__profile-new {
   display: flex;
   align-items: center;
+  gap: 24px;
   min-height: 60vh;
   flex-direction: column;
   border-radius: 10px;
@@ -148,8 +149,8 @@ const languageOptions = [
 .profile-new-form {
   display: flex;
   justify-content: center;
-  gap: 14px;
-  border: 1px dashed var(--border-color-2);
+  gap: 32px;
+  background-color: var(--primary-color-6);
   width: 800px;
   padding: 12px 20px;
 }
