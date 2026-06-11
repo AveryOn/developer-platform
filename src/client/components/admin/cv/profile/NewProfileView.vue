@@ -11,7 +11,9 @@ import SelectInputUI from '~/client/components/shared/SelectInputUI.vue'
 import TextareaUI from '~/client/components/shared/TextareaUI.vue'
 import { useFormValidator } from '~/client/composables/useFormValidator'
 import { useToast } from '~/client/composables/useToast'
+import { sleep } from '~/shared/async'
 import { createCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
+import { AppRoutes } from '~/shared/router'
 import { ProfileLanguage } from '~/shared/types'
 
 
@@ -28,6 +30,7 @@ const formData = reactive({
   isActive: false,
 })
 const isSubmitLoading = ref(false)
+const isSubmitDisabled = ref(false)
 const languageOptions = [
   {
     label: 'English',
@@ -78,6 +81,10 @@ async function submit() {
     })
     toast.success('Профиль успешно создан!', { duration: 3000, title: 'Профиль успешно создан!' })
     console.debug('CREATE NEW PROFILE', { newProfile })
+    isSubmitLoading.value = false
+    isSubmitDisabled.value = true
+    await sleep('2.5s')
+    window.location.href = AppRoutes.admin.AdminCvProfile
   }
   catch (err) {
     toast.error('Произошла ошибка при создании профиля', { duration: 3000, title: 'Ошибка' })
@@ -191,7 +198,7 @@ async function submit() {
         class="w-[30%]"
         type="submit"
         variant="primary"
-        :disabled="isSomeError"
+        :disabled="isSomeError || isSubmitDisabled"
         :loading="isSubmitLoading"
         @click="submit"
       >Save profile</ButtonBaseUI>
