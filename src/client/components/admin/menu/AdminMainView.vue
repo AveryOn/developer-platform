@@ -7,7 +7,7 @@ import {
   mdiFolderOpenOutline,
   mdiCardAccountDetailsOutline,
 } from '@mdi/js'
-import MenuItem from '~/client/components/admin/MenuItem.vue'
+import MenuItem from '~/client/components/admin/menu/MenuItem.vue'
 import { UseI18n } from '~/client/composables/useI18n.ts'
 
 const appStore = useAppStore()
@@ -17,47 +17,29 @@ const { $t } = UseI18n()
 <template>
   <div>
     <header>
-      <button
-        @click="appStore.applyTheme(AppTheme['app-theme-package-1'])"
-      >
+      <button @click="appStore.applyTheme(AppTheme['app-theme-package-1'])">
         Theme 1
       </button>
-      <button
-        @click="appStore.applyTheme(AppTheme['app-theme-package-2'])"
-      >
+      <button @click="appStore.applyTheme(AppTheme['app-theme-package-2'])">
         Theme 2
       </button>
-      <button
-        @click="appStore.applyTheme(AppTheme['app-theme-package-3'])"
-      >
+      <button @click="appStore.applyTheme(AppTheme['app-theme-package-3'])">
         Theme 3
       </button>
     </header>
 
     <main class="main-admin-menu pt-[24px] overflow-hidden">
       <a href="/admin/cv">
-        <MenuItem
-          :icon="mdiCardAccountDetailsOutline"
-          :title="$t('CV Management')"
-        />
+        <MenuItem :icon="mdiCardAccountDetailsOutline" :title="$t('CV Management')" />
       </a>
       <a href="/admin/projects">
-        <MenuItem
-          :icon="mdiFolderOpenOutline"
-          :title="$t('Projects Management')"
-        />
+        <MenuItem :icon="mdiFolderOpenOutline" :title="$t('Projects Management')" />
       </a>
       <a href="/admin/articles">
-        <MenuItem
-          :icon="mdiNewspaperVariantMultipleOutline"
-          :title="$t('Articles Management')"
-        />
+        <MenuItem :icon="mdiNewspaperVariantMultipleOutline" :title="$t('Articles Management')" />
       </a>
       <a href="/admin/settings">
-        <MenuItem
-          :icon="mdiPalette"
-          :title="$t('Adjust the color schema')"
-        />
+        <MenuItem :icon="mdiPalette" :title="$t('Adjust the color schema')" />
       </a>
     </main>
   </div>
