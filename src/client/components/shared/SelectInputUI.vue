@@ -244,7 +244,7 @@ onBeforeUnmount(() => {
   border: 1px solid var(--border-color-1);
   border-radius: 10px;
 
-  background: var(--primary-color-3);
+  background: var(--primary-color-3-100);
   box-shadow: 0 14px 35px rgb(0 0 0 / 35%);
 }
 
@@ -272,13 +272,13 @@ onBeforeUnmount(() => {
 }
 
 .app-select__option:hover:not(:disabled) {
-  background: var(--primary-color-3);
-  color: var(--primary-color-1);
+  background: var(--primary-color-4);
+  color: var(--text-color-5);
 }
 
 .app-select__option--selected {
-  background: var(--primary-color-3);
-  color: var(--primary-color-1);
+  background: var(--primary-color-4);
+  color: var(--text-color-6);
 }
 
 .app-select__option--disabled {

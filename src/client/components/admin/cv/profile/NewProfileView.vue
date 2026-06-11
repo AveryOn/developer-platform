@@ -2,6 +2,7 @@
 import { reactive, ref } from 'vue';
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue';
 import InputUI from '~/client/components/shared/InputUI.vue';
+import PhoneInputUI from '~/client/components/shared/PhoneInputUI.vue';
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue';
 import { ProfileLanguage } from '~/shared/types';
 
@@ -25,7 +26,7 @@ const formData = reactive({
   location: null,
   summary: '',
   email: null,
-  phone: null,
+  phone: '',
   isActive: false,
 })
 
@@ -61,13 +62,13 @@ const languageOptions = [
       <CheckboxUI id="profile-is-active" v-model="formData.isActive" label="Active profile" />
 
       <!-- PHONE NUMBER -->
-      <AppPhoneInput
+      <PhoneInputUI
         id="phone"
         v-model="formData.phone"
         label="Phone"
         default-country="GE"
         :error="phoneError"
-        @phone-change="(payload: string) => console.log(payload)"
+        @phone-change="(payload) => console.log(payload)"
       />
     </form>
   </section>

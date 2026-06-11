@@ -483,7 +483,7 @@ onBeforeUnmount(() => {
   border: 1px solid var(--border-color-1);
   border-radius: 10px;
 
-  background: var(--primary-color-2);
+  background: var(--primary-color-3-100);
   box-shadow: 0 14px 35px rgb(0 0 0 / 35%);
 }
 
