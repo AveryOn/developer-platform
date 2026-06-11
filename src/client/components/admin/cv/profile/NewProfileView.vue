@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
+import CheckboxUI from '~/client/components/shared/CheckboxUI.vue';
 import InputUI from '~/client/components/shared/InputUI.vue';
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue';
 import { ProfileLanguage } from '~/shared/types';
@@ -50,6 +51,11 @@ const languageOptions = [
     <form class="profile-new-form" @submit.prevent>
       <InputUI v-model="formData.title" type="text" placeholder="Title"></InputUI>
       <SelectInputUI v-model="formData.language" :options="languageOptions"></SelectInputUI>
+      <CheckboxUI
+        id="profile-is-active"
+        v-model="formData.isActive"
+        label="Active profile"
+      />
     </form>
   </section>
 </template>
