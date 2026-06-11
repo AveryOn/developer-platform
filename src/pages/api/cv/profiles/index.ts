@@ -19,7 +19,10 @@ export const GET: APIRoute = async ({ url }) => {
       const profile = await CvProfileService.getActive()
 
       logger.info('Fetched Profile', { profile })
-      return Response.json({ data: profile }, { status: HttpStatusCode.Ok })
+      return Response.json(
+        { data: profile },
+        { status: HttpStatusCode.Ok },
+      )
     }
 
     // GET LIST
@@ -40,7 +43,9 @@ export const POST: APIRoute = async ({ request }) => {
 
   const body = await request.json()
   logger.info('Pick up BODY', { body: body.data })
-  const { success, data, error } = createCvProfileDto.safeParse(body.data)
+  const { success, data, error } = createCvProfileDto.safeParse(
+    body.data,
+  )
 
   if (!success) {
     logger.error('Validation Failed', { error })
@@ -48,5 +53,8 @@ export const POST: APIRoute = async ({ request }) => {
   }
   const newProfile = await CvProfileService.create(data!)
 
-  return Response.json({ data: newProfile }, { status: HttpStatusCode.Created })
+  return Response.json(
+    { data: newProfile },
+    { status: HttpStatusCode.Created },
+  )
 }

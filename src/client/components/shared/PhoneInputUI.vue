@@ -70,7 +70,9 @@ const displayNames = computed(() => {
 })
 
 const countryOptions = computed<CountryOption[]>(() => {
-  const countries = props.countries?.length ? props.countries : getCountries()
+  const countries = props.countries?.length
+    ? props.countries
+    : getCountries()
 
   return countries
     .map((code) => ({
@@ -205,7 +207,10 @@ function buildPayload(formatted: string): PhonePayload {
   }
 }
 
-function commitPhoneValue(value: string, country = selectedCountry.value) {
+function commitPhoneValue(
+  value: string,
+  country = selectedCountry.value,
+) {
   const result = formatPhone(value, country)
 
   selectedCountry.value = result.country
@@ -264,7 +269,11 @@ onBeforeUnmount(() => {
 
 <template>
   <div ref="rootRef" class="app-phone-input">
-    <label v-if="props.label" :for="props.id" class="app-phone-input__label">
+    <label
+      v-if="props.label"
+      :for="props.id"
+      class="app-phone-input__label"
+    >
       {{ props.label }}
     </label>
 
@@ -283,9 +292,7 @@ onBeforeUnmount(() => {
           +{{ selectedCountryOption?.callingCode }}
         </span>
 
-        <span class="app-phone-input__arrow">
-          ⌄
-        </span>
+        <span class="app-phone-input__arrow"> ⌄ </span>
       </button>
 
       <input

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { CvProfileApi } from '~/client/api/admin/cv/profile.api';
-import type { Profile } from '~/shared/dto/admin/cv/profile.dto';
-import Icon from '~/client/components/common/Icon.vue';
-import { mdiPlus } from '@mdi/js';
+import { onMounted, ref } from 'vue'
+import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
+import type { Profile } from '~/shared/dto/admin/cv/profile.dto'
+import Icon from '~/client/components/common/Icon.vue'
+import { mdiPlus } from '@mdi/js'
 
 // import type { Profile } from '~/shared/dto/admin/cv/profile.dto';
 // import { ProfileLanguage } from '~/shared/types';
@@ -61,23 +61,30 @@ const profiles = ref<Profile[]>([])
 onMounted(async () => {
   profiles.value = await CvProfileApi.getAll()
 })
-
 </script>
 
 <template>
   <section class="cv-admin__profile">
     <div class="cv-profile__action-block">
-      <a href="/admin/cv/profile/new" class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]">
+      <a
+        href="/admin/cv/profile/new"
+        class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]"
+      >
         <Icon :icon="mdiPlus" :size="24"></Icon>
       </a>
     </div>
     <ul class="cv-profile__list-block">
-      <li v-for="profile in profiles" :key="profile.id" class="profile-list-item">
+      <li
+        v-for="profile in profiles"
+        :key="profile.id"
+        class="profile-list-item"
+      >
         <h2 class="profile-item__header">{{ profile.title }}</h2>
-        <div class="text-[--text-color-3] py-[8px] px-[8px]">> {{ profile.summary }}</div>
+        <div class="text-[--text-color-3] py-[8px] px-[8px]">
+          > {{ profile.summary }}
+        </div>
       </li>
     </ul>
-
   </section>
 </template>
 

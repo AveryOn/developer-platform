@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
-import CheckboxUI from '~/client/components/shared/CheckboxUI.vue';
-import EmailInputUI from '~/client/components/shared/EmailInputUI.vue';
-import InputUI from '~/client/components/shared/InputUI.vue';
-import PhoneInputUI from '~/client/components/shared/PhoneInputUI.vue';
-import SelectInputUI from '~/client/components/shared/SelectInputUI.vue';
-import { ProfileLanguage } from '~/shared/types';
+import { reactive, ref } from 'vue'
+import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
+import EmailInputUI from '~/client/components/shared/EmailInputUI.vue'
+import InputUI from '~/client/components/shared/InputUI.vue'
+import PhoneInputUI from '~/client/components/shared/PhoneInputUI.vue'
+import SelectInputUI from '~/client/components/shared/SelectInputUI.vue'
+import TextareaUI from '~/client/components/shared/TextareaUI.vue'
+import { ProfileLanguage } from '~/shared/types'
 
 // export const createCvProfileDto = z.object({
 //   language: z.enum(ProfileLanguages),
@@ -48,20 +49,30 @@ const languageOptions = [
     value: ProfileLanguage.fr,
   },
 ]
-
 </script>
 
 <template>
   <section class="cv-admin__profile-new">
     <form class="profile-new-form" @submit.prevent>
       <!-- TITLE -->
-      <InputUI v-model="formData.title" type="text" placeholder="Title"></InputUI>
+      <InputUI
+        v-model="formData.title"
+        type="text"
+        placeholder="Title"
+      ></InputUI>
 
       <!-- LANGUAGE -->
-      <SelectInputUI v-model="formData.language" :options="languageOptions"></SelectInputUI>
+      <SelectInputUI
+        v-model="formData.language"
+        :options="languageOptions"
+      ></SelectInputUI>
 
       <!-- IS ACTIVE PROFILE -->
-      <CheckboxUI id="profile-is-active" v-model="formData.isActive" label="Active profile" />
+      <CheckboxUI
+        id="profile-is-active"
+        v-model="formData.isActive"
+        label="Active profile"
+      />
 
       <!-- PHONE NUMBER -->
       <PhoneInputUI
@@ -83,6 +94,15 @@ const languageOptions = [
         :error="emailError"
         required
         @email-change="(payload) => console.log(payload)"
+      />
+
+      <!-- SUMMARY -->
+      <TextareaUI
+        id="summary"
+        v-model="formData.summary"
+        placeholder="Write profile summary..."
+        label="Summary"
+        description="Short professional summary that will be shown in your CV profile."
       />
     </form>
   </section>

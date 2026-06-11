@@ -108,9 +108,7 @@ onBeforeUnmount(() => {
         {{ selectedOption?.label ?? props.placeholder }}
       </span>
 
-      <span class="app-select__arrow">
-        ⌄
-      </span>
+      <span class="app-select__arrow"> ⌄ </span>
     </button>
 
     <div v-if="isOpen" class="app-select__dropdown">

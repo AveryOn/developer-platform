@@ -355,7 +355,11 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="app-email-input">
-    <label v-if="props.label" :for="props.id" class="app-email-input__label">
+    <label
+      v-if="props.label"
+      :for="props.id"
+      class="app-email-input__label"
+    >
       {{ props.label }}
 
       <span v-if="props.required" class="app-email-input__required">
@@ -367,14 +371,13 @@ onBeforeUnmount(() => {
       class="app-email-input__control"
       :class="{
         'app-email-input__control--focused': isFocused,
-        'app-email-input__control--error': props.error || (!isValid && innerValue),
+        'app-email-input__control--error':
+          props.error || (!isValid && innerValue),
         'app-email-input__control--valid': isValid && innerValue,
         'app-email-input__control--disabled': props.disabled,
       }"
     >
-      <span class="app-email-input__icon">
-        @
-      </span>
+      <span class="app-email-input__icon"> @ </span>
 
       <input
         :id="props.id"
@@ -411,14 +414,18 @@ onBeforeUnmount(() => {
         {{ isValid ? '✓' : '!' }}
       </span>
 
-      <div v-if="shouldShowSuggestions" class="app-email-input__dropdown">
+      <div
+        v-if="shouldShowSuggestions"
+        class="app-email-input__dropdown"
+      >
         <button
           v-for="(domain, index) in domainSuggestions"
           :key="domain"
           type="button"
           class="app-email-input__option"
           :class="{
-            'app-email-input__option--active': index === activeSuggestionIndex,
+            'app-email-input__option--active':
+              index === activeSuggestionIndex,
           }"
           @mousedown.prevent="applyDomain(domain)"
         >
@@ -500,7 +507,9 @@ onBeforeUnmount(() => {
     box-shadow 0.15s ease;
 }
 
-.app-email-input__control:hover:not(.app-email-input__control--disabled) {
+.app-email-input__control:hover:not(
+    .app-email-input__control--disabled
+  ) {
   border-color: var(--primary-color-1);
 }
 

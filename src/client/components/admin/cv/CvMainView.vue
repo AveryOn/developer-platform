@@ -73,7 +73,7 @@ const navItems = [
 
 function isActiveSection(item: NavItem) {
   const isActive = appStore.getCurrentPath().startsWith(item.href)
-  if(isActive) {
+  if (isActive) {
     activeSection.value = item.key
   }
   return isActive
@@ -95,7 +95,6 @@ async function click() {
 
   // await CvProfileApi.getActive()
 }
-
 </script>
 
 <template>
@@ -105,7 +104,9 @@ async function click() {
         <h1 class="cv-admin__title">CV Management</h1>
         <p class="cv-admin__subtitle">
           Manage resume content, templates and versions.
-          <button class="bg-white text-black" @click="click">CLICK</button>
+          <button class="bg-white text-black" @click="click">
+            CLICK
+          </button>
         </p>
       </div>
 

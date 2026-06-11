@@ -15,6 +15,7 @@ const props = withDefaults(
     disabled?: boolean
     error?: string
     throttleMs?: number
+    description?: string
   }>(),
   {
     id: undefined,
@@ -24,6 +25,7 @@ const props = withDefaults(
     disabled: false,
     error: undefined,
     throttleMs: 0,
+    description: undefined,
   },
 )
 
@@ -78,13 +80,22 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="app-textarea">
-    <label
-      v-if="props.label"
-      :for="props.id"
-      class="app-textarea__label"
+    <div
+      v-if="props.label || props.description"
+      class="app-textarea__header"
     >
-      {{ props.label }}
-    </label>
+      <label
+        v-if="props.label"
+        :for="props.id"
+        class="app-textarea__label"
+      >
+        {{ props.label }}
+      </label>
+
+      <p v-if="props.description" class="app-textarea__description">
+        {{ props.description }}
+      </p>
+    </div>
 
     <textarea
       :id="props.id"
@@ -108,6 +119,19 @@ onBeforeUnmount(() => {
   flex-direction: column;
   gap: 8px;
   width: 100%;
+}
+
+.app-textarea__header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.app-textarea__description {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--primary-color-1) 70%, transparent);
 }
 
 .app-textarea__label {
