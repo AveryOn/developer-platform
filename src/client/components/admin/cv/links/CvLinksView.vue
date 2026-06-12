@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { mdiPen } from '@mdi/js'
-import { onMounted, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import Icon from '~/client/components/common/Icon.vue'
+import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
+import InputUI from '~/client/components/shared/InputUI.vue'
 import SelectInputUI, {
   type SelectOption,
 } from '~/client/components/shared/SelectInputUI.vue'
@@ -48,6 +50,7 @@ const links = ref<Link[]>([
     isVisible: false,
   },
 ])
+const editLinksMap = reactive<Record<string, boolean>>({})
 
 async function uploadProfiles(): Promise<SelectOption[]> {
   const profiles = await CvProfileApi.getAll()
@@ -59,12 +62,18 @@ async function uploadProfiles(): Promise<SelectOption[]> {
   })
 }
 
+function selectLinkForEditing(linkId: string) {
+  editLinksMap[linkId] = !editLinksMap[linkId]
+}
+
 onMounted(async () => {
   profileSelectItems.value = await uploadProfiles()
   const links = await CvLinksApi.getListByProfileId(
     selectedProfileId.value ?? _,
   )
-  console.debug(links);
+  links.forEach((l) => {
+    editLinksMap[l.id] = false
+  })
 })
 </script>
 
@@ -77,8 +86,12 @@ onMounted(async () => {
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
 
       <ul class="flex flex-col gap-[10px]">
-        <li v-for="link in links" :key="link.id" class="link-item">
-          <p class="link-item__title">{{ link.label }}</p>
+        <li v-for="link in links" :key="link.id" class="link-item" @click="selectLinkForEditing(link.id)">
+          <div v-if="editLinksMap[link.id]" class="flex">
+            <InputUI @click.stop />
+            <ButtonBaseUI>HELLO</ButtonBaseUI>
+          </div>
+          <span v-else>{{ link.label }}</span>
           <div class="link-item__actions">
             <Icon :icon="mdiPen" :size="16"></Icon>
           </div>

@@ -2,6 +2,8 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref, watch } from 'vue'
 
+type AppInputSize = 'xsmall' | 'small' | 'medium' | 'large'
+
 const model = defineModel<string>({
   default: '',
 })
@@ -15,6 +17,7 @@ const props = withDefaults(
     disabled?: boolean
     error?: string
     throttleMs?: number
+    size?: AppInputSize
   }>(),
   {
     id: undefined,
@@ -24,6 +27,7 @@ const props = withDefaults(
     disabled: false,
     error: undefined,
     throttleMs: 0,
+    size: 'medium',
   },
 )
 
@@ -82,15 +86,9 @@ onBeforeUnmount(() => {
       {{ props.label }}
     </label>
 
-    <input
-      :id="props.id"
-      :type="props.type"
-      :value="innerValue"
-      class="app-input__field"
-      :placeholder="props.placeholder"
-      :disabled="props.disabled"
-      @input="handleInput"
-    />
+    <input :id="props.id" :type="props.type" :value="innerValue" class="app-input__field"
+      :class="`app-input__field--${props.size}`" :placeholder="props.placeholder" :disabled="props.disabled"
+      @input="handleInput" />
 
     <p v-if="props.error" class="app-input__error">
       {{ props.error }}
@@ -114,10 +112,7 @@ onBeforeUnmount(() => {
 
 .app-input__field {
   width: 100%;
-  min-height: 44px;
   height: 100%;
-
-  padding: 0 14px;
 
   border: 1px solid var(--border-color-1);
   border-radius: 10px;
@@ -125,7 +120,6 @@ onBeforeUnmount(() => {
   background: var(--primary-color-2);
   color: white;
 
-  font-size: 16px;
   line-height: 1;
   font-family: inherit;
 
@@ -134,6 +128,30 @@ onBeforeUnmount(() => {
     border-color 0.15s ease,
     background-color 0.15s ease,
     box-shadow 0.15s ease;
+}
+
+.app-input__field--xsmall {
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.app-input__field--small {
+  min-height: 38px;
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+.app-input__field--medium {
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 16px;
+}
+
+.app-input__field--large {
+  min-height: 52px;
+  padding: 0 16px;
+  font-size: 18px;
 }
 
 .app-input__field::placeholder {
