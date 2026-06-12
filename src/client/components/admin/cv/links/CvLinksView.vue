@@ -1,16 +1,53 @@
 <script setup lang="ts">
+import { mdiPen } from '@mdi/js'
 import { onMounted, ref } from 'vue'
 import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
+import Icon from '~/client/components/common/Icon.vue'
 import SelectInputUI, {
   type SelectOption,
 } from '~/client/components/shared/SelectInputUI.vue'
 import { _ } from '~/shared/const'
 import type { Link } from '~/shared/dto/cv/link.dto'
+import type { SocialNetwork } from '~/shared/types'
 
 const profileSelectItems = ref<SelectOption[]>([])
 const selectedProfileId = ref<string>('')
-const links = ref<Link[]>([])
+const links = ref<Link[]>([
+  {
+    id: 'link_1',
+    label: 'GitHub',
+    createdAt: '2026-06-11T10:00:00.000Z',
+    updatedAt: '2026-06-11T10:00:00.000Z',
+    profileId: 'profile_1',
+    type: 'github' as SocialNetwork,
+    url: 'https://github.com/example-user',
+    order: 1,
+    isVisible: true,
+  },
+  {
+    id: 'link_2',
+    label: 'LinkedIn',
+    createdAt: '2026-06-11T10:05:00.000Z',
+    updatedAt: '2026-06-11T10:05:00.000Z',
+    profileId: 'profile_1',
+    type: 'linkedin' as SocialNetwork,
+    url: 'https://linkedin.com/in/example-user',
+    order: 2,
+    isVisible: true,
+  },
+  {
+    id: 'link_3',
+    label: 'Portfolio',
+    createdAt: '2026-06-11T10:10:00.000Z',
+    updatedAt: '2026-06-11T10:10:00.000Z',
+    profileId: 'profile_1',
+    type: 'website' as SocialNetwork,
+    url: 'https://example.dev',
+    order: 3,
+    isVisible: false,
+  },
+])
 
 async function uploadProfiles(): Promise<SelectOption[]> {
   const profiles = await CvProfileApi.getAll()
@@ -24,31 +61,28 @@ async function uploadProfiles(): Promise<SelectOption[]> {
 
 onMounted(async () => {
   profileSelectItems.value = await uploadProfiles()
-  links.value = await CvLinksApi.getListByProfileId(
-    selectedProfileId.value ?? _,
-  )
+  // links.value = await CvLinksApi.getListByProfileId(
+  //   selectedProfileId.value ?? _,
+  // )
 })
 </script>
 
 <template>
   <section class="cv-admin__links">
-    <form
-      class="flex flex-col gap-[24px] min-w-[460px] w-[460px]"
-      @submit.prevent
-    >
-      <SelectInputUI
-        v-model="selectedProfileId"
-        :options="profileSelectItems"
-        :placeholder="'Select Profile'"
-      />
+    <form class="flex flex-col gap-[24px] min-w-[460px] w-[460px]" @submit.prevent>
+      <SelectInputUI v-model="selectedProfileId" :options="profileSelectItems" :placeholder="'Select Profile'" />
 
+      <!-- SEPARATOR -->
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
 
-      <div>
-        <ul>
-          <li></li>
-        </ul>
-      </div>
+      <ul class="flex flex-col gap-[10px]">
+        <li v-for="link in links" :key="link.id" class="link-item">
+          <p class="link-item__title">{{ link.label }}</p>
+          <div class="link-item__actions">
+            <Icon :icon="mdiPen" :size="16"></Icon>
+          </div>
+        </li>
+      </ul>
     </form>
   </section>
 </template>
@@ -63,4 +97,23 @@ onMounted(async () => {
   border: 1px dashed var(--border-color-1);
   padding: 24px 48px;
 }
+
+.link-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-color-1);
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.link-item:hover {
+  background-color: var(--primary-color-3);
+  transition: all 0.3s ease;
+
+}
+
+.link-item__title {}
 </style>
