@@ -63,12 +63,16 @@ async function uploadProfiles(): Promise<SelectOption[]> {
   })
 }
 
-function toggleLinkForEditing(linkId: string) {
-  editLinksMap[linkId] = !editLinksMap[linkId]
+function toggleLinkForEditing(link: Link) {
+  const isEditing = !editLinksMap[link.id]
+  editLinksMap[link.id] = isEditing
+  if (isEditing === true) {
+    newLinkLabel.value = link.label
+  }
   Object
     .keys(editLinksMap)
     .forEach((l) => {
-      if (l === linkId) {
+      if (l === link.id) {
         return
       }
       editLinksMap[l] = false
@@ -100,7 +104,7 @@ onMounted(async () => {
             <InputUI v-model="newLinkLabel" size="xsmall" @click.stop />
             <ButtonBaseUI size="xsmall">Confirm</ButtonBaseUI>
           </div>
-          <span v-else @click="toggleLinkForEditing(link.id)">{{ link.label }}</span>
+          <span v-else @click="toggleLinkForEditing(link)">{{ link.label }}</span>
           <div class="link-item__actions">
             <Icon :icon="mdiPen" :size="16"></Icon>
           </div>
