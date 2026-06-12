@@ -1,4 +1,3 @@
-
 export const clientRoutes = {
   Home: '/',
   AboutMe: '/about-me',

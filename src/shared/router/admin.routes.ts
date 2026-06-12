@@ -1,4 +1,3 @@
-
 export const adminRoutes = {
   // ENTRY
   index: '/admin',

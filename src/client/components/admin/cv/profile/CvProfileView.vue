@@ -17,13 +17,19 @@ onMounted(async () => {
 <template>
   <section class="cv-admin__profile">
     <div class="cv-profile__action-block">
-      <a href="/admin/cv/profile/new"
-        class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]">
+      <a
+        href="/admin/cv/profile/new"
+        class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]"
+      >
         <Icon :icon="mdiPlus" :size="24"></Icon>
       </a>
     </div>
     <ul class="cv-profile__list-block">
-      <li v-for="profile in profiles" :key="profile.id" class="profile-list-item">
+      <li
+        v-for="profile in profiles"
+        :key="profile.id"
+        class="profile-list-item"
+      >
         <a :href="AppRoutes.admin.CvProfileById(profile.id)">
           <div class="flex w-full justify-between">
             <h2 class="profile-item__header w-full">
@@ -31,8 +37,12 @@ onMounted(async () => {
             </h2>
             <ProfileActiveBadge :is-active="profile.isActive" />
           </div>
-          <div class="flex items-center gap-[14px] w-full text-[--text-color-3] py-[8px] px-[8px]">
-            <div class="bg-[--primary-color-3-100] px-[8px] py-[4px] rounded-[4px] font-bold">
+          <div
+            class="flex items-center gap-[14px] w-full text-[--text-color-3] py-[8px] px-[8px]"
+          >
+            <div
+              class="bg-[--primary-color-3-100] px-[8px] py-[4px] rounded-[4px] font-bold"
+            >
               {{
                 `${profile.firstName}
               ${profile.lastName}`

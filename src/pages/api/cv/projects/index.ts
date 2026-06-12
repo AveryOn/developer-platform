@@ -9,7 +9,6 @@ import { CvProjectService } from '~/server/services/admin/cv/project.service'
 export const GET: APIRoute = async () => {
   const logger = new Logger('HTTP:GET:Projects.GET_LIST')
   try {
-
     // GET LIST
     logger.info('request projects list')
     const projects = await CvProjectService.getList()
@@ -22,4 +21,3 @@ export const GET: APIRoute = async () => {
     throw err
   }
 }
-

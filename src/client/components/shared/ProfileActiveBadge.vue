@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { mdiCheckCircleOutline } from '@mdi/js';
-import Icon from '~/client/components/common/Icon.vue';
-
+import { mdiCheckCircleOutline } from '@mdi/js'
+import Icon from '~/client/components/common/Icon.vue'
 
 const { isActive = false } = defineProps<{
   isActive?: boolean
@@ -9,10 +8,13 @@ const { isActive = false } = defineProps<{
 </script>
 
 <template>
-  <span class="cv-profile-by-id__status" :class="{
-    'cv-profile-by-id__status--active': isActive,
-    'cv-profile-by-id__status--inactive': !isActive,
-  }">
+  <span
+    class="cv-profile-by-id__status"
+    :class="{
+      'cv-profile-by-id__status--active': isActive,
+      'cv-profile-by-id__status--inactive': !isActive,
+    }"
+  >
     <Icon :icon="mdiCheckCircleOutline" :size="20" />
     {{ isActive ? 'Active' : 'Inactive' }}
   </span>

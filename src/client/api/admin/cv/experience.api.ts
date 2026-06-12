@@ -3,7 +3,9 @@ import type { Experience } from '~/shared/dto/cv/experience.dto'
 
 export const CvLinksApi = {
   async getList() {
-    const result = await httpClient.get<{ data: Experience[] }>(`/cv/experience/`)
+    const result = await httpClient.get<{ data: Experience[] }>(
+      `/cv/experience/`,
+    )
     return result.data
   },
 }

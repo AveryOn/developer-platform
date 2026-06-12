@@ -339,7 +339,11 @@ function formatDate(value: string | null) {
   <section class="cv-profile-by-id">
     <Transition name="loading-overlay-fade">
       <div v-if="isSubmitLoading" class="loading-overlay">
-        <Icon class="loading-overlay__icon text-[--primary-color-4]" :icon="mdiRadioactiveCircleOutline" :size="180" />
+        <Icon
+          class="loading-overlay__icon text-[--primary-color-4]"
+          :icon="mdiRadioactiveCircleOutline"
+          :size="180"
+        />
       </div>
     </Transition>
 
@@ -370,7 +374,11 @@ function formatDate(value: string | null) {
           <Icon :icon="mdiPlus" :size="22" />
         </a>
 
-        <button type="button" class="cv-profile-by-id__save-button" @click="saveProfile">
+        <button
+          type="button"
+          class="cv-profile-by-id__save-button"
+          @click="saveProfile"
+        >
           <Icon :icon="mdiContentSaveOutline" :size="18" />
           Save all
         </button>
@@ -398,7 +406,11 @@ function formatDate(value: string | null) {
     </div>
 
     <div class="cv-profile-by-id__content">
-      <section v-for="group in fieldGroups" :key="group.title" class="cv-profile-card">
+      <section
+        v-for="group in fieldGroups"
+        :key="group.title"
+        class="cv-profile-card"
+      >
         <header class="cv-profile-card__header">
           <div>
             <h2 class="cv-profile-card__title">
@@ -412,9 +424,14 @@ function formatDate(value: string | null) {
         </header>
 
         <div class="cv-profile-fields">
-          <article v-for="field in group.fields" :key="field.key" class="cv-profile-field" :class="{
-            'cv-profile-field--wide': field.kind === 'textarea',
-          }">
+          <article
+            v-for="field in group.fields"
+            :key="field.key"
+            class="cv-profile-field"
+            :class="{
+              'cv-profile-field--wide': field.kind === 'textarea',
+            }"
+          >
             <div class="cv-profile-field__top">
               <div>
                 <h3 class="cv-profile-field__label">
@@ -428,65 +445,110 @@ function formatDate(value: string | null) {
 
               <div class="cv-profile-field__controls">
                 <template v-if="editing[field.key]">
-                  <button type="button" class="cv-profile-field__control cv-profile-field__control--save"
-                    @click="saveField(field.key)">
+                  <button
+                    type="button"
+                    class="cv-profile-field__control cv-profile-field__control--save"
+                    @click="saveField(field.key)"
+                  >
                     Save
                   </button>
 
-                  <button type="button" class="cv-profile-field__icon-control" aria-label="Cancel editing"
-                    @click="cancelEdit(field.key)">
+                  <button
+                    type="button"
+                    class="cv-profile-field__icon-control"
+                    aria-label="Cancel editing"
+                    @click="cancelEdit(field.key)"
+                  >
                     <Icon :icon="mdiClose" :size="18" />
                   </button>
                 </template>
 
-                <button v-else type="button" class="cv-profile-field__icon-control" aria-label="Edit field"
-                  @click="startEdit(field.key)">
+                <button
+                  v-else
+                  type="button"
+                  class="cv-profile-field__icon-control"
+                  aria-label="Edit field"
+                  @click="startEdit(field.key)"
+                >
                   <Icon :icon="mdiPencilOutline" :size="18" />
                 </button>
               </div>
             </div>
 
-            <div v-if="editing[field.key]" class="cv-profile-field__editor">
-              <textarea v-if="field.kind === 'textarea'" class="cv-profile-field__textarea" rows="6"
-                :placeholder="field.placeholder" :value="getInputValue(field.key)" @input="
+            <div
+              v-if="editing[field.key]"
+              class="cv-profile-field__editor"
+            >
+              <textarea
+                v-if="field.kind === 'textarea'"
+                class="cv-profile-field__textarea"
+                rows="6"
+                :placeholder="field.placeholder"
+                :value="getInputValue(field.key)"
+                @input="
                   setInputValue(
                     field.key,
                     ($event.target as HTMLTextAreaElement).value,
                   )
-                  " />
+                "
+              />
 
-              <select v-else-if="field.kind === 'select'" class="cv-profile-field__input"
-                :value="getInputValue(field.key)" @change="
+              <select
+                v-else-if="field.kind === 'select'"
+                class="cv-profile-field__input"
+                :value="getInputValue(field.key)"
+                @change="
                   setInputValue(
                     field.key,
                     ($event.target as HTMLSelectElement).value,
                   )
-                  ">
-                <option v-for="option in languageOptions" :key="String(option)" :value="option">
+                "
+              >
+                <option
+                  v-for="option in languageOptions"
+                  :key="String(option)"
+                  :value="option"
+                >
                   {{ option }}
                 </option>
               </select>
 
-              <label v-else-if="field.kind === 'checkbox'" class="cv-profile-field__checkbox">
-                <input type="checkbox" :checked="draft.isActive" @change="setCheckboxValue" />
+              <label
+                v-else-if="field.kind === 'checkbox'"
+                class="cv-profile-field__checkbox"
+              >
+                <input
+                  type="checkbox"
+                  :checked="draft.isActive"
+                  @change="setCheckboxValue"
+                />
 
                 <span> This profile is active </span>
               </label>
 
-              <input v-else class="cv-profile-field__input" :type="field.kind" :placeholder="field.placeholder"
-                :value="getInputValue(field.key)" @input="
+              <input
+                v-else
+                class="cv-profile-field__input"
+                :type="field.kind"
+                :placeholder="field.placeholder"
+                :value="getInputValue(field.key)"
+                @input="
                   setInputValue(
                     field.key,
                     ($event.target as HTMLInputElement).value,
                   )
-                  " />
+                "
+              />
             </div>
 
             <div v-else class="cv-profile-field__value">
-              <span class="cv-profile-field__text" :class="{
-                'cv-profile-field__text--empty':
-                  getDisplayValue(field.key) === '—',
-              }">
+              <span
+                class="cv-profile-field__text"
+                :class="{
+                  'cv-profile-field__text--empty':
+                    getDisplayValue(field.key) === '—',
+                }"
+              >
                 {{ getDisplayValue(field.key) }}
               </span>
             </div>
@@ -515,21 +577,21 @@ function formatDate(value: string | null) {
             <span class="cv-profile-meta__label">Created at</span>
             <span class="cv-profile-meta__value">{{
               formatDate(profile.createdAt)
-              }}</span>
+            }}</span>
           </div>
 
           <div class="cv-profile-meta__item">
             <span class="cv-profile-meta__label">Updated at</span>
             <span class="cv-profile-meta__value">{{
               formatDate(profile.updatedAt)
-              }}</span>
+            }}</span>
           </div>
 
           <div class="cv-profile-meta__item">
             <span class="cv-profile-meta__label">Deleted at</span>
             <span class="cv-profile-meta__value">{{
               formatDate(profile.deletedAt)
-              }}</span>
+            }}</span>
           </div>
         </div>
       </section>
@@ -1015,7 +1077,8 @@ function formatDate(value: string | null) {
 .cv-profile-field__input:focus,
 .cv-profile-field__textarea:focus {
   border-color: var(--primary-color-4);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color-4) 18%, transparent);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--primary-color-4) 18%, transparent);
 }
 
 .cv-profile-field__checkbox {

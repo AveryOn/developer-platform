@@ -1,4 +1,3 @@
-
 export const apiRoutes = {
   Health: '/api/health',
   Projects: '/api/projects',

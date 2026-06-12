@@ -1,6 +1,6 @@
 import { articlesTable } from '~/server/database/schema'
 import { db } from '~/server/database/client'
-import type { ArticleInput, Article } from '~/shared/dto/article.dto';
+import type { ArticleInput, Article } from '~/shared/dto/article.dto'
 
 export const ArticleService = {
   async getList(): Promise<Article[]> {
