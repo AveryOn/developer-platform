@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
-import type { Profile } from '~/shared/dto/admin/cv/profile.dto'
+import type { Profile } from '~/shared/dto/cv/profile.dto'
 import Icon from '~/client/components/common/Icon.vue'
 import { mdiPlus } from '@mdi/js'
 import { AppRoutes } from '~/shared/router'

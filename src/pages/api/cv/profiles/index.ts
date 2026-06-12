@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro'
-import { createCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
+import { createCvProfileDto } from '~/shared/dto/cv/profile.dto'
 import { CvProfileService } from '~/server/services/admin/cv/profile.service'
 import {
   Logger,

@@ -5,7 +5,7 @@ import type {
   CreateCvProfileDto,
   Profile,
   UpdateCvProfileDto,
-} from '~/shared/dto/admin/cv/profile.dto'
+} from '~/shared/dto/cv/profile.dto'
 import { dateISO } from '~/shared/utils/datetime'
 
 export const CvProfileService = {

@@ -13,7 +13,7 @@ import Icon from '~/client/components/common/Icon.vue'
 import {
   updateCvProfileDto,
   type Profile,
-} from '~/shared/dto/admin/cv/profile.dto'
+} from '~/shared/dto/cv/profile.dto'
 import { useToast } from '~/client/composables/useToast'
 import z from 'zod'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
@@ -515,21 +515,21 @@ function formatDate(value: string | null) {
             <span class="cv-profile-meta__label">Created at</span>
             <span class="cv-profile-meta__value">{{
               formatDate(profile.createdAt)
-            }}</span>
+              }}</span>
           </div>
 
           <div class="cv-profile-meta__item">
             <span class="cv-profile-meta__label">Updated at</span>
             <span class="cv-profile-meta__value">{{
               formatDate(profile.updatedAt)
-            }}</span>
+              }}</span>
           </div>
 
           <div class="cv-profile-meta__item">
             <span class="cv-profile-meta__label">Deleted at</span>
             <span class="cv-profile-meta__value">{{
               formatDate(profile.deletedAt)
-            }}</span>
+              }}</span>
           </div>
         </div>
       </section>

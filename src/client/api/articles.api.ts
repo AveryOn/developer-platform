@@ -1,5 +1,5 @@
 import { httpClient } from '~/client/api/http-client'
-import type { Article } from '~/shared/types'
+import type { Article } from '~/shared/dto/article.dto'
 
 export type CreateArticleDto = {
   slug: string

@@ -1,7 +1,7 @@
 import { httpClient } from '~/client/api/http-client'
 import type {
   Profile,
-} from '~/shared/dto/admin/cv/profile.dto'
+} from '~/shared/dto/cv/profile.dto'
 
 export const CvLinksApi = {
   async getListByProfileId(profileId: string) {

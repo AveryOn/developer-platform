@@ -12,7 +12,7 @@ import TextareaUI from '~/client/components/shared/TextareaUI.vue'
 import { useFormValidator } from '~/client/composables/useFormValidator'
 import { useToast } from '~/client/composables/useToast'
 import { sleep } from '~/shared/async'
-import { createCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
+import { createCvProfileDto } from '~/shared/dto/cv/profile.dto'
 import { AppRoutes } from '~/shared/router'
 import { ProfileLanguage } from '~/shared/types'
 

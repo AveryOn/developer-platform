@@ -3,7 +3,7 @@ import type {
   CreateCvProfileDto,
   Profile,
   UpdateCvProfileDto,
-} from '~/shared/dto/admin/cv/profile.dto'
+} from '~/shared/dto/cv/profile.dto'
 
 export const CvProfileApi = {
   async getAll() {

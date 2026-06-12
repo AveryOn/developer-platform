@@ -6,7 +6,7 @@ import { cvProfileTable } from '~/server/database/schema/cv-profile'
 import { ZodBundleErrors } from '~/server/plugins/zod.plugin'
 import { CvProfileService } from '~/server/services/admin/cv/profile.service'
 import { _ } from '~/shared/const'
-import { updateCvProfileDto } from '~/shared/dto/admin/cv/profile.dto'
+import { updateCvProfileDto } from '~/shared/dto/cv/profile.dto'
 import { Logger } from '~/shared/logger/logger.client'
 
 // Получить профиль по его ID
