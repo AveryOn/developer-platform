@@ -1,7 +1,7 @@
 import { httpClient } from '~/client/api/http-client'
 import type { Language } from '~/shared/dto/cv/language.dto'
 
-export const CvLinksApi = {
+export const CvLanguageApi = {
   async getList() {
     const result = await httpClient.get<{ data: Language[] }>(
       `/cv/languages/`,
