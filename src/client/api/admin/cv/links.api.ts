@@ -1,4 +1,5 @@
 import { httpClient } from '~/client/api/http-client'
+import { _ } from '~/shared/const'
 import type { Link } from '~/shared/dto/cv/link.dto'
 import { AppRoutes } from '~/shared/router'
 
@@ -9,9 +10,7 @@ export const CvLinksApi = {
     const result = await httpClient.get<{ data: Link[] }>(
       routes.CvLinks,
       {
-        params: {
-          profileId,
-        },
+        params: profileId ? { profileId } : _,
       },
     )
     return result.data

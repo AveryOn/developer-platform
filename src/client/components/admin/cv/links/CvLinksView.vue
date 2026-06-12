@@ -1,22 +1,16 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import SelectInputUI, {
   type SelectOption,
 } from '~/client/components/shared/SelectInputUI.vue'
-// import { CvLinksApi } from '~/client/api/admin/cv/links.api'
+import { _ } from '~/shared/const'
+import type { Link } from '~/shared/dto/cv/link.dto'
 
 const profileSelectItems = ref<SelectOption[]>([])
-// const selectedProfileId = ref<string | null>(null)
-
-// function getProfileList() {
-
-// }
-
-// function loadLinks() {
-//   if(!selectedProfileId.value) return
-//   CvLinksApi.getListByProfileId()
-// }
+const selectedProfileId = ref<string>('')
+const links = ref<Link[]>([])
 
 async function uploadProfiles(): Promise<SelectOption[]> {
   const profiles = await CvProfileApi.getAll()
@@ -30,6 +24,9 @@ async function uploadProfiles(): Promise<SelectOption[]> {
 
 onMounted(async () => {
   profileSelectItems.value = await uploadProfiles()
+  links.value = await CvLinksApi.getListByProfileId(
+    selectedProfileId.value ?? _,
+  )
 })
 </script>
 
@@ -40,9 +37,10 @@ onMounted(async () => {
       @submit.prevent
     >
       <SelectInputUI
+        v-model="selectedProfileId"
         :options="profileSelectItems"
         :placeholder="'Select Profile'"
-      ></SelectInputUI>
+      />
 
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
 
