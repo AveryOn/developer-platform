@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
-type SelectOption = {
+export type SelectOption = {
   label: string
   value: string
   disabled?: boolean
