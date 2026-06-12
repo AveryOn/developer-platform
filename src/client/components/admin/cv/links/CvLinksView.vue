@@ -106,19 +106,23 @@ function toggleLinkForEditing(link: Link) {
 
 function filledEditMap(links: Link[]) {
   for (const link of links) {
-    editLinksMap[link.id] = {
-      enabled: false,
-      newValue: '',
+    if (!editLinksMap[link.id]) {
+      editLinksMap[link.id] = {
+        enabled: false,
+        newValue: '',
+      }
     }
   }
 }
 
 onBeforeMount(async () => {
   profileSelectItems.value = await uploadProfiles()
-  const links = await CvLinksApi.getListByProfileId(
-    selectedProfileId.value ?? _,
+  const uploadedLinks = await CvLinksApi.getListByProfileId(
+    selectedProfileId.value || _,
   )
-  filledEditMap(links)
+  console.debug(uploadedLinks)
+  // links.value = uploadedLinks
+  filledEditMap(links.value)
 })
 
 </script>
