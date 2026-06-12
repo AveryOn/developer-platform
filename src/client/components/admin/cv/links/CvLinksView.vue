@@ -92,24 +92,33 @@ onMounted(async () => {
 
 <template>
   <section class="cv-admin__links">
-    <form class="flex flex-col gap-[24px] min-w-[460px] w-[460px]" @submit.prevent>
+    <form class="flex flex-col gap-[24px] min-w-[480px] w-[460px]" @submit.prevent>
       <SelectInputUI v-model="selectedProfileId" :options="profileSelectItems" :placeholder="'Select Profile'" />
 
       <!-- SEPARATOR -->
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
 
-      <ul class="flex flex-col gap-[10px]">
-        <li v-for="link in links" :key="link.id" class="link-item">
-          <div v-if="editLinksMap[link.id]" class="flex items-center gap-[8px]">
-            <InputUI v-model="newLinkLabel" size="xsmall" @click.stop />
-            <ButtonBaseUI size="xsmall">Confirm</ButtonBaseUI>
-          </div>
-          <span v-else @click="toggleLinkForEditing(link)">{{ link.label }}</span>
-          <div class="link-item__actions">
-            <Icon :icon="mdiPen" :size="16"></Icon>
-          </div>
-        </li>
-      </ul>
+      <div class="relative flex items-start justify-between h-[100%] gap-[24px]">
+        <ul class="flex flex-col gap-[10px] w-[50%]">
+          <li v-for="link in links" :key="link.id" class="link-item">
+            <div v-if="editLinksMap[link.id]" class="flex items-center gap-[8px]">
+              <InputUI v-model="newLinkLabel" size="xsmall" @click.stop />
+              <ButtonBaseUI size="xsmall">Confirm</ButtonBaseUI>
+            </div>
+            <span v-else @click="toggleLinkForEditing(link)">{{ link.label }}</span>
+            <div class="link-item__actions">
+              <Icon :icon="mdiPen" :size="16"></Icon>
+            </div>
+          </li>
+        </ul>
+
+        <!-- SEPARATOR -->
+        <div class="absolute top-0 left-[50%] transform-translate-x-[-50%] bottom-0 w-[10px] bg-[--primary-color-5]">
+        </div>
+
+        <div class="w-[50%] flex flex-col bg-[primary-colo-4] link-edit-block"></div>
+
+      </div>
     </form>
   </section>
 </template>
@@ -139,6 +148,10 @@ onMounted(async () => {
 .link-item:hover {
   background-color: var(--primary-color-3);
   transition: all 0.3s ease;
+}
 
+.link-edit-block {
+  border: 1px solid red;
+  padding: 10px;
 }
 </style>
