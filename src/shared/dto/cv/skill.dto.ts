@@ -1,4 +1,7 @@
-import type { cvSkillGroupTable, cvSkillTable } from "~/server/database/schema";
+import type {
+  cvSkillGroupTable,
+  cvSkillTable,
+} from '~/server/database/schema'
 
 export type SkillGroup = typeof cvSkillGroupTable.$inferSelect
 export type SkillGroupInput = typeof cvSkillGroupTable.$inferInsert

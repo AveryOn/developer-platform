@@ -13,7 +13,9 @@ export const GET: APIRoute = async () => {
     logger.info('request employmentType list')
     const employmentTypes = await CvEmploymentTypeService.getList()
 
-    logger.info('GET: employmentTypes', { count: employmentTypes.length })
+    logger.info('GET: employmentTypes', {
+      count: employmentTypes.length,
+    })
 
     return Response.json({ data: employmentTypes })
   } catch (err) {

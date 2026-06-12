@@ -24,10 +24,11 @@ onMounted(async () => {
 <template>
   <section class="cv-admin__links">
     <div class="cv-links__main-block">
-      <div class="profiles-selector-block">
-      </div>
+      <div class="profiles-selector-block"></div>
 
-      <div class="px-[4px] bg-[--primary-color-5] top-0 bottom-0 my-[14px]"></div>
+      <div
+        class="px-[4px] bg-[--primary-color-5] top-0 bottom-0 my-[14px]"
+      ></div>
 
       <div class="w-[50%]">
         <h1>HELLO</h1>

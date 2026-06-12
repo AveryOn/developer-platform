@@ -8,7 +8,6 @@ import { AppRoutes } from '~/shared/router'
 
 const routes = AppRoutes.api.admin
 
-
 export const CvProfileApi = {
   async getAll() {
     const result = await httpClient.get<{ data: Profile[] }>(
