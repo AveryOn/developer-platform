@@ -119,6 +119,8 @@ export function useFormValidator<TForm extends object>(form: TForm) {
     })
   }
 
+  /** Отменяет ошибку для определенного поля
+   * @param field - Имя ключа для которого будет отменена ошибка */
   function undoError(field: keyof TForm) {
     errors[field] = ''
   }
