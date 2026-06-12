@@ -131,8 +131,7 @@ onBeforeUnmount(() => {
 }
 
 .app-input__field--xsmall {
-  min-height: 32px;
-  height: 24px;
+  min-height: 28px;
   padding: 0 10px;
   font-size: 13px;
 }
