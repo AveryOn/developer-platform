@@ -9,9 +9,14 @@ import InputUI from '~/client/components/shared/InputUI.vue'
 import SelectInputUI, {
   type SelectOption,
 } from '~/client/components/shared/SelectInputUI.vue'
+import { useKeyboard } from '~/client/composables/useKeyboard'
 import { _ } from '~/shared/const'
 import type { Link } from '~/shared/dto/cv/link.dto'
 import type { SocialNetwork } from '~/shared/types'
+
+useKeyboard({
+  esc: resetEditMode
+})
 
 const profileSelectItems = ref<SelectOption[]>([])
 const selectedProfileId = ref<string>('')
@@ -61,6 +66,12 @@ async function uploadProfiles(): Promise<SelectOption[]> {
       value: p.id,
     }
   })
+}
+
+function resetEditMode() {
+  for (const key of Object.keys(editLinksMap)) {
+    editLinksMap[key] = false
+  }
 }
 
 function toggleLinkForEditing(link: Link) {
