@@ -51,6 +51,7 @@ const links = ref<Link[]>([
   },
 ])
 const editLinksMap = reactive<Record<string, boolean>>({})
+const newLinkLabel = ref('')
 
 async function uploadProfiles(): Promise<SelectOption[]> {
   const profiles = await CvProfileApi.getAll()
@@ -62,8 +63,16 @@ async function uploadProfiles(): Promise<SelectOption[]> {
   })
 }
 
-function selectLinkForEditing(linkId: string) {
+function toggleLinkForEditing(linkId: string) {
   editLinksMap[linkId] = !editLinksMap[linkId]
+  Object
+    .keys(editLinksMap)
+    .forEach((l) => {
+      if (l === linkId) {
+        return
+      }
+      editLinksMap[l] = false
+    })
 }
 
 onMounted(async () => {
@@ -86,12 +95,12 @@ onMounted(async () => {
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
 
       <ul class="flex flex-col gap-[10px]">
-        <li v-for="link in links" :key="link.id" class="link-item" @click="selectLinkForEditing(link.id)">
+        <li v-for="link in links" :key="link.id" class="link-item">
           <div v-if="editLinksMap[link.id]" class="flex items-center gap-[8px]">
-            <InputUI size="xsmall" @click.stop />
-            <ButtonBaseUI size="xsmall">HELLO</ButtonBaseUI>
+            <InputUI v-model="newLinkLabel" size="xsmall" @click.stop />
+            <ButtonBaseUI size="xsmall">Confirm</ButtonBaseUI>
           </div>
-          <span v-else>{{ link.label }}</span>
+          <span v-else @click="toggleLinkForEditing(link.id)">{{ link.label }}</span>
           <div class="link-item__actions">
             <Icon :icon="mdiPen" :size="16"></Icon>
           </div>
