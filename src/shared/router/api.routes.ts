@@ -6,8 +6,33 @@ export const apiRoutes = {
   },
 
   admin: {
+    // EMPLOYMENT TYPE
+    CvEmploymentType: `/api/cv/employment-types`,
+
+    // PROFILES
     CvProfiles: '/api/cv/profiles',
     CvProfilesActive: '/api/cv/profiles/active',
     cvProfileByUuid: (uuid: string) => `/api/cv/profiles/${uuid}`,
+
+    // EXPERIENCE
+    CvExperiences: '/api/cv/experiences',
+
+    // LANGUAGES
+    CvLanguages: '/api/cv/languages',
+
+    // LINKS
+    CvLinks: '/api/cv/links',
+
+    // PROJECTS
+    CvProjects: '/api/cv/projects',
+
+    // SKILLS
+    CvSkills: '/api/cv/skills',
+
+    // TEMPLATES
+    CvTemplates: '/api/cv/templates',
+
+    // VERSIONS
+    CvVersions: '/api/cv/versions',
   },
 } as const
