@@ -1,9 +1,9 @@
 import { httpClient } from '~/client/api/http-client'
-import type { Experience } from '~/shared/dto/cv/experience.dto'
+import type { Project } from '~/shared/dto/cv/projects.dto'
 
 export const CvProjectsApi = {
-  async getList(profileId: string) {
-    const result = await httpClient.get<{ data: Experience[] }>(`/cv/experience/`)
+  async getList() {
+    const result = await httpClient.get<{ data: Project[] }>(`/cv/projects`)
     return result.data
   },
 }
