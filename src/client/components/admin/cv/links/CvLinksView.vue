@@ -5,10 +5,10 @@ import type { Profile } from '~/shared/dto/cv/profile.dto'
 import Icon from '~/client/components/common/Icon.vue'
 import { mdiPlus } from '@mdi/js'
 import ProfileActiveBadge from '~/client/components/shared/ProfileActiveBadge.vue'
-import { CvLinksApi } from '~/client/api/admin/cv/links.api'
+// import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 
 const profiles = ref<Profile[]>([])
-const selectedProfileId = ref<string | null>(null)
+// const selectedProfileId = ref<string | null>(null)
 
 // function getProfileList() {
 
@@ -27,33 +27,23 @@ onMounted(async () => {
 <template>
   <section class="cv-admin__links">
     <div class="cv-links__action-block">
-      <a
-        href="/admin/cv/profile/new"
-        class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]"
-      >
+      <a href="/admin/cv/profile/new"
+        class="action-button text-[--primary-color-4] bg-[--primary-color-3] px-[8px] py-[4px] rounded-[6px]">
         <Icon :icon="mdiPlus" :size="24"></Icon>
       </a>
     </div>
     <div class="cv-links__main-block">
       <ul class="profiles-list">
-        <li
-          v-for="profile in profiles"
-          :key="profile.id"
-          class="profile-list-item"
-        >
-          <a @click="">
+        <li v-for="profile in profiles" :key="profile.id" class="profile-list-item">
+          <a>
             <div class="flex w-full justify-between">
               <h2 class="profile-item__header w-full">
                 {{ profile.title }}
               </h2>
               <ProfileActiveBadge :is-active="profile.isActive" />
             </div>
-            <div
-              class="flex items-center gap-[14px] w-full text-[--text-color-3] py-[8px] px-[8px]"
-            >
-              <div
-                class="bg-[--primary-color-3-100] px-[8px] py-[4px] rounded-[4px] font-bold"
-              >
+            <div class="flex items-center gap-[14px] w-full text-[--text-color-3] py-[8px] px-[8px]">
+              <div class="bg-[--primary-color-3-100] px-[8px] py-[4px] rounded-[4px] font-bold">
                 {{
                   `${profile.firstName}
                 ${profile.lastName}`
@@ -67,9 +57,7 @@ onMounted(async () => {
         </li>
       </ul>
 
-      <div
-        class="px-[4px] bg-[--primary-color-5] top-0 bottom-0 my-[14px]"
-      ></div>
+      <div class="px-[4px] bg-[--primary-color-5] top-0 bottom-0 my-[14px]"></div>
 
       <div class="w-[50%]">
         <h1>HELLO</h1>
