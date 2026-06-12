@@ -46,6 +46,12 @@ onMounted(async () => {
           </a>
         </li>
       </ul>
+
+      <div class="px-[4px] bg-[--primary-color-5] top-0 bottom-0"></div>
+
+      <div class="w-[50%]">
+        <h1>HELLO</h1>
+      </div>
     </div>
   </section>
 </template>
@@ -78,6 +84,7 @@ onMounted(async () => {
 }
 
 .cv-links__main-block {
+  position: relative;
   display: flex;
   align-items: center;
   border: 1px solid red;
@@ -85,6 +92,7 @@ onMounted(async () => {
 
 .profiles-list {
   display: flex;
+  width: 50%;
   flex-direction: column;
   padding: 12px 24px;
   gap: 8px;

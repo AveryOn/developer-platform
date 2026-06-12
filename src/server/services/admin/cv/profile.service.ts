@@ -23,15 +23,14 @@ export const CvProfileService = {
     return await db.select().from(cvProfileTable)
   },
 
-  async getActive(): Promise<Profile | null> {
-    const [profile] = await db
+  async getActive(): Promise<Profile[]> {
+    const profiles = await db
       .select()
       .from(cvProfileTable)
       .where(eq(cvProfileTable.isActive, true))
       .orderBy(desc(cvProfileTable.createdAt))
-      .limit(1)
 
-    return profile ?? null
+    return profiles
   },
 
   async create(data: CreateCvProfileDto): Promise<Profile> {

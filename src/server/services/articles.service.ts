@@ -1,6 +1,6 @@
-import type { Article, ArticleCreateInput } from '~/shared/types'
 import { articlesTable } from '~/server/database/schema'
 import { db } from '~/server/database/client'
+import ArticleCreateInput from '~/shared/types';
 
 export const ArticleService = {
   async getList(): Promise<Article[]> {
