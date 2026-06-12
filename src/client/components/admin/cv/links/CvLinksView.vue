@@ -61,9 +61,10 @@ async function uploadProfiles(): Promise<SelectOption[]> {
 
 onMounted(async () => {
   profileSelectItems.value = await uploadProfiles()
-  // links.value = await CvLinksApi.getListByProfileId(
-  //   selectedProfileId.value ?? _,
-  // )
+  const links = await CvLinksApi.getListByProfileId(
+    selectedProfileId.value ?? _,
+  )
+  console.debug(links);
 })
 </script>
 
@@ -114,6 +115,4 @@ onMounted(async () => {
   transition: all 0.3s ease;
 
 }
-
-.link-item__title {}
 </style>
