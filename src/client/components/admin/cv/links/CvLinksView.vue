@@ -89,7 +89,7 @@ onMounted(async () => {
         <li v-for="link in links" :key="link.id" class="link-item" @click="selectLinkForEditing(link.id)">
           <div v-if="editLinksMap[link.id]" class="flex">
             <InputUI size="xsmall" @click.stop />
-            <ButtonBaseUI>HELLO</ButtonBaseUI>
+            <ButtonBaseUI size="xsmall">HELLO</ButtonBaseUI>
           </div>
           <span v-else>{{ link.label }}</span>
           <div class="link-item__actions">

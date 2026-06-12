@@ -1,9 +1,12 @@
 <script setup lang="ts">
+type BaseButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
+type BaseButtonSize = 'xsmall' | 'small' | 'medium' | 'large'
+
 const props = withDefaults(
   defineProps<{
     type?: 'button' | 'submit' | 'reset'
-    variant?: 'primary' | 'secondary' | 'ghost' | 'danger'
-    size?: 'sm' | 'md' | 'lg'
+    variant?: BaseButtonVariant
+    size?: BaseButtonSize
     disabled?: boolean
     loading?: boolean
     fullWidth?: boolean
@@ -11,7 +14,7 @@ const props = withDefaults(
   {
     type: 'button',
     variant: 'primary',
-    size: 'md',
+    size: 'medium',
     disabled: false,
     loading: false,
     fullWidth: false,
@@ -33,26 +36,16 @@ function handleClick(event: MouseEvent) {
 </script>
 
 <template>
-  <button
-    :type="type"
-    class="base-button"
-    :class="[
-      `base-button--${variant}`,
-      `base-button--${size}`,
-      {
-        'base-button--disabled': disabled,
-        'base-button--loading': loading,
-        'base-button--full-width': fullWidth,
-      },
-    ]"
-    :disabled="disabled || loading"
-    @click="handleClick"
-  >
-    <span
-      v-if="loading"
-      class="base-button__loader"
-      aria-hidden="true"
-    />
+  <button :type="type" class="base-button" :class="[
+    `base-button--${variant}`,
+    `base-button--${size}`,
+    {
+      'base-button--disabled': disabled,
+      'base-button--loading': loading,
+      'base-button--full-width': fullWidth,
+    },
+  ]" :disabled="disabled || loading" @click="handleClick">
+    <span v-if="loading" class="base-button__loader" aria-hidden="true" />
 
     <span class="base-button__content">
       <slot />
@@ -93,19 +86,25 @@ function handleClick(event: MouseEvent) {
   cursor: not-allowed;
 }
 
-.base-button--sm {
+.base-button--xsmall {
+  min-height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.base-button--small {
   min-height: 34px;
   padding: 0 12px;
   font-size: 13px;
 }
 
-.base-button--md {
+.base-button--medium {
   min-height: 40px;
   padding: 0 16px;
   font-size: 14px;
 }
 
-.base-button--lg {
+.base-button--large {
   min-height: 46px;
   padding: 0 20px;
   font-size: 15px;
@@ -178,6 +177,26 @@ function handleClick(event: MouseEvent) {
   border-radius: 999px;
 
   animation: base-button-spin 0.7s linear infinite;
+}
+
+.base-button--xsmall .base-button__loader {
+  width: 12px;
+  height: 12px;
+}
+
+.base-button--small .base-button__loader {
+  width: 13px;
+  height: 13px;
+}
+
+.base-button--medium .base-button__loader {
+  width: 14px;
+  height: 14px;
+}
+
+.base-button--large .base-button__loader {
+  width: 16px;
+  height: 16px;
 }
 
 @keyframes base-button-spin {
