@@ -1,38 +1,9 @@
+import { adminRoutes } from "~/shared/router/admin.routes";
+import { apiRoutes } from "~/shared/router/api.routes";
+import { clientRoutes } from "~/shared/router/client.routes";
+
 export const AppRoutes = {
-  client: {
-    Home: '/',
-    AboutMe: '/about-me',
-    News: '/news',
-    Projects: '/projects',
-    newsDetails: (uuid: string) => `/news/${uuid}`,
-    projectDetails: (uuid: string) => `/projects/${uuid}`,
-  },
-  admin: {
-    index: '/admin',
-    Projects: '/admin/projects',
-    Settings: '/admin/settings',
-    Articles: '/admin/articles',
-    ArticlesNew: '/admin/articles/new',
-    Cv: '/admin/cv',
-    CvEmploymentTypes: '/admin/cv/employment-types',
-    CvExperience: '/admin/cv/experience',
-    CvLanguages: '/admin/cv/languages',
-    CvLinks: '/admin/cv/links',
-    CvPreview: '/admin/cv/preview',
-    CvProfile: '/admin/cv/profile',
-    CvProfileById: (uuid: string) => `/admin/cv/profile/${uuid}`,
-    CvProfileNew: '/admin/cv/profile/new',
-    CvProjects: '/admin/cv/projects',
-    CvSkills: '/admin/cv/skills',
-    CvTemplates: '/admin/cv/templates',
-    CvVersions: '/admin/cv/versions',
-  },
-  api: {
-    Health: '/api/health',
-    Projects: '/api/projects',
-    Articles: '/api/articles',
-    CvProfiles: '/api/cv/profiles',
-    CvProfilesActive: '/api/cv/profiles/active',
-    cvProfileByUuid: (uuid: string) => `/api/cv/profiles/${uuid}`,
-  },
+  client: clientRoutes,
+  admin: adminRoutes,
+  api: apiRoutes,
 }

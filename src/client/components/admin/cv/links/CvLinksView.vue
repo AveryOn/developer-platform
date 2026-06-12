@@ -4,14 +4,26 @@ import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import type { Profile } from '~/shared/dto/admin/cv/profile.dto'
 import Icon from '~/client/components/common/Icon.vue'
 import { mdiPlus } from '@mdi/js'
-import { AppRoutes } from '~/shared/router'
 import ProfileActiveBadge from '~/client/components/shared/ProfileActiveBadge.vue'
+import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 
 const profiles = ref<Profile[]>([])
+const selectedProfileId = ref<string | null>(null)
+
+// function getProfileList() {
+
+// }
+
+// function loadLinks() {
+//   if(!selectedProfileId.value) return
+//   CvLinksApi.getListByProfileId()
+// }
 
 onMounted(async () => {
   profiles.value = await CvProfileApi.getAll()
 })
+
+
 </script>
 
 <template>
@@ -25,7 +37,7 @@ onMounted(async () => {
     <div class="cv-links__main-block">
       <ul class="profiles-list">
         <li v-for="profile in profiles" :key="profile.id" class="profile-list-item">
-          <a :href="AppRoutes.admin.CvProfileById(profile.id)">
+          <a @click="">
             <div class="flex w-full justify-between">
               <h2 class="profile-item__header w-full">
                 {{ profile.title }}
@@ -47,7 +59,7 @@ onMounted(async () => {
         </li>
       </ul>
 
-      <div class="px-[4px] bg-[--primary-color-5] top-0 bottom-0"></div>
+      <div class="px-[4px] bg-[--primary-color-5] top-0 bottom-0 my-[14px]"></div>
 
       <div class="w-[50%]">
         <h1>HELLO</h1>
@@ -86,7 +98,6 @@ onMounted(async () => {
 .cv-links__main-block {
   position: relative;
   display: flex;
-  align-items: center;
   border: 1px solid red;
 }
 
