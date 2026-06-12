@@ -7,7 +7,7 @@ export const apiRoutes = {
 
   admin: {
     // EMPLOYMENT TYPE
-    CvEmploymentType: `/api/cv/employment-types`,
+    CvEmploymentTypes: `/api/cv/employment-types`,
 
     // PROFILES
     CvProfiles: '/api/cv/profiles',
