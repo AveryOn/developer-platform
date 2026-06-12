@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiPen } from '@mdi/js'
-import { onMounted, reactive, ref } from 'vue'
+import { onBeforeMount, reactive, ref } from 'vue'
 import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import Icon from '~/client/components/common/Icon.vue'
@@ -55,7 +55,11 @@ const links = ref<Link[]>([
     isVisible: false,
   },
 ])
-const editLinksMap = reactive<Record<string, boolean>>({})
+interface EditLinksMapValue {
+  enabled: boolean
+  newValue: string
+}
+const editLinksMap = reactive<Record<string, EditLinksMapValue>>({})
 const newLinkLabel = ref('')
 
 async function uploadProfiles(): Promise<SelectOption[]> {
@@ -70,35 +74,53 @@ async function uploadProfiles(): Promise<SelectOption[]> {
 
 function resetEditMode() {
   for (const key of Object.keys(editLinksMap)) {
-    editLinksMap[key] = false
+    editLinksMap[key].enabled = false
   }
 }
 
 function toggleLinkForEditing(link: Link) {
-  const isEditing = !editLinksMap[link.id]
-  editLinksMap[link.id] = isEditing
-  if (isEditing === true) {
-    newLinkLabel.value = link.label
+  if (!editLinksMap[link.id]) {
+    editLinksMap[link.id] = {
+      enabled: false,
+      newValue: '',
+    }
   }
-  Object
-    .keys(editLinksMap)
-    .forEach((l) => {
-      if (l === link.id) {
-        return
-      }
-      editLinksMap[l] = false
-    })
+
+  const isEditing = !editLinksMap[link.id].enabled
+
+  editLinksMap[link.id].enabled = isEditing
+
+  if (isEditing) {
+    newLinkLabel.value = link.label
+    editLinksMap[link.id].newValue = link.label
+  }
+
+  Object.keys(editLinksMap).forEach((id) => {
+    if (id === link.id) {
+      return
+    }
+
+    editLinksMap[id].enabled = false
+  })
 }
 
-onMounted(async () => {
+function filledEditMap(links: Link[]) {
+  for (const link of links) {
+    editLinksMap[link.id] = {
+      enabled: false,
+      newValue: '',
+    }
+  }
+}
+
+onBeforeMount(async () => {
   profileSelectItems.value = await uploadProfiles()
   const links = await CvLinksApi.getListByProfileId(
     selectedProfileId.value ?? _,
   )
-  links.forEach((l) => {
-    editLinksMap[l.id] = false
-  })
+  filledEditMap(links)
 })
+
 </script>
 
 <template>
@@ -112,11 +134,11 @@ onMounted(async () => {
       <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
         <ul class="flex flex-col gap-[10px] w-[50%]">
           <li v-for="link in links" :key="link.id" class="link-item">
-            <div v-if="editLinksMap[link.id]" class="flex items-center gap-[8px]">
+            <div v-if="editLinksMap[link.id]?.enabled" class="flex items-center gap-[8px]">
               <InputUI v-model="newLinkLabel" size="xsmall" @click.stop />
               <ButtonBaseUI size="xsmall">Confirm</ButtonBaseUI>
             </div>
-            <span v-else @click="toggleLinkForEditing(link)">{{ link.label }}</span>
+            <span v-else @click="() => toggleLinkForEditing(link)">{{ link.label }}</span>
             <div class="link-item__actions">
               <Icon :icon="mdiPen" :size="16"></Icon>
             </div>
