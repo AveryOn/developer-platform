@@ -92,13 +92,13 @@ onMounted(async () => {
 
 <template>
   <section class="cv-admin__links">
-    <form class="flex flex-col gap-[24px] min-w-[480px] w-[460px]" @submit.prevent>
+    <form class="flex flex-col gap-[24px] min-w-[360px] w-[600px]" @submit.prevent>
       <SelectInputUI v-model="selectedProfileId" :options="profileSelectItems" :placeholder="'Select Profile'" />
 
       <!-- SEPARATOR -->
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
 
-      <div class="relative flex items-start justify-between h-[100%] gap-[24px]">
+      <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
         <ul class="flex flex-col gap-[10px] w-[50%]">
           <li v-for="link in links" :key="link.id" class="link-item">
             <div v-if="editLinksMap[link.id]" class="flex items-center gap-[8px]">
@@ -113,10 +113,11 @@ onMounted(async () => {
         </ul>
 
         <!-- SEPARATOR -->
-        <div class="absolute top-0 left-[50%] transform-translate-x-[-50%] bottom-0 w-[10px] bg-[--primary-color-5]">
+        <div v-if="selectedProfileId"
+          class="absolute top-0 left-[50%] transform-translate-x-[-50%] bottom-0 w-[4px] bg-[--primary-color-5]">
         </div>
 
-        <div class="w-[50%] flex flex-col bg-[primary-colo-4] link-edit-block"></div>
+        <div v-if="selectedProfileId" class="w-[50%] flex flex-col bg-[primary-colo-4] link-edit-block"></div>
 
       </div>
     </form>
@@ -138,6 +139,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   border: 1px solid var(--border-color-1);
   border-radius: 6px;
   padding: 8px 12px;
