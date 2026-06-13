@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiPen } from '@mdi/js'
+import { mdiHandOkay, mdiPen, mdiUndo } from '@mdi/js'
 import { onBeforeMount, ref } from 'vue'
 import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
@@ -11,6 +11,7 @@ import { useKeyboard } from '~/client/composables/useKeyboard'
 import { _ } from '~/shared/const'
 import type { Link } from '~/shared/dto/cv/link.dto'
 import type { SocialNetwork } from '~/shared/types'
+import type { LinkInput } from '~/shared/dto/cv/link.dto';
 
 useKeyboard({
   esc: () => console.debug('HELLO FUCK')
@@ -54,7 +55,12 @@ const links = ref<Link[]>([
   },
 ])
 const selectedLink = ref<Link | null>(null)
-const editLinkFormData = ref<Link | null>(null)
+
+type LinkEditData = Partial<Record<keyof LinkInput, {
+  oldValue: LinkInput[keyof LinkInput]
+  newValue: LinkInput[keyof LinkInput]
+}>>
+const editLinkFormData = ref<LinkEditData>()
 
 async function uploadProfiles(): Promise<SelectOption[]> {
   const profiles = await CvProfileApi.getAll()
@@ -68,7 +74,13 @@ async function uploadProfiles(): Promise<SelectOption[]> {
 
 function selectLink(link: Link) {
   selectedLink.value = link
-  editLinkFormData.value = { ...link }
+  for (const key of Object.keys(link)) {
+    const k = key as keyof typeof link
+    editLinkFormData.value![k] = {
+      newValue: link[k],
+      oldValue: link[k],
+    }
+  }
 }
 
 onBeforeMount(async () => {
@@ -96,7 +108,7 @@ onBeforeMount(async () => {
 
 <template>
   <section class="cv-admin__links">
-    <div class="flex flex-col gap-[24px] min-w-[360px] w-[700px]">
+    <div class="flex flex-col gap-[24px] min-w-[360px] w-[800px]">
       <SelectInputUI v-model="selectedProfileId" :options="profiles" :placeholder="'Select Profile'" />
 
       <!-- SEPARATOR -->
@@ -120,9 +132,13 @@ onBeforeMount(async () => {
         <div v-if="selectedLink" class="w-[50%] bg-[primary-colo-4] link-edit-overlay">
           <form class="link-edit-form" @submit.prevent>
             <div class="link-edit-item">
-              <div class="flex items-center gap-[16px] bg-[--primary-color-3-100] p-[8px]">
+              <div class="flex items-center justify-between">
                 <p class="link-edit-item__key">EXAMPLE_KEY:</p>
                 <p class="link-edit-item__value">EXAMPLE___VALUE</p>
+                <div class="link-edit-item__actions">
+                  <Icon class="action-btn" :icon="mdiUndo" :size="26"></Icon>
+                  <Icon class="action-btn" :icon="mdiHandOkay" :size="26"></Icon>
+                </div>
               </div>
             </div>
           </form>
@@ -167,4 +183,30 @@ onBeforeMount(async () => {
 }
 
 .link-edit-form {}
+
+.link-edit-item__value {
+  background-color: var(--primary-color-3);
+}
+
+.link-edit-item__actions {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+  border-left: 2px solid var(--border-color-1);
+  gap: 2px;
+  padding: 0 6px;
+}
+
+.action-btn {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 4px;
+  background-color: var(--primary-color-3);
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  transition: all 0.3s ease;
+  background-color: var(--primary-color-3-100);
+}
 </style>
