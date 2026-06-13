@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { mdiPen } from '@mdi/js'
-import { onBeforeMount, reactive, ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import Icon from '~/client/components/common/Icon.vue'
-import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
-import InputUI from '~/client/components/shared/InputUI.vue'
 import SelectInputUI, {
   type SelectOption,
 } from '~/client/components/shared/SelectInputUI.vue'
@@ -15,10 +13,10 @@ import type { Link } from '~/shared/dto/cv/link.dto'
 import type { SocialNetwork } from '~/shared/types'
 
 useKeyboard({
-  esc: resetEditMode
+  esc: () => console.debug('HELLO FUCK')
 })
 
-const profileSelectItems = ref<SelectOption[]>([])
+const profiles = ref<SelectOption[]>([])
 const selectedProfileId = ref<string>('')
 const links = ref<Link[]>([
   {
@@ -55,12 +53,8 @@ const links = ref<Link[]>([
     isVisible: false,
   },
 ])
-interface EditLinksMapValue {
-  enabled: boolean
-  newValue: string
-}
-const editLinksMap = reactive<Record<string, EditLinksMapValue>>({})
-const newLinkLabel = ref('')
+const selectedLink = ref<Link | null>(null)
+const editLinkFormData = ref<Link | null>(null)
 
 async function uploadProfiles(): Promise<SelectOption[]> {
   const profiles = await CvProfileApi.getAll()
@@ -72,77 +66,46 @@ async function uploadProfiles(): Promise<SelectOption[]> {
   })
 }
 
-function resetEditMode() {
-  for (const key of Object.keys(editLinksMap)) {
-    editLinksMap[key].enabled = false
-  }
-}
-
-function toggleLinkForEditing(link: Link) {
-  if (!editLinksMap[link.id]) {
-    editLinksMap[link.id] = {
-      enabled: false,
-      newValue: '',
-    }
-  }
-
-  const isEditing = !editLinksMap[link.id].enabled
-
-  editLinksMap[link.id].enabled = isEditing
-
-  if (isEditing) {
-    newLinkLabel.value = link.label
-    editLinksMap[link.id].newValue = link.label
-  }
-
-  Object.keys(editLinksMap).forEach((id) => {
-    if (id === link.id) {
-      return
-    }
-
-    editLinksMap[id].enabled = false
-  })
-}
-
-function filledEditMap(links: Link[]) {
-  for (const link of links) {
-    if (!editLinksMap[link.id]) {
-      editLinksMap[link.id] = {
-        enabled: false,
-        newValue: '',
-      }
-    }
-  }
+function selectLink(link: Link) {
+  selectedLink.value = link
+  editLinkFormData.value = { ...link }
 }
 
 onBeforeMount(async () => {
-  profileSelectItems.value = await uploadProfiles()
+  profiles.value = await uploadProfiles()
   const uploadedLinks = await CvLinksApi.getListByProfileId(
     selectedProfileId.value || _,
   )
   console.debug(uploadedLinks)
   // links.value = uploadedLinks
-  filledEditMap(links.value)
 })
+
+/*
+  label: string;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  profileId: string;
+  type: SocialNetwork;
+  url: string;
+  order: number;
+  isVisible: boolean;
+*/
 
 </script>
 
 <template>
   <section class="cv-admin__links">
-    <form class="flex flex-col gap-[24px] min-w-[360px] w-[600px]" @submit.prevent>
-      <SelectInputUI v-model="selectedProfileId" :options="profileSelectItems" :placeholder="'Select Profile'" />
+    <div class="flex flex-col gap-[24px] min-w-[360px] w-[700px]">
+      <SelectInputUI v-model="selectedProfileId" :options="profiles" :placeholder="'Select Profile'" />
 
       <!-- SEPARATOR -->
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
 
       <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
         <ul class="flex flex-col gap-[10px] w-[50%]">
-          <li v-for="link in links" :key="link.id" class="link-item">
-            <div v-if="editLinksMap[link.id]?.enabled" class="flex items-center gap-[8px]">
-              <InputUI v-model="newLinkLabel" size="xsmall" @click.stop />
-              <ButtonBaseUI size="xsmall">Confirm</ButtonBaseUI>
-            </div>
-            <span v-else @click="() => toggleLinkForEditing(link)">{{ link.label }}</span>
+          <li v-for="link in links" :key="link.id" class="link-item" @click="() => selectLink(link)">
+            <span>{{ link.label }}</span>
             <div class="link-item__actions">
               <Icon :icon="mdiPen" :size="16"></Icon>
             </div>
@@ -150,14 +113,23 @@ onBeforeMount(async () => {
         </ul>
 
         <!-- SEPARATOR -->
-        <div v-if="selectedProfileId"
+        <div v-if="selectedLink"
           class="absolute top-0 left-[50%] transform-translate-x-[-50%] bottom-0 w-[4px] bg-[--primary-color-5]">
         </div>
 
-        <div v-if="selectedProfileId" class="w-[50%] flex flex-col bg-[primary-colo-4] link-edit-block"></div>
+        <div v-if="selectedLink" class="w-[50%] bg-[primary-colo-4] link-edit-overlay">
+          <form class="link-edit-form" @submit.prevent>
+            <div class="link-edit-item">
+              <div class="flex items-center gap-[16px] bg-[--primary-color-3-100] p-[8px]">
+                <p class="link-edit-item__key">EXAMPLE_KEY:</p>
+                <p class="link-edit-item__value">EXAMPLE___VALUE</p>
+              </div>
+            </div>
+          </form>
+        </div>
 
       </div>
-    </form>
+    </div>
   </section>
 </template>
 
@@ -189,8 +161,10 @@ onBeforeMount(async () => {
   transition: all 0.3s ease;
 }
 
-.link-edit-block {
+.link-edit-overlay {
   border: 1px solid red;
   padding: 10px;
 }
+
+.link-edit-form {}
 </style>
