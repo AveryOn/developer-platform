@@ -14,7 +14,7 @@ import type { SocialNetwork } from '~/shared/types'
 import type { LinkInput } from '~/shared/dto/cv/link.dto';
 
 useKeyboard({
-  esc: () => console.debug('HELLO FUCK')
+  esc: resetSelection,
 })
 
 const profiles = ref<SelectOption[]>([])
@@ -88,6 +88,14 @@ function selectLink(link: Link) {
       oldValue: link[k],
     }
   }
+}
+
+function resetSelection() {
+  selectedLink.value = null
+  Object.values(editLinkFormData.value).forEach((v) => {
+    v.newValue = _
+    v.oldValue = _
+  })
 }
 
 onBeforeMount(async () => {
