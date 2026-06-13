@@ -13,6 +13,7 @@ import type { Link } from '~/shared/dto/cv/link.dto'
 import type { SocialNetwork } from '~/shared/types'
 import type { LinkInput } from '~/shared/dto/cv/link.dto';
 import InputUI from '~/client/components/shared/InputUI.vue'
+import { sleep } from '~/shared/async'
 
 useKeyboard({
   esc: resetSelection,
@@ -60,15 +61,16 @@ const selectedLink = ref<Link | null>(null)
 type LinkEditData = Partial<Record<keyof LinkInput, {
   oldValue: LinkInput[keyof LinkInput]
   newValue: LinkInput[keyof LinkInput]
-  focused: boolean
+  focused: boolean,
+  loading: boolean,
 }>>
 const editLinkFormData = ref<LinkEditData>({
-  isVisible: { newValue: _, oldValue: _, focused: false },
-  label: { newValue: _, oldValue: _, focused: false },
-  order: { newValue: _, oldValue: _, focused: false },
-  profileId: { newValue: _, oldValue: _, focused: false },
-  type: { newValue: _, oldValue: _, focused: false },
-  url: { newValue: _, oldValue: _, focused: false },
+  isVisible: { newValue: _, oldValue: _, focused: false, loading: false },
+  label: { newValue: _, oldValue: _, focused: false, loading: false },
+  order: { newValue: _, oldValue: _, focused: false, loading: false },
+  profileId: { newValue: _, oldValue: _, focused: false, loading: false },
+  type: { newValue: _, oldValue: _, focused: false, loading: false },
+  url: { newValue: _, oldValue: _, focused: false, loading: false },
 })
 
 async function uploadProfiles(): Promise<SelectOption[]> {
@@ -89,6 +91,7 @@ function selectLink(link: Link) {
       newValue: link[k],
       oldValue: link[k],
       focused: false,
+      loading: false
     }
   }
 }
@@ -99,7 +102,20 @@ function resetSelection() {
     v.newValue = _
     v.oldValue = _
     v.focused = false
+    v.loading = false
   })
+}
+
+async function confirmUpdateField(field: keyof LinkInput) {
+  console.error('asdsdsdas', editLinkFormData.value[field]!.loading)
+  try {
+    editLinkFormData.value[field]!.loading = true
+
+    await sleep(1000)
+  }
+  finally {
+    editLinkFormData.value[field]!.loading = false
+  }
 }
 
 onBeforeMount(async () => {
@@ -153,14 +169,19 @@ onBeforeMount(async () => {
                 <div class="flex items-center justify-between">
                   <p class="link-edit-item__key">Label:</p>
 
-                  <InputUI v-if="editLinkFormData['label']?.focused"></InputUI>
-                  <p v-else class="link-edit-item__value" @click="">
+                  <InputUI v-if="editLinkFormData['label']?.focused"
+                    v-model="editLinkFormData['label']!.newValue! as string" size="xsmall" class="w-[50%]!"
+                    placeholder="Label">
+                  </InputUI>
+                  <p v-else class="link-edit-item__value" @click="editLinkFormData['label']!.focused = true">
                     {{ editLinkFormData.label?.oldValue }}
                   </p>
 
                   <div class="link-edit-item__actions">
+                    <span v-if="editLinkFormData!['label']?.loading" class="base-button__loader" />
                     <Icon class="action-btn" :icon="mdiUndo" :size="26" />
-                    <Icon class="action-btn" :icon="mdiHandOkay" :size="26" />
+                    <Icon class="action-btn" :icon="mdiHandOkay" :size="26"
+                      @click="() => confirmUpdateField('label')" />
                   </div>
                 </div>
               </div>
@@ -246,6 +267,23 @@ onBeforeMount(async () => {
 .action-btn:hover {
   transition: all 0.3s ease;
   background-color: var(--primary-color-3-100);
+}
+
+.base-button__loader {
+  width: 14px;
+  height: 14px;
+
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 999px;
+
+  animation: base-button-spin 0.7s linear infinite;
+}
+
+@keyframes base-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* --------------------------------------------------- */
