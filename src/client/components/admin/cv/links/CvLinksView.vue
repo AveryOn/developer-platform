@@ -12,6 +12,7 @@ import { _ } from '~/shared/const'
 import type { Link } from '~/shared/dto/cv/link.dto'
 import type { SocialNetwork } from '~/shared/types'
 import type { LinkInput } from '~/shared/dto/cv/link.dto';
+import InputUI from '~/client/components/shared/InputUI.vue'
 
 useKeyboard({
   esc: resetSelection,
@@ -59,14 +60,15 @@ const selectedLink = ref<Link | null>(null)
 type LinkEditData = Partial<Record<keyof LinkInput, {
   oldValue: LinkInput[keyof LinkInput]
   newValue: LinkInput[keyof LinkInput]
+  focused: boolean
 }>>
 const editLinkFormData = ref<LinkEditData>({
-  isVisible: { newValue: _, oldValue: _ },
-  label: { newValue: _, oldValue: _ },
-  order: { newValue: _, oldValue: _ },
-  profileId: { newValue: _, oldValue: _ },
-  type: { newValue: _, oldValue: _ },
-  url: { newValue: _, oldValue: _ },
+  isVisible: { newValue: _, oldValue: _, focused: false },
+  label: { newValue: _, oldValue: _, focused: false },
+  order: { newValue: _, oldValue: _, focused: false },
+  profileId: { newValue: _, oldValue: _, focused: false },
+  type: { newValue: _, oldValue: _, focused: false },
+  url: { newValue: _, oldValue: _, focused: false },
 })
 
 async function uploadProfiles(): Promise<SelectOption[]> {
@@ -86,6 +88,7 @@ function selectLink(link: Link) {
     editLinkFormData.value[k] = {
       newValue: link[k],
       oldValue: link[k],
+      focused: false,
     }
   }
 }
@@ -95,6 +98,7 @@ function resetSelection() {
   Object.values(editLinkFormData.value).forEach((v) => {
     v.newValue = _
     v.oldValue = _
+    v.focused = false
   })
 }
 
@@ -149,13 +153,13 @@ onBeforeMount(async () => {
                 <div class="flex items-center justify-between">
                   <p class="link-edit-item__key">Label:</p>
 
-                  <p class="link-edit-item__value">
+                  <InputUI v-if="editLinkFormData['label']?.focused"></InputUI>
+                  <p v-else class="link-edit-item__value" @click="">
                     {{ editLinkFormData.label?.oldValue }}
                   </p>
 
                   <div class="link-edit-item__actions">
                     <Icon class="action-btn" :icon="mdiUndo" :size="26" />
-
                     <Icon class="action-btn" :icon="mdiHandOkay" :size="26" />
                   </div>
                 </div>
@@ -203,6 +207,13 @@ onBeforeMount(async () => {
 
 .link-edit-form {}
 
+.link-edit-item {
+  border-right: 1px solid var(--border-color-1);
+  border-left: 1px solid var(--border-color-1);
+  padding: 4px 8px;
+  background-color: var(--primary-color-6);
+}
+
 .link-edit-item__value {
   cursor: pointer;
   background-color: var(--primary-color-3);
@@ -220,9 +231,8 @@ onBeforeMount(async () => {
   display: flex;
   align-items: center;
   margin-left: 4px;
-  border-left: 2px solid var(--border-color-1);
+  /* border-left: 2px solid var(--border-color-1); */
   gap: 2px;
-  padding: 0 6px;
 }
 
 .action-btn {
@@ -251,7 +261,6 @@ onBeforeMount(async () => {
 }
 
 /* Вертикальный разделитель */
-
 .separator-enter-active,
 .separator-leave-active {
   transition:
@@ -272,7 +281,6 @@ onBeforeMount(async () => {
 }
 
 /* Панель редактирования */
-
 .link-editor-enter-active,
 .link-editor-leave-active {
   transition:
