@@ -60,7 +60,14 @@ type LinkEditData = Partial<Record<keyof LinkInput, {
   oldValue: LinkInput[keyof LinkInput]
   newValue: LinkInput[keyof LinkInput]
 }>>
-const editLinkFormData = ref<LinkEditData>()
+const editLinkFormData = ref<LinkEditData>({
+  isVisible: { newValue: _, oldValue: _ },
+  label: { newValue: _, oldValue: _ },
+  order: { newValue: _, oldValue: _ },
+  profileId: { newValue: _, oldValue: _ },
+  type: { newValue: _, oldValue: _ },
+  url: { newValue: _, oldValue: _ },
+})
 
 async function uploadProfiles(): Promise<SelectOption[]> {
   const profiles = await CvProfileApi.getAll()
@@ -76,7 +83,7 @@ function selectLink(link: Link) {
   selectedLink.value = link
   for (const key of Object.keys(link)) {
     const k = key as keyof typeof link
-    editLinkFormData.value![k] = {
+    editLinkFormData.value[k] = {
       newValue: link[k],
       oldValue: link[k],
     }
@@ -94,9 +101,6 @@ onBeforeMount(async () => {
 
 /*
   label: string;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
   profileId: string;
   type: SocialNetwork;
   url: string;
@@ -116,7 +120,8 @@ onBeforeMount(async () => {
 
       <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
         <ul class="flex flex-col gap-[10px] w-[50%]">
-          <li v-for="link in links" :key="link.id" class="link-item" @click="() => selectLink(link)">
+          <li v-for="link in links" :key="link.id" class="link-item"
+            :class="{ 'bg-[--primary-color-3-100]': link.id === selectedLink?.id }" @click="() => selectLink(link)">
             <span>{{ link.label }}</span>
             <div class="link-item__actions">
               <Icon :icon="mdiPen" :size="16"></Icon>
@@ -125,24 +130,31 @@ onBeforeMount(async () => {
         </ul>
 
         <!-- SEPARATOR -->
-        <div v-if="selectedLink"
-          class="absolute top-0 left-[50%] transform-translate-x-[-50%] bottom-0 w-[4px] bg-[--primary-color-5]">
-        </div>
+        <Transition name="separator">
+          <div v-if="selectedLink" class="links-separator"></div>
+        </Transition>
 
-        <div v-if="selectedLink" class="w-[50%] bg-[primary-colo-4] link-edit-overlay">
-          <form class="link-edit-form" @submit.prevent>
-            <div class="link-edit-item">
-              <div class="flex items-center justify-between">
-                <p class="link-edit-item__key">EXAMPLE_KEY:</p>
-                <p class="link-edit-item__value">EXAMPLE___VALUE</p>
-                <div class="link-edit-item__actions">
-                  <Icon class="action-btn" :icon="mdiUndo" :size="26"></Icon>
-                  <Icon class="action-btn" :icon="mdiHandOkay" :size="26"></Icon>
+        <Transition name="link-editor">
+          <div v-if="selectedLink" class="w-[50%] link-edit-overlay">
+            <form class="link-edit-form" @submit.prevent>
+              <div class="link-edit-item">
+                <div class="flex items-center justify-between">
+                  <p class="link-edit-item__key">Label:</p>
+
+                  <p class="link-edit-item__value">
+                    {{ editLinkFormData.label?.oldValue }}
+                  </p>
+
+                  <div class="link-edit-item__actions">
+                    <Icon class="action-btn" :icon="mdiUndo" :size="26" />
+
+                    <Icon class="action-btn" :icon="mdiHandOkay" :size="26" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+        </Transition>
 
       </div>
     </div>
@@ -178,14 +190,22 @@ onBeforeMount(async () => {
 }
 
 .link-edit-overlay {
-  border: 1px solid red;
   padding: 10px;
 }
 
 .link-edit-form {}
 
 .link-edit-item__value {
+  cursor: pointer;
   background-color: var(--primary-color-3);
+  transition: all 0.3s ease;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.link-edit-item__value:hover {
+  transition: all 0.3s ease;
+  background-color: var(--primary-color-3-100);
 }
 
 .link-edit-item__actions {
@@ -208,5 +228,59 @@ onBeforeMount(async () => {
 .action-btn:hover {
   transition: all 0.3s ease;
   background-color: var(--primary-color-3-100);
+}
+
+/* --------------------------------------------------- */
+.links-separator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  transform: translateX(-50%);
+  transform-origin: top;
+  background-color: var(--primary-color-5);
+}
+
+/* Вертикальный разделитель */
+
+.separator-enter-active,
+.separator-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.separator-enter-from,
+.separator-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) scaleY(0);
+}
+
+.separator-enter-to,
+.separator-leave-from {
+  opacity: 1;
+  transform: translateX(-50%) scaleY(1);
+}
+
+/* Панель редактирования */
+
+.link-editor-enter-active,
+.link-editor-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.link-editor-enter-from,
+.link-editor-leave-to {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.link-editor-enter-to,
+.link-editor-leave-from {
+  opacity: 1;
+  transform: translateX(0);
 }
 </style>
