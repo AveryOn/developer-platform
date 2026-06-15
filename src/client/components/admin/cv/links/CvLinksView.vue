@@ -226,8 +226,6 @@ onBeforeMount(async () => {
   padding: 10px;
 }
 
-.link-edit-form {}
-
 .link-edit-item {
   border-right: 1px solid var(--border-color-1);
   border-left: 1px solid var(--border-color-1);
