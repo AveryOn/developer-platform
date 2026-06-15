@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiHandOkay, mdiPen, mdiUndo } from '@mdi/js'
-import { onBeforeMount, ref } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import Icon from '~/client/components/common/Icon.vue'
@@ -57,6 +57,10 @@ const links = ref<Link[]>([
     isVisible: false,
   },
 ])
+const linksByProfileId = computed(() => {
+  if (!selectedProfileId.value) return links.value
+  return links.value.filter(v => (v.profileId === selectedProfileId.value))
+})
 const selectedLink = ref<Link | null>(null)
 
 type LinkEditData = Partial<Record<keyof LinkInput, {
@@ -163,7 +167,7 @@ onBeforeMount(async () => {
 
       <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
         <ul class="flex flex-col gap-[10px] w-[50%]">
-          <li v-for="link in links" :key="link.id" class="link-item"
+          <li v-for="link in linksByProfileId" :key="link.id" class="link-item"
             :class="{ 'bg-[--primary-color-3-100]': link.id === selectedLink?.id }" @click="() => selectLink(link)">
             <span>{{ link.label }}</span>
             <div class="link-item__actions">
