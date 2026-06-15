@@ -268,6 +268,28 @@ onBeforeMount(async () => {
                 </div>
               </div>
 
+              <!-- ORDER FIELD -->
+              <div class="link-edit-item">
+                <div class="flex items-center justify-between">
+                  <p class="link-edit-item__key">Order:</p>
+
+                  <InputUI v-if="editLinkFormData['order']?.focused"
+                    v-model="editLinkFormData['order']!.newValue! as string" size="xsmall" class="w-[50%]!"
+                    placeholder="Order">
+                  </InputUI>
+                  <p v-else class="link-edit-item__value" @click="editLinkFormData['order']!.focused = true">
+                    {{ editLinkFormData.order?.oldValue }}
+                  </p>
+
+                  <div class="link-edit-item__actions">
+                    <Icon class="action-btn" :icon="mdiUndo" :size="26" @click="() => undoChanges('order')" />
+                    <span v-if="editLinkFormData!['order']?.loading" class="base-button__loader" />
+                    <Icon v-else class="action-btn" :icon="mdiHandOkay" :size="26"
+                      @click="() => confirmUpdateField('order')" />
+                  </div>
+                </div>
+              </div>
+
             </form>
           </div>
         </Transition>
@@ -323,8 +345,9 @@ onBeforeMount(async () => {
 }
 
 .link-edit-item__value {
-  min-width: 0;
-  max-width: 50%;
+  width: 50%;
+  margin-left: auto;
+  margin-right: 16px;
   overflow: hidden;
 
   padding: 3px 8px;
