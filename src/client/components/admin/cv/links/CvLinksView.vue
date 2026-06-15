@@ -106,6 +106,10 @@ function resetSelection() {
   })
 }
 
+function commitChange(field: keyof LinkInput) {
+  editLinkFormData.value[field]!.oldValue = editLinkFormData.value[field]!.newValue
+}
+
 function undoChanges(field: keyof LinkInput) {
   editLinkFormData.value[field]!.newValue = editLinkFormData.value[field]?.oldValue
   resetFocus(field)
@@ -125,6 +129,8 @@ async function confirmUpdateField(field: keyof LinkInput) {
     editLinkFormData.value[field]!.loading = true
 
     await sleep(1000)
+    resetFocus(field)
+    commitChange(field)
   }
   finally {
     editLinkFormData.value[field]!.loading = false
