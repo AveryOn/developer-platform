@@ -106,15 +106,18 @@ function resetSelection() {
   })
 }
 
+/** Зафиксировать изменения в поле */
 function commitChange(field: keyof LinkInput) {
   editLinkFormData.value[field]!.oldValue = editLinkFormData.value[field]!.newValue
 }
 
+/** Отменить изменения в поле */
 function undoChanges(field: keyof LinkInput) {
   editLinkFormData.value[field]!.newValue = editLinkFormData.value[field]?.oldValue
   resetFocus(field)
 }
 
+/** Проверка есть ли изменения в поле */
 function hasChanges(field: keyof LinkInput) {
   return editLinkFormData.value[field]!.newValue !== editLinkFormData.value[field]?.oldValue
 }
