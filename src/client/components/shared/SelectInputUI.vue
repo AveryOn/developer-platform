@@ -8,6 +8,8 @@ export type SelectOption = {
   disabled?: boolean
 }
 
+type AppInputSize = 'xsmall' | 'small' | 'medium' | 'large'
+
 const model = defineModel<string>({
   default: '',
 })
@@ -20,6 +22,7 @@ const props = withDefaults(
     disabled?: boolean
     error?: string
     options: SelectOption[]
+    size?: AppInputSize
   }>(),
   {
     id: undefined,
@@ -27,6 +30,7 @@ const props = withDefaults(
     placeholder: 'Select option',
     disabled: false,
     error: undefined,
+    size: 'medium',
   },
 )
 
@@ -93,37 +97,25 @@ onBeforeUnmount(() => {
       {{ props.label }}
     </label>
 
-    <button
-      :id="props.id"
-      type="button"
-      class="app-select__field"
-      :class="{
+    <button :id="props.id" type="button" class="app-select__field" :class="[
+      `app-select__field--${props.size}`,
+      {
         'app-select__field--open': isOpen,
         'app-select__field--empty': !selectedOption,
-      }"
-      :disabled="props.disabled"
-      @click="toggleDropdown"
-    >
+      },
+    ]" :disabled="props.disabled" @click="toggleDropdown">
       <span class="app-select__value">
         {{ selectedOption?.label ?? props.placeholder }}
       </span>
 
-      <span class="app-select__arrow"> ⌄ </span>
+      <span class="app-select__arrow">⌄</span>
     </button>
 
     <div v-if="isOpen" class="app-select__dropdown">
-      <button
-        v-for="option in props.options"
-        :key="option.value"
-        type="button"
-        class="app-select__option"
-        :class="{
-          'app-select__option--selected': option.value === model,
-          'app-select__option--disabled': option.disabled,
-        }"
-        :disabled="option.disabled"
-        @click="selectOption(option)"
-      >
+      <button v-for="option in props.options" :key="option.value" type="button" class="app-select__option" :class="{
+        'app-select__option--selected': option.value === model,
+        'app-select__option--disabled': option.disabled,
+      }" :disabled="option.disabled" @click="selectOption(option)">
         {{ option.label }}
       </button>
     </div>
@@ -152,7 +144,6 @@ onBeforeUnmount(() => {
 
 .app-select__field {
   width: 100%;
-  min-height: 44px;
   height: 100%;
 
   display: flex;
@@ -160,15 +151,12 @@ onBeforeUnmount(() => {
   justify-content: space-between;
   gap: 12px;
 
-  padding: 0 14px;
-
   border: 1px solid var(--border-color-1);
   border-radius: 10px;
 
   background: var(--primary-color-2);
   color: white;
 
-  font-size: 16px;
   line-height: 1;
   font-family: inherit;
   text-align: left;
@@ -180,6 +168,30 @@ onBeforeUnmount(() => {
     border-color 0.15s ease,
     background-color 0.15s ease,
     box-shadow 0.15s ease;
+}
+
+.app-select__field--xsmall {
+  min-height: 28px;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.app-select__field--small {
+  min-height: 38px;
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+.app-select__field--medium {
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 16px;
+}
+
+.app-select__field--large {
+  min-height: 52px;
+  padding: 0 16px;
+  font-size: 18px;
 }
 
 .app-select__field:hover:not(:disabled) {
@@ -197,7 +209,9 @@ onBeforeUnmount(() => {
 }
 
 .app-select__field--empty {
-  color: color-mix(in srgb, var(--primary-color-1) 55%, transparent);
+  color: color-mix(in srgb,
+      var(--primary-color-1) 55%,
+      transparent);
 }
 
 .app-select__field:disabled {
@@ -212,6 +226,8 @@ onBeforeUnmount(() => {
 }
 
 .app-select__arrow {
+  flex-shrink: 0;
+
   color: var(--primary-color-1);
   font-size: 18px;
   line-height: 1;

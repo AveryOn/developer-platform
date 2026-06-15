@@ -211,7 +211,9 @@ onBeforeMount(async () => {
                     v-model="editLinkFormData['label']!.newValue! as string" size="xsmall" class="w-[50%]!"
                     placeholder="Label">
                   </InputUI> -->
-                  <SelectInputUI v-if="editLinkFormData['profileId']?.focused" :options="profiles"></SelectInputUI>
+                  <SelectInputUI v-if="editLinkFormData['profileId']?.focused" class="w-[50%]!" :options="profiles"
+                    size="xsmall">
+                  </SelectInputUI>
                   <p v-else class="link-edit-item__value" @click="editLinkFormData['profileId']!.focused = true">
                     {{ editLinkFormData.profileId?.oldValue }}
                   </p>
