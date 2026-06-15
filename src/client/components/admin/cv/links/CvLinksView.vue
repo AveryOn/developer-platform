@@ -107,7 +107,6 @@ function resetSelection() {
 }
 
 async function confirmUpdateField(field: keyof LinkInput) {
-  console.error('asdsdsdas', editLinkFormData.value[field]!.loading)
   try {
     editLinkFormData.value[field]!.loading = true
 
@@ -126,16 +125,6 @@ onBeforeMount(async () => {
   console.debug(uploadedLinks)
   // links.value = uploadedLinks
 })
-
-/*
-  label: string;
-  profileId: string;
-  type: SocialNetwork;
-  url: string;
-  order: number;
-  isVisible: boolean;
-*/
-
 </script>
 
 <template>
