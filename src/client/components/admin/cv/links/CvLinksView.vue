@@ -27,7 +27,7 @@ const links = ref<Link[]>([
     label: 'GitHub',
     createdAt: '2026-06-11T10:00:00.000Z',
     updatedAt: '2026-06-11T10:00:00.000Z',
-    profileId: 'profile_1',
+    profileId: '32e31878-32f4-4906-91e0-7162308eeea5',
     type: 'github' as SocialNetwork,
     url: 'https://github.com/example-user',
     order: 1,
@@ -38,7 +38,7 @@ const links = ref<Link[]>([
     label: 'LinkedIn',
     createdAt: '2026-06-11T10:05:00.000Z',
     updatedAt: '2026-06-11T10:05:00.000Z',
-    profileId: 'profile_1',
+    profileId: '32e31878-32f4-4906-91e0-7162308eeea5',
     type: 'linkedin' as SocialNetwork,
     url: 'https://linkedin.com/in/example-user',
     order: 2,
@@ -49,7 +49,7 @@ const links = ref<Link[]>([
     label: 'Portfolio',
     createdAt: '2026-06-11T10:10:00.000Z',
     updatedAt: '2026-06-11T10:10:00.000Z',
-    profileId: 'profile_1',
+    profileId: '07b0cd14-06c3-46db-afd3-560e4e5447f4',
     type: 'website' as SocialNetwork,
     url: 'https://example.dev',
     order: 3,
@@ -206,11 +206,12 @@ onBeforeMount(async () => {
               <div class="link-edit-item">
                 <div class="flex items-center justify-between">
                   <p class="link-edit-item__key">Profile:</p>
-                  <SelectInputUI v-if="editLinkFormData['profileId']?.focused" class="w-[50%]!" :options="profiles"
+                  <SelectInputUI v-if="editLinkFormData['profileId']?.focused"
+                    v-model="editLinkFormData['profileId']!.newValue! as string" class="w-[50%]!" :options="profiles"
                     size="xsmall">
                   </SelectInputUI>
                   <p v-else class="link-edit-item__value" @click="editLinkFormData['profileId']!.focused = true">
-                    {{ editLinkFormData.profileId?.oldValue }}
+                    {{profiles.find(v => v.value === editLinkFormData.profileId?.oldValue)?.label}}
                   </p>
 
                   <div class="link-edit-item__actions">
