@@ -179,6 +179,8 @@ onBeforeMount(async () => {
         <Transition name="link-editor">
           <div v-if="selectedLink" class="w-[50%] link-edit-overlay">
             <form class="link-edit-form" @submit.prevent>
+
+              <!-- LABEL FIELD -->
               <div class="link-edit-item">
                 <div class="flex items-center justify-between">
                   <p class="link-edit-item__key">Label:</p>
@@ -199,6 +201,29 @@ onBeforeMount(async () => {
                   </div>
                 </div>
               </div>
+
+              <!-- PROFILE_ID FIELD -->
+              <div class="link-edit-item">
+                <div class="flex items-center justify-between">
+                  <p class="link-edit-item__key">Label:</p>
+
+                  <InputUI v-if="editLinkFormData['label']?.focused"
+                    v-model="editLinkFormData['label']!.newValue! as string" size="xsmall" class="w-[50%]!"
+                    placeholder="Label">
+                  </InputUI>
+                  <p v-else class="link-edit-item__value" @click="editLinkFormData['label']!.focused = true">
+                    {{ editLinkFormData.label?.oldValue }}
+                  </p>
+
+                  <div class="link-edit-item__actions">
+                    <Icon class="action-btn" :icon="mdiUndo" :size="26" @click="() => undoChanges('label')" />
+                    <span v-if="editLinkFormData!['label']?.loading" class="base-button__loader" />
+                    <Icon v-else class="action-btn" :icon="mdiHandOkay" :size="26"
+                      @click="() => confirmUpdateField('label')" />
+                  </div>
+                </div>
+              </div>
+
             </form>
           </div>
         </Transition>
@@ -238,6 +263,12 @@ onBeforeMount(async () => {
 
 .link-edit-overlay {
   padding: 10px;
+}
+
+.link-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .link-edit-item {
