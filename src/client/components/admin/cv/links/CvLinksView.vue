@@ -205,21 +205,22 @@ onBeforeMount(async () => {
               <!-- PROFILE_ID FIELD -->
               <div class="link-edit-item">
                 <div class="flex items-center justify-between">
-                  <p class="link-edit-item__key">Label:</p>
+                  <p class="link-edit-item__key">Profile:</p>
 
-                  <InputUI v-if="editLinkFormData['label']?.focused"
+                  <!-- <InputUI v-if="editLinkFormData['label']?.focused"
                     v-model="editLinkFormData['label']!.newValue! as string" size="xsmall" class="w-[50%]!"
                     placeholder="Label">
-                  </InputUI>
-                  <p v-else class="link-edit-item__value" @click="editLinkFormData['label']!.focused = true">
-                    {{ editLinkFormData.label?.oldValue }}
+                  </InputUI> -->
+                  <SelectInputUI v-if="editLinkFormData['profileId']?.focused" :options="profiles"></SelectInputUI>
+                  <p v-else class="link-edit-item__value" @click="editLinkFormData['profileId']!.focused = true">
+                    {{ editLinkFormData.profileId?.oldValue }}
                   </p>
 
                   <div class="link-edit-item__actions">
-                    <Icon class="action-btn" :icon="mdiUndo" :size="26" @click="() => undoChanges('label')" />
-                    <span v-if="editLinkFormData!['label']?.loading" class="base-button__loader" />
+                    <Icon class="action-btn" :icon="mdiUndo" :size="26" @click="() => undoChanges('profileId')" />
+                    <span v-if="editLinkFormData!['profileId']?.loading" class="base-button__loader" />
                     <Icon v-else class="action-btn" :icon="mdiHandOkay" :size="26"
-                      @click="() => confirmUpdateField('label')" />
+                      @click="() => confirmUpdateField('profileId')" />
                   </div>
                 </div>
               </div>
