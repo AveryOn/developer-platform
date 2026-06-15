@@ -106,8 +106,22 @@ function resetSelection() {
   })
 }
 
+function undoChanges(field: keyof LinkInput) {
+  editLinkFormData.value[field]!.newValue = editLinkFormData.value[field]?.oldValue
+  resetFocus(field)
+}
+
+function hasChanges(field: keyof LinkInput) {
+  return editLinkFormData.value[field]!.newValue !== editLinkFormData.value[field]?.oldValue
+}
+
+function resetFocus(field: keyof LinkInput) {
+  editLinkFormData.value[field]!.focused = false
+}
+
 async function confirmUpdateField(field: keyof LinkInput) {
   try {
+    if (!hasChanges(field)) return
     editLinkFormData.value[field]!.loading = true
 
     await sleep(1000)
@@ -167,9 +181,9 @@ onBeforeMount(async () => {
                   </p>
 
                   <div class="link-edit-item__actions">
+                    <Icon class="action-btn" :icon="mdiUndo" :size="26" @click="() => undoChanges('label')" />
                     <span v-if="editLinkFormData!['label']?.loading" class="base-button__loader" />
-                    <Icon class="action-btn" :icon="mdiUndo" :size="26" />
-                    <Icon class="action-btn" :icon="mdiHandOkay" :size="26"
+                    <Icon v-else class="action-btn" :icon="mdiHandOkay" :size="26"
                       @click="() => confirmUpdateField('label')" />
                   </div>
                 </div>
