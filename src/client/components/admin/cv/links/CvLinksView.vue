@@ -246,6 +246,28 @@ onBeforeMount(async () => {
                 </div>
               </div>
 
+              <!-- URL FIELD -->
+              <div class="link-edit-item">
+                <div class="flex items-center justify-between">
+                  <p class="link-edit-item__key">URL:</p>
+
+                  <InputUI v-if="editLinkFormData['url']?.focused"
+                    v-model="editLinkFormData['url']!.newValue! as string" size="xsmall" class="w-[50%]!"
+                    placeholder="URL">
+                  </InputUI>
+                  <p v-else class="link-edit-item__value" @click="editLinkFormData['url']!.focused = true">
+                    {{ editLinkFormData.url?.oldValue }}
+                  </p>
+
+                  <div class="link-edit-item__actions">
+                    <Icon class="action-btn" :icon="mdiUndo" :size="26" @click="() => undoChanges('url')" />
+                    <span v-if="editLinkFormData!['url']?.loading" class="base-button__loader" />
+                    <Icon v-else class="action-btn" :icon="mdiHandOkay" :size="26"
+                      @click="() => confirmUpdateField('url')" />
+                  </div>
+                </div>
+              </div>
+
             </form>
           </div>
         </Transition>
@@ -301,11 +323,20 @@ onBeforeMount(async () => {
 }
 
 .link-edit-item__value {
-  cursor: pointer;
-  background-color: var(--primary-color-3);
-  transition: all 0.3s ease;
+  min-width: 0;
+  max-width: 50%;
+  overflow: hidden;
+
   padding: 3px 8px;
   border-radius: 4px;
+
+  background-color: var(--primary-color-3);
+  cursor: pointer;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  transition: all 0.3s ease;
 }
 
 .link-edit-item__value:hover {
