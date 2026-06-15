@@ -122,10 +122,12 @@ function hasChanges(field: keyof LinkInput) {
   return editLinkFormData.value[field]!.newValue !== editLinkFormData.value[field]?.oldValue
 }
 
+/** Сбросить фокус на поле */
 function resetFocus(field: keyof LinkInput) {
   editLinkFormData.value[field]!.focused = false
 }
 
+/** Подтвердить изменение поля */
 async function confirmUpdateField(field: keyof LinkInput) {
   try {
     if (!hasChanges(field)) return
