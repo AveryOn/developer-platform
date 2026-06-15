@@ -14,6 +14,7 @@ import { SocialNetworks, type SocialNetwork } from '~/shared/types'
 import type { LinkInput } from '~/shared/dto/cv/link.dto';
 import InputUI from '~/client/components/shared/InputUI.vue'
 import { sleep } from '~/shared/async'
+import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
 
 useKeyboard({
   esc: resetSelection,
@@ -286,6 +287,22 @@ onBeforeMount(async () => {
                     <span v-if="editLinkFormData!['order']?.loading" class="base-button__loader" />
                     <Icon v-else class="action-btn" :icon="mdiHandOkay" :size="26"
                       @click="() => confirmUpdateField('order')" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- IS_VISIBLE FIELD -->
+              <div class="link-edit-item">
+                <div class="flex items-center justify-between">
+                  <p class="link-edit-item__key">Visible:</p>
+
+                  <CheckboxUI v-model="editLinkFormData['isVisible']!.newValue! as boolean" />
+
+                  <div class="link-edit-item__actions">
+                    <Icon class="action-btn" :icon="mdiUndo" :size="26" @click="() => undoChanges('isVisible')" />
+                    <span v-if="editLinkFormData!['isVisible']?.loading" class="base-button__loader" />
+                    <Icon v-else class="action-btn" :icon="mdiHandOkay" :size="26"
+                      @click="() => confirmUpdateField('isVisible')" />
                   </div>
                 </div>
               </div>
