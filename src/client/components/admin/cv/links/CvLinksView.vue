@@ -10,7 +10,7 @@ import SelectInputUI, {
 import { useKeyboard } from '~/client/composables/useKeyboard'
 import { _ } from '~/shared/const'
 import type { Link } from '~/shared/dto/cv/link.dto'
-import type { SocialNetwork } from '~/shared/types'
+import { SocialNetworks, type SocialNetwork } from '~/shared/types'
 import type { LinkInput } from '~/shared/dto/cv/link.dto';
 import InputUI from '~/client/components/shared/InputUI.vue'
 import { sleep } from '~/shared/async'
@@ -220,6 +220,28 @@ onBeforeMount(async () => {
                     <span v-if="editLinkFormData!['profileId']?.loading" class="base-button__loader" />
                     <Icon v-else class="action-btn" :icon="mdiHandOkay" :size="26"
                       @click="() => confirmUpdateField('profileId')" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- TYPE FIELD -->
+              <div class="link-edit-item">
+                <div class="flex items-center justify-between">
+                  <p class="link-edit-item__key">Type:</p>
+
+                  <SelectInputUI v-if="editLinkFormData['type']?.focused"
+                    v-model="editLinkFormData['type']!.newValue! as string" class="w-[50%]!"
+                    :options="SocialNetworks.map(v => ({ label: v, value: v }))" size="xsmall">
+                  </SelectInputUI>
+                  <p v-else class="link-edit-item__value" @click="editLinkFormData['type']!.focused = true">
+                    {{ editLinkFormData.type?.oldValue }}
+                  </p>
+
+                  <div class="link-edit-item__actions">
+                    <Icon class="action-btn" :icon="mdiUndo" :size="26" @click="() => undoChanges('type')" />
+                    <span v-if="editLinkFormData!['type']?.loading" class="base-button__loader" />
+                    <Icon v-else class="action-btn" :icon="mdiHandOkay" :size="26"
+                      @click="() => confirmUpdateField('type')" />
                   </div>
                 </div>
               </div>
