@@ -206,11 +206,6 @@ onBeforeMount(async () => {
               <div class="link-edit-item">
                 <div class="flex items-center justify-between">
                   <p class="link-edit-item__key">Profile:</p>
-
-                  <!-- <InputUI v-if="editLinkFormData['label']?.focused"
-                    v-model="editLinkFormData['label']!.newValue! as string" size="xsmall" class="w-[50%]!"
-                    placeholder="Label">
-                  </InputUI> -->
                   <SelectInputUI v-if="editLinkFormData['profileId']?.focused" class="w-[50%]!" :options="profiles"
                     size="xsmall">
                   </SelectInputUI>
