@@ -16,6 +16,7 @@ import InputUI from '~/client/components/shared/InputUI.vue'
 import { sleep } from '~/shared/async'
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
+import { AppRoutes } from '~/shared/router'
 
 useKeyboard({
   esc: resetSelection,
@@ -146,6 +147,10 @@ async function confirmUpdateField(field: keyof LinkInput) {
   finally {
     editLinkFormData.value[field]!.loading = false
   }
+}
+
+function goToNewLinkPage() {
+  window.location.href = AppRoutes.admin.CvLinksNew
 }
 
 onBeforeMount(async () => {
@@ -318,7 +323,7 @@ onBeforeMount(async () => {
       </div>
 
       <div class="w-full flex justify-center">
-        <ButtonBaseUI>* Create New *</ButtonBaseUI>
+        <ButtonBaseUI @click="goToNewLinkPage">* Create New *</ButtonBaseUI>
       </div>
     </div>
   </section>

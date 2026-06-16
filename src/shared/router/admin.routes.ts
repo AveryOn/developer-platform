@@ -57,5 +57,6 @@ export const adminRoutes = {
 
   // LINKS
   CvLinks: '/admin/cv/links',
+  CvLinksNew: '/admin/cv/links/new',
   // ---
 }
