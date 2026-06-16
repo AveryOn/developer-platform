@@ -15,6 +15,7 @@ import type { LinkInput } from '~/shared/dto/cv/link.dto';
 import InputUI from '~/client/components/shared/InputUI.vue'
 import { sleep } from '~/shared/async'
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
+import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 
 useKeyboard({
   esc: resetSelection,
@@ -310,11 +311,14 @@ onBeforeMount(async () => {
                   </div>
                 </div>
               </div>
-
             </form>
           </div>
         </Transition>
 
+      </div>
+
+      <div class="w-full flex justify-center">
+        <ButtonBaseUI>* Create New *</ButtonBaseUI>
       </div>
     </div>
   </section>
