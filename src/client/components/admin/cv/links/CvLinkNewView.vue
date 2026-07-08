@@ -1,38 +1,19 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue'
-import { CvLinksApi } from '~/client/api/admin/cv/links.api'
-import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import SelectInputUI, {
-  type SelectOption,
 } from '~/client/components/shared/SelectInputUI.vue'
 import { useKeyboard } from '~/client/composables/useKeyboard'
-import { _ } from '~/shared/const'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
+import { useProfiles } from '~/client/composables/useProfiles'
 
 useKeyboard({
   esc: () => { },
 })
 
-const profiles = ref<SelectOption[]>([])
-const selectedProfileId = ref<string>('')
+const {
+  profiles,
+  selectedProfileId
+} = useProfiles()
 
-async function uploadProfiles(): Promise<SelectOption[]> {
-  const profiles = await CvProfileApi.getAll()
-  return profiles.map((p) => {
-    return {
-      label: p.title,
-      value: p.id,
-    }
-  })
-}
-
-onBeforeMount(async () => {
-  profiles.value = await uploadProfiles()
-  const uploadedLinks = await CvLinksApi.getListByProfileId(
-    selectedProfileId.value || _,
-  )
-  console.debug(uploadedLinks)
-})
 </script>
 
 <template>
