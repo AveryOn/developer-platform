@@ -5,6 +5,9 @@ import {
 } from '~/shared/logger/logger.client'
 import { _ } from '~/shared/const'
 import { CvLinkService } from '~/server/services/admin/cv/link.service'
+import { throwZodError } from '~/server/plugins/zod.plugin'
+import { createCvLinkDto } from '~/shared/dto/cv/link.dto'
+import { HttpStatusCode } from 'axios'
 
 export const GET: APIRoute = async () => {
   const logger = new Logger('HTTP:GET:Links.GET_LIST')
@@ -23,11 +26,11 @@ export const GET: APIRoute = async () => {
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  const logger = new Logger('HTTP:POST:Profile.Create')
+  const logger = new Logger('HTTP:POST:Link.Create')
 
   const body = await request.json()
   logger.info('Pick up BODY', { body: body.data })
-  const { success, data, error } = createCvProfileDto.safeParse(
+  const { success, data, error } = createCvLinkDto.safeParse(
     body.data,
   )
 
@@ -35,10 +38,10 @@ export const POST: APIRoute = async ({ request }) => {
     logger.error('Validation Failed', { error })
     throwZodError(error, logger, 'Validation Error')
   }
-  const newProfile = await CvProfileService.create(data!)
+  const newRecord = await CvLinkService.create(data!)
 
   return Response.json(
-    { data: newProfile },
+    { data: newRecord },
     { status: HttpStatusCode.Created },
   )
 }
