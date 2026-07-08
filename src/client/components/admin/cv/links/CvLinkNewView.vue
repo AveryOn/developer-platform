@@ -4,6 +4,10 @@ import SelectInputUI, {
 import { useKeyboard } from '~/client/composables/useKeyboard'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import { useProfiles } from '~/client/composables/useProfiles'
+import { useFormValidator } from '~/client/composables/useFormValidator'
+import { reactive } from 'vue'
+import type { CreateCvLinkDto } from '~/shared/dto/cv/link.dto'
+import { SocialNetwork } from '~/shared/types'
 
 useKeyboard({
   esc: () => { },
@@ -13,6 +17,22 @@ const {
   profiles,
   selectedProfileId
 } = useProfiles()
+
+const formData = reactive<CreateCvLinkDto>({
+  isVisible: true,
+  label: '',
+  order: 0,
+  profileId: '',
+  type: SocialNetwork.other,
+  url: ''
+})
+
+const {
+  errors,
+  isSomeError,
+  setErrors,
+  undoError
+} = useFormValidator(formData)
 
 </script>
 
