@@ -2,10 +2,8 @@
 import { mdiHandOkay, mdiPen, mdiUndo } from '@mdi/js'
 import { computed, onBeforeMount, ref } from 'vue'
 import { CvLinksApi } from '~/client/api/admin/cv/links.api'
-import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import Icon from '~/client/components/common/Icon.vue'
 import SelectInputUI, {
-  type SelectOption,
 } from '~/client/components/shared/SelectInputUI.vue'
 import { useKeyboard } from '~/client/composables/useKeyboard'
 import { _ } from '~/shared/const'
@@ -17,13 +15,16 @@ import { sleep } from '~/shared/async'
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import { AppRoutes } from '~/shared/router'
+import { useProfiles } from '~/client/composables/useProfiles'
 
 useKeyboard({
   esc: resetSelection,
 })
+const {
+  profiles,
+  selectedProfileId
+} = useProfiles()
 
-const profiles = ref<SelectOption[]>([])
-const selectedProfileId = ref<string>('')
 const links = ref<Link[]>([
   {
     id: 'link_1',
@@ -79,16 +80,6 @@ const editLinkFormData = ref<LinkEditData>({
   type: { newValue: _, oldValue: _, focused: false, loading: false },
   url: { newValue: _, oldValue: _, focused: false, loading: false },
 })
-
-async function uploadProfiles(): Promise<SelectOption[]> {
-  const profiles = await CvProfileApi.getAll()
-  return profiles.map((p) => {
-    return {
-      label: p.title,
-      value: p.id,
-    }
-  })
-}
 
 function selectLink(link: Link) {
   selectedLink.value = link
@@ -154,7 +145,6 @@ function goToNewLinkPage() {
 }
 
 onBeforeMount(async () => {
-  profiles.value = await uploadProfiles()
   const uploadedLinks = await CvLinksApi.getListByProfileId(
     selectedProfileId.value || _,
   )
