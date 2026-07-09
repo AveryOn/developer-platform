@@ -1,5 +1,8 @@
 import type { APIRoute } from "astro"
 import z from "zod"
+import { ZodBundleErrors } from "~/server/plugins/zod.plugin"
+import { CvLinkService } from "~/server/services/admin/cv/link.service"
+import { _ } from "~/shared/const"
 import { patchCvLinkDto } from "~/shared/dto/cv/link.dto"
 import { Logger } from "~/shared/logger/logger.client"
 
@@ -7,9 +10,9 @@ import { Logger } from "~/shared/logger/logger.client"
 export const PATCH: APIRoute = async ({ params, request }) => {
   const logger = new Logger('HTTP:PATCH:UPDATE_PROFILE_LINK')
   try {
-    const uuid = params.uuid
+    const linkId = params.uuid
 
-    if (!z.uuid().safeParse(uuid).success) {
+    if (!linkId || !z.uuid().safeParse(linkId).success) {
       return Response.json(
         { error: 'Profile uuid is required' },
         { status: 400 },
@@ -31,17 +34,9 @@ export const PATCH: APIRoute = async ({ params, request }) => {
       )
     }
 
-    const profile = await CvProfileService.getById(uuid)
-    if (!profile) {
-      return Response.json(
-        { error: 'Profile not found' },
-        { status: 404 },
-      )
-    }
+    const isSuccess = await CvLinkService.patch(linkId, data, logger)
 
-    const updatedProfile = await CvProfileService.update(uuid, data)
-
-    return Response.json({ data: updatedProfile })
+    return Response.json({ data: isSuccess })
   } catch (err) {
     logger.error(_, { err })
     throw err
