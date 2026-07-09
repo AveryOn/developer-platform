@@ -23,6 +23,7 @@ export const apiRoutes = {
     // LINKS
     CvLinks: '/api/cv/links',
     CvLinksReorder: '/api/cv/links/reorder',
+    cvLinkByUuid: (uuid: string) => `/api/cv/links/${uuid}`,
 
     // PROJECTS
     CvProjects: '/api/cv/projects',
