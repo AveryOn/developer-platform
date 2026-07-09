@@ -36,7 +36,6 @@ const linksOrder = ref<LinkOrderItem[]>([])
 
 /** true - если порядок ссылок изменен */
 const linksAreReordered = computed(() => {
-  console.debug(linksOrder)
   for (let i = 0; i < links.value.length; i++) {
     const link = links.value[i];
     if (linksOrder.value[i].order !== link.order) {
