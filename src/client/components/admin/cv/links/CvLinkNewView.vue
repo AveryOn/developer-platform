@@ -108,9 +108,6 @@ async function submit() {
         <SelectInputUI v-model="formData.profileId" :options="profiles" :placeholder="'Select Profile'"
           :label="'Profile*'" />
 
-        <!-- TYPE -->
-        <SelectInputUI v-model="formData.type" :options="types" :placeholder="'Select Type of Link'" :label="'Type*'" />
-
         <!-- LABEL -->
         <InputUI v-model="formData.label" class="w-[360px]!" type="text" :error="errors.label" label="Label*"
           placeholder="e.g. GitHub / Linkedin / Reddit..." @input="undoError('label')" />
@@ -119,7 +116,10 @@ async function submit() {
         <InputUI v-model="formData.url" class="w-[360px]!" type="text" :error="errors.url" label="URL*"
           placeholder="e.g. https://github.com..." @input="undoError('url')" />
 
-        <ButtonBaseUI>Save</ButtonBaseUI>
+        <!-- TYPE -->
+        <SelectInputUI v-model="formData.type" :options="types" :placeholder="'Select Type of Link'" :label="'Type*'" />
+
+        <ButtonBaseUI :disabled="isSubmitDisabled" @click="submit">Save</ButtonBaseUI>
       </div>
     </div>
   </section>
