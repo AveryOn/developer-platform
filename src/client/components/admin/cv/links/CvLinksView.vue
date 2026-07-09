@@ -28,6 +28,7 @@ const {
 interface LinkOrderItem {
   id: string
   order: number
+  label?: string
 }
 
 const links = ref<Link[]>([])
@@ -117,13 +118,6 @@ async function saveNewOrder() {
   //
 }
 
-/** Заполняет массив порядка ссылок */
-function filledLinksOrder() {
-  linksOrder.value = links.value.length > 0
-    ? []
-    : links.value.map((v) => ({ id: v.id, order: v.order }))
-}
-
 function moveLinkUp() {
   const selectedId = selectedLink.value?.id
   if (!selectedId) return
@@ -133,8 +127,16 @@ function moveLinkUp() {
   if (idx <= 0) {
     return
   }
-
   ;[links.value[idx - 1], links.value[idx]] = [links.value[idx], links.value[idx - 1]]
+  for (let i = 0; i < links.value.length; i++) {
+    const link = links.value[i]
+
+    linksOrder.value[i] = {
+      id: link.id,
+      order: i + 1,
+      label: link.label,
+    }
+  }
 }
 
 function moveLinkDown() {
@@ -146,9 +148,16 @@ function moveLinkDown() {
   if (idx === -1 || idx === links.value.length - 1) {
     return
   }
-  ;[links.value[idx], links.value[idx + 1]] = [links.value[idx + 1], links.value[idx]]
 
-  console.debug(idx)
+  ;[links.value[idx], links.value[idx + 1]] = [links.value[idx + 1], links.value[idx]]
+  for (let i = 0; i < links.value.length; i++) {
+    const link = links.value[i]
+    linksOrder.value[i] = {
+      id: link.id,
+      order: i + 1,
+      label: link.label,
+    }
+  }
 }
 
 function goToNewLinkPage() {
@@ -163,7 +172,6 @@ async function uploadLinks() {
 
 onBeforeMount(async () => {
   await uploadLinks()
-  filledLinksOrder()
 })
 </script>
 
@@ -372,6 +380,7 @@ onBeforeMount(async () => {
   padding: 8px 12px;
   cursor: pointer;
   transition: all 0.3s ease;
+  user-select: none;
 }
 
 .link-item:hover {
