@@ -61,23 +61,23 @@ export const CvLinkService = {
       })
       logger?.info('Reorder links:: COMPLETE', { shiftedLinks })
 
-      // // Фиксирование индексов порядка для всех остальных link в профиле
-      // await Promise.all(shiftedLinks.map(async (link) => {
-      //   const [data] = await tx
-      //     .update(cvProfileLinkTable)
-      //     .set({
-      //       order: link.order
-      //     })
-      //     .where(
-      //       eq(cvProfileLinkTable.id, link.id)
-      //     )
-      //     .returning({
-      //       id: cvProfileLinkTable.id,
-      //       order: cvProfileLinkTable.order,
-      //     })
-      //     .limit(1)
-      //   return data
-      // }))
+      // Фиксирование индексов порядка для всех остальных link в профиле
+      await Promise.all(shiftedLinks.map(async (link) => {
+        const [data] = await tx
+          .update(cvProfileLinkTable)
+          .set({
+            order: link.order
+          })
+          .where(
+            eq(cvProfileLinkTable.id, link.id)
+          )
+          .returning({
+            id: cvProfileLinkTable.id,
+            order: cvProfileLinkTable.order,
+          })
+          .limit(1)
+        return data
+      }))
 
 
       // const [newLink] = await tx
@@ -98,6 +98,7 @@ export const CvLinkService = {
       //   newLink,
       //   shiftedLinks: shiftedLinks
       // }
+      throw ''
     })
   },
 }
