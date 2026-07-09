@@ -41,12 +41,19 @@ const {
 
 const isSubmitLoading = ref(false)
 const isSubmitDisabled = computed(() => {
-  return formData.isVisible === true
-    && !formData.label
-    && !formData.order
+  return !formData.label
     && !formData.profileId
     && !formData.url
     && formData.type === SocialNetwork.other
+})
+
+const types = computed(() => {
+  return Object.values(SocialNetwork).map((el) => {
+    return {
+      label: el,
+      value: el,
+    }
+  })
 })
 
 
@@ -96,8 +103,13 @@ async function submit() {
     <div class="flex flex-col gap-[24px] min-w-[360px] w-[800px]">
       <div class="w-full flex flex-col justify-center items-center gap-[24px] w-[360px]! mx-auto">
         <h1 class="text-[26px] mb-[24px]">Creation a new Link</h1>
+
+        <!-- PROFILE_ID -->
         <SelectInputUI v-model="formData.profileId" :options="profiles" :placeholder="'Select Profile'"
           :label="'Profile*'" />
+
+        <!-- TYPE -->
+        <SelectInputUI v-model="formData.type" :options="types" :placeholder="'Select Type of Link'" :label="'Type*'" />
 
         <!-- LABEL -->
         <InputUI v-model="formData.label" class="w-[360px]!" type="text" :error="errors.label" label="Label*"
