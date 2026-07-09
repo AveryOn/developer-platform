@@ -3,3 +3,10 @@ export enum CookieKey {
 }
 
 export const _ = undefined
+
+export enum ProcessStatus {
+  PENDING = 'PENDING',
+  COMPLETE = 'COMPLETE',
+  ERROR = 'ERROR',
+  REJECT = 'REJECT',
+}

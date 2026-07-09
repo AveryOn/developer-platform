@@ -1,9 +1,11 @@
 import { cvProfileLinkTable, cvProfileTable } from '~/server/database/schema'
 import { db } from '~/server/database/client'
-import type { CreateCvLinkDto, CreateLinkResponse, Link, ReorderLinksDto } from '~/shared/dto/cv/link.dto'
+import type { CreateCvLinkDto, CreateLinkResponse, Link, PatchCvLinkDto, ReorderLinksDto } from '~/shared/dto/cv/link.dto'
 import { and, asc, eq } from 'drizzle-orm'
 import { dateISO } from '~/shared/utils/datetime'
 import type { Logger } from '~/shared/logger/logger.client'
+import { HttpStatusCode } from 'axios'
+import { ProcessStatus } from '~/shared/const'
 // import { dateISO } from '~/shared/utils/datetime'
 
 export const CvLinkService = {
@@ -105,7 +107,47 @@ export const CvLinkService = {
     })
   },
 
-  async reorder(dto: ReorderLinksDto, logger?: Logger) {
+  async patch(linkId: string, dto: PatchCvLinkDto, logger?: Logger): Promise<boolean> {
+    return await db.transaction(async (tx) => {
+      try {
+        // Получение объекта ссылки
+        logger?.info('Get Link by ID:: ' + ProcessStatus.PENDING)
+        const [link] = await tx
+          .select()
+          .from(cvProfileLinkTable)
+          .where(
+            eq(cvProfileLinkTable.id, linkId)
+          )
+          .limit(1)
+
+        // Если ссылки с таким ID не существует
+        if (!link) {
+          logger?.info('Get Link by ID:: ' + ProcessStatus.ERROR, { status: HttpStatusCode.NotFound })
+          return false
+        }
+        logger?.info('Get Link by ID:: ' + ProcessStatus.COMPLETE)
+
+        // Обновление объекта ссылки
+        logger?.info('Patch Link:: ' + ProcessStatus.PENDING)
+        await tx
+          .update(cvProfileLinkTable)
+          .set({ ...dto })
+          .where(
+            eq(cvProfileLinkTable.id, link.id)
+          )
+          .returning()
+
+        logger?.info('Patch Link:: ' + ProcessStatus.COMPLETE)
+        return true
+      }
+      catch (err) {
+        logger?.error(ProcessStatus.ERROR, { error: err })
+        return false
+      }
+    })
+  },
+
+  async reorder(dto: ReorderLinksDto, logger?: Logger): Promise<boolean> {
     return await db.transaction(async (tx) => {
       try {
         logger?.info('Get Profile:: PENDING', { profileId: dto.profileId })
