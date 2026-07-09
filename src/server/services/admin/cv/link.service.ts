@@ -30,31 +30,36 @@ export const CvLinkService = {
         .limit(1)
 
 
-      logger?.info('Conflict Row Check', { existingLink })
-      // // Если такая ссылка уже существует для этого профиля
-      // if (existingLink) {
-      //   logger?.error('[CONFLICT] Such a link already exists', {
-      //     profileId: existingLink.profileId,
-      //     label: existingLink.label
-      //   })
-      //   throw new Error('Conflict', { cause: 'Such a link already exists' })
-      // }
+      // Если такая ссылка уже существует для этого профиля
+      if (existingLink) {
+        logger?.error('[CONFLICT] Such a link already exists', {
+          profileId: existingLink.profileId,
+          label: existingLink.label
+        })
+        throw new Error('Conflict', { cause: 'Such a link already exists' })
+      }
+
+      logger?.info(`Get list by Profile ${dto.profileId}:: PENDING`)
+
+      const linksOnProfile = await tx
+        .select({
+          order: cvProfileLinkTable.order,
+          id: cvProfileLinkTable.id,
+        })
+        .from(cvProfileLinkTable)
+        .where(
+          eq(cvProfileLinkTable.profileId, dto.profileId),
+        )
+
+      logger?.info(`Get list by Profile ${dto.profileId}:: COMPLETE`, { count: linksOnProfile.length })
 
 
-      // const linksOnProfile = await tx
-      //   .select({
-      //     order: cvProfileLinkTable.order,
-      //     id: cvProfileLinkTable.id,
-      //   })
-      //   .from(cvProfileLinkTable)
-      //   .where(
-      //     eq(cvProfileLinkTable.profileId, dto.profileId),
-      //   )
-
-      // const shiftedLinks = linksOnProfile.map((link) => {
-      //   link.order += 1
-      //   return link
-      // })
+      logger?.info('Reorder links:: PENDING')
+      const shiftedLinks = linksOnProfile.map((link) => {
+        link.order += 1
+        return link
+      })
+      logger?.info('Reorder links:: COMPLETE', { shiftedLinks })
 
       // // Фиксирование индексов порядка для всех остальных link в профиле
       // await Promise.all(shiftedLinks.map(async (link) => {
