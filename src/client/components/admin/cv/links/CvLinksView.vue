@@ -60,6 +60,8 @@ type LinkEditData = Partial<Record<keyof LinkInput, {
   focused: boolean,
   loading: boolean,
 }>>
+type LinkEditBody = Partial<Record<keyof LinkInput, LinkInput[keyof LinkInput]>>
+
 const editLinkFormData = ref<LinkEditData>({
   isVisible: { newValue: _, oldValue: _, focused: false, loading: false },
   label: { newValue: _, oldValue: _, focused: false, loading: false },
@@ -93,9 +95,14 @@ function resetSelection() {
   resetChangesOrder()
 }
 
-/** Зафиксировать изменения в поле */
-function commitChange(field: keyof LinkInput) {
-  editLinkFormData.value[field]!.oldValue = editLinkFormData.value[field]!.newValue
+/** Обновляет исходный массив ссылок после изменений */
+function refreshSource(body: LinkEditBody) {
+  links.value = links.value.map((l) => {
+    if (l.id === selectedLink.value?.id) {
+      return { ...l, ...body as Link }
+    }
+    return l
+  })
 }
 
 /** Отменить изменения в поле */
@@ -124,12 +131,20 @@ const someChange = computed(() => {
 /** Подтвердить изменение поля */
 async function confirmUpdateField(field: keyof LinkInput) {
   try {
+    if (!selectedLink.value) return
     if (!hasChanges(field)) return
     editLinkFormData.value[field]!.loading = true
 
-    await sleep(1000)
+    const body = { [field]: editLinkFormData.value[field]?.newValue }
+    const result = await CvLinksApi.patch(selectedLink.value.id, body)
+    if (!result) throw _;
+
+    //  Зафиксировать изменение в исходном массиве
+    refreshSource(body)
     resetFocus(field)
-    commitChange(field)
+    resetSelection()
+
+    toast.success('Ссылка изменена', { duration: 3000, title: 'Success!' })
   }
   catch (err) {
     console.error(err)
@@ -158,7 +173,7 @@ async function submitFormChanges() {
     if (!someChange.value) return
 
     // Собираем объект измененных полей ссылки
-    const body: Partial<Record<keyof LinkInput, LinkInput[keyof LinkInput]>> = {}
+    const body: LinkEditBody = {}
     for (const [k, v] of Object.entries(editLinkFormData.value)) {
       if (hasChanges(k as keyof LinkInput)) {
         body[k as keyof LinkInput] = v.newValue
@@ -168,12 +183,7 @@ async function submitFormChanges() {
     if (!result) throw _
 
     //  Зафиксировать изменение в исходном массиве
-    links.value = links.value.map((l) => {
-      if (l.id === selectedLink.value?.id) {
-        return { ...l, ...body as Link }
-      }
-      return l
-    })
+    refreshSource(body)
     resetSelection()
     toast.success('Ссылка изменена', { duration: 3000, title: 'Success!' })
   } catch (err) {
