@@ -178,6 +178,9 @@ function goToNewLinkPage() {
 }
 
 async function uploadLinks() {
+  // Нужно сбросить прошлое состояние формы перед рендерингом нового списка ссылок
+  resetSelection()
+
   links.value = await CvLinksApi.getListByProfileId(
     selectedProfileId.value || _,
   )
