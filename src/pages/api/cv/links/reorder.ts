@@ -11,9 +11,7 @@ export const PUT: APIRoute = async ({ request }) => {
     const body = await request.json()
     logger.info('Excludes request body', { body })
 
-    const { success, data, error } = reorderLinksDto.safeParse(
-      body?.data,
-    )
+    const { success, data, error } = reorderLinksDto.safeParse(body)
 
     if (!success) {
       logger.error(_, { error })

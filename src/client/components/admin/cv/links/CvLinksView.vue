@@ -15,10 +15,12 @@ import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import { AppRoutes } from '~/shared/router'
 import { useProfiles } from '~/client/composables/useProfiles'
+import { useToast } from '~/client/composables/useToast'
 
 useKeyboard({
   esc: resetSelection,
 })
+const toast = useToast()
 const {
   profiles,
   selectedProfileId
@@ -32,6 +34,7 @@ interface LinkOrderItem {
 
 const links = ref<Link[]>([])
 const linksOrder = ref<LinkOrderItem[]>([])
+const isSaveReorderLoading = ref(false)
 
 /** true - если порядок ссылок изменен */
 const linksAreReordered = computed(() => {
@@ -126,7 +129,26 @@ async function confirmUpdateField(field: keyof LinkInput) {
 }
 
 async function saveNewOrder() {
-  //
+  try {
+    isSaveReorderLoading.value = true
+
+    const success = await CvLinksApi.reorder({
+      linksOrder: linksOrder.value,
+      profileId: selectedProfileId.value,
+    })
+
+    if (success) return
+  } catch (err) {
+    console.error(err)
+    toast.error('Произошла ошибка при создании ссылки', {
+      duration: 3000,
+      title: 'Ошибка',
+    })
+  }
+  finally {
+    isSaveReorderLoading.value = false
+  }
+
 }
 
 function moveLink(direction: 'up' | 'down') {
@@ -360,7 +382,7 @@ onBeforeMount(async () => {
       </div>
 
       <TransitionGroup tag="div" name="link-actions" class="w-full flex justify-center gap-[14px]">
-        <ButtonBaseUI v-if="linksAreReordered" key="save-order" @click="saveNewOrder">
+        <ButtonBaseUI v-if="linksAreReordered" key="save-order" :loading="isSaveReorderLoading" @click="saveNewOrder">
           Save New Order
         </ButtonBaseUI>
 

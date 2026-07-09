@@ -23,7 +23,10 @@ export const CvLinksApi = {
   },
 
   async reorder(data: ReorderLinksDto) {
-    const result = await httpClient.put<{ data: boolean }>(routes.CvLinksReorder, data)
+    const result = await httpClient.put<{ data: boolean }>(routes.CvLinksReorder, {
+      linksOrder: data.linksOrder,
+      profileId: data.profileId,
+    })
     return result.data
   }
 
