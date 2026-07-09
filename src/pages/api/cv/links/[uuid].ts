@@ -22,9 +22,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
     const body = await request.json()
     logger.info('Excludes request body', { body })
 
-    const { success, data, error } = patchCvLinkDto.safeParse(
-      body?.data,
-    )
+    const { success, data, error } = patchCvLinkDto.safeParse(body)
 
     if (!success) {
       logger.error(_, { error })

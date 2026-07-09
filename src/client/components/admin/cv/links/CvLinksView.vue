@@ -6,7 +6,7 @@ import Icon from '~/client/components/common/Icon.vue'
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue'
 import { useKeyboard } from '~/client/composables/useKeyboard'
 import { _ } from '~/shared/const'
-import type { Link } from '~/shared/dto/cv/link.dto'
+import type { Link, PatchCvLinkDto } from '~/shared/dto/cv/link.dto'
 import { SocialNetworks } from '~/shared/types'
 import type { LinkInput } from '~/shared/dto/cv/link.dto';
 import InputUI from '~/client/components/shared/InputUI.vue'
@@ -152,10 +152,12 @@ function resetFormChanges() {
 async function submitFormChanges() {
   try {
     isSubmitFormChangesLoading.value = true
+
+    if (!selectedLink.value) return
     // Если изменений форме ссылки нет, тогда выход
     if (!someChange.value) return
 
-    // СОбираем объект измененных полей ссылки
+    // Собираем объект измененных полей ссылки
     const body: Partial<Record<keyof LinkInput, LinkInput[keyof LinkInput]>> = {}
     for (const [k, v] of Object.entries(editLinkFormData.value)) {
       if (hasChanges(k as keyof LinkInput)) {
@@ -164,6 +166,9 @@ async function submitFormChanges() {
     }
 
     console.debug(body)
+
+    const result = await CvLinksApi.patch(selectedLink.value?.id, body as PatchCvLinkDto)
+    if (result) toast.success('Ссылка изменена', { duration: 3000, title: 'Success!' })
   } catch (err) {
     console.error(err)
     toast.error('Произошла ошибка при изменении данных ссылки', {
