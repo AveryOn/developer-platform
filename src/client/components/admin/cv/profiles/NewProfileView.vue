@@ -44,32 +44,29 @@ const languageOptions = [
   },
 ]
 
-const { errors, isSomeError, setErrors, undoError } =
-  useFormValidator(formData)
+const {
+  errors,
+  isSomeError,
+  undoError,
+  validateFormOrThrow,
+} = useFormValidator(formData)
 
 const toast = useToast()
 
 async function submit() {
   try {
     isSubmitLoading.value = true
-    const data = createCvProfileDto.safeParse(formData)
-    console.debug(formData)
-    if (!data.success) {
-      const details = z.treeifyError(data.error)
-      setErrors(details)
-      console.debug(details)
-      throw new Error('INVALID DATA')
-    }
+    const data = validateFormOrThrow(createCvProfileDto, formData)
     const newProfile = await CvProfileApi.create({
-      firstName: formData.firstName,
-      isActive: formData.isActive,
-      language: formData.language,
-      lastName: formData.lastName,
-      summary: formData.summary,
-      title: formData.title,
-      email: formData.email,
-      location: formData.location,
-      phone: formData.phone,
+      firstName: data.data.firstName,
+      isActive: data.data.isActive,
+      language: data.data.language,
+      lastName: data.data.lastName,
+      summary: data.data.summary,
+      title: data.data.title,
+      email: data.data.email,
+      location: data.data.location,
+      phone: data.data.phone,
     })
     toast.success('Профиль успешно создан!', {
       duration: 3000,
