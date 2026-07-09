@@ -3,8 +3,6 @@ import { ref } from 'vue'
 import Icon from '~/client/components/common/Icon.vue'
 import { mdiAccountEdit } from '@mdi/js'
 import { useAppStore } from '~/client/stores/app.store'
-import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
-import { ProfileLanguage } from '~/shared/types'
 
 const appStore = useAppStore()
 
