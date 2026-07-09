@@ -97,14 +97,14 @@ async function submit() {
       <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
       </div>
 
-      <div class="w-full flex flex-col justify-center items-center">
+      <div class="w-full flex flex-col justify-center items-center gap-[24px]">
 
         <!-- LABEL -->
         <InputUI v-model="formData.label" class="w-[360px]!" type="text" :error="errors.label" label="Label"
           placeholder="e.g. GitHub / Linkedin / Reddit..." @input="undoError('label')" />
 
         <!-- URL -->
-        <InputUI v-model="formData.url" class="w-[360px]!" type="text" :error="errors.url" label="url"
+        <InputUI v-model="formData.url" class="w-[360px]!" type="text" :error="errors.url" label="URL"
           placeholder="e.g. https://github.com..." @input="undoError('url')" />
 
         <ButtonBaseUI>Save</ButtonBaseUI>
