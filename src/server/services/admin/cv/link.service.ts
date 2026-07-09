@@ -29,14 +29,16 @@ export const CvLinkService = {
         )
         .limit(1)
 
-      // Если такая ссылка уже существует для этого профиля
-      if (existingLink) {
-        logger?.error('[CONFLICT] Such a link already exists', {
-          profileId: existingLink.profileId,
-          label: existingLink.label
-        })
-        throw new Error('Conflict', { cause: 'Such a link already exists' })
-      }
+
+      logger?.info('Conflict Row Check', { existingLink })
+      // // Если такая ссылка уже существует для этого профиля
+      // if (existingLink) {
+      //   logger?.error('[CONFLICT] Such a link already exists', {
+      //     profileId: existingLink.profileId,
+      //     label: existingLink.label
+      //   })
+      //   throw new Error('Conflict', { cause: 'Such a link already exists' })
+      // }
 
 
       // const linksOnProfile = await tx
