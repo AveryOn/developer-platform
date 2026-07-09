@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import z from 'zod'
 import { CvProfileApi } from '~/client/api/admin/cv/profile.api'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
