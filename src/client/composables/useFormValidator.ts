@@ -1,4 +1,4 @@
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 
 /**
  * Карта ошибок формы.
@@ -78,6 +78,8 @@ export interface ZodErrorCustomDetails<TForm extends object> {
  * })
  */
 export function useFormValidator<TForm extends object>(form: TForm) {
+  const isSubmitLoading = ref(false)
+  const isSubmitDisabled = ref(false)
   /**
    * Реактивная карта ошибок формы.
    * Ключи объекта соответствуют ключам переданной формы.
@@ -129,6 +131,8 @@ export function useFormValidator<TForm extends object>(form: TForm) {
     return Object.values(errors).some(Boolean)
   })
   return {
+    isSubmitLoading,
+    isSubmitDisabled,
     errors,
     isSomeError,
     setErrors,
