@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiChevronDownBoxOutline, mdiChevronUpBoxOutline, mdiHandOkay, mdiPen, mdiUndo } from '@mdi/js'
-import { computed, ref } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import Icon from '~/client/components/common/Icon.vue'
 import SelectInputUI, {
@@ -25,7 +25,14 @@ const {
   selectedProfileId
 } = useProfiles()
 
+interface LinkOrderItem {
+  id: string
+  order: number
+}
+
 const links = ref<Link[]>([])
+const linksOrder = ref<LinkOrderItem[]>([])
+
 const linksByProfileId = computed(() => {
   if (!selectedProfileId.value) return links.value
   return links.value.filter(v => (v.profileId === selectedProfileId.value))
@@ -106,6 +113,44 @@ async function confirmUpdateField(field: keyof LinkInput) {
   }
 }
 
+async function saveNewOrder() {
+  //
+}
+
+/** Заполняет массив порядка ссылок */
+function filledLinksOrder() {
+  linksOrder.value = links.value.length > 0
+    ? []
+    : links.value.map((v) => ({ id: v.id, order: v.order }))
+}
+
+function moveLinkUp() {
+  const selectedId = selectedLink.value?.id
+  if (!selectedId) return
+
+  const idx = links.value.findIndex((link) => link.id === selectedId)
+
+  if (idx <= 0) {
+    return
+  }
+
+  ;[links.value[idx - 1], links.value[idx]] = [links.value[idx], links.value[idx - 1]]
+}
+
+function moveLinkDown() {
+  const selectedId = selectedLink.value?.id
+  if (!selectedId) return
+
+  const idx = links.value.findIndex((link) => link.id === selectedId)
+
+  if (idx === -1 || idx === links.value.length - 1) {
+    return
+  }
+  ;[links.value[idx], links.value[idx + 1]] = [links.value[idx + 1], links.value[idx]]
+
+  console.debug(idx)
+}
+
 function goToNewLinkPage() {
   window.location.href = AppRoutes.admin.CvLinksNew
 }
@@ -115,6 +160,11 @@ async function uploadLinks() {
     selectedProfileId.value || _,
   )
 }
+
+onBeforeMount(async () => {
+  await uploadLinks()
+  filledLinksOrder()
+})
 </script>
 
 <template>
@@ -128,8 +178,8 @@ async function uploadLinks() {
 
       <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
         <div v-if="selectedLink" class="absolute left-[-36px] top-0 bottom-0 flex flex-col justify-between">
-          <Icon class="move-link-btn" :size="28" :icon="mdiChevronUpBoxOutline"></Icon>
-          <Icon class="move-link-btn" :size="28" :icon="mdiChevronDownBoxOutline"></Icon>
+          <Icon class="move-link-btn" :size="28" :icon="mdiChevronUpBoxOutline" @click="moveLinkUp"></Icon>
+          <Icon class="move-link-btn" :size="28" :icon="mdiChevronDownBoxOutline" @click="moveLinkDown"></Icon>
         </div>
 
         <ul class="flex flex-col gap-[10px] w-[50%]">
@@ -283,6 +333,7 @@ async function uploadLinks() {
       </div>
 
       <div class="w-full flex justify-center">
+        <ButtonBaseUI @click="saveNewOrder">Save New Order</ButtonBaseUI>
         <ButtonBaseUI @click="goToNewLinkPage">* Create New *</ButtonBaseUI>
       </div>
     </div>
