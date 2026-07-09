@@ -164,11 +164,18 @@ async function submitFormChanges() {
         body[k as keyof LinkInput] = v.newValue
       }
     }
-
-    console.debug(body)
-
     const result = await CvLinksApi.patch(selectedLink.value?.id, body as PatchCvLinkDto)
-    if (result) toast.success('Ссылка изменена', { duration: 3000, title: 'Success!' })
+    if (!result) throw _
+
+    //  Зафиксировать изменение в исходном массиве
+    links.value = links.value.map((l) => {
+      if (l.id === selectedLink.value?.id) {
+        return { ...l, ...body as Link }
+      }
+      return l
+    })
+    resetSelection()
+    toast.success('Ссылка изменена', { duration: 3000, title: 'Success!' })
   } catch (err) {
     console.error(err)
     toast.error('Произошла ошибка при изменении данных ссылки', {
