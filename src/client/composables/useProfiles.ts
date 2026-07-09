@@ -3,7 +3,7 @@ import type { SelectOption } from "~/client/components/shared/SelectInputUI.vue"
 import { CvProfileApi } from "~/client/api/admin/cv/profile.api"
 import { _ } from "~/shared/const"
 
-export function useProfiles() {
+export function useProfiles(options?: { setFirstAsSelect?: boolean }) {
 
   const profiles = ref<SelectOption[]>([])
   const selectedProfileId = ref<string>('')
@@ -21,6 +21,9 @@ export function useProfiles() {
 
   onBeforeMount(async () => {
     profiles.value = await uploadProfiles()
+    if (options?.setFirstAsSelect) {
+      selectedProfileId.value = profiles.value[0].value
+    }
   })
 
   return {

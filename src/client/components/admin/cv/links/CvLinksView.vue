@@ -22,7 +22,7 @@ useKeyboard({
 const {
   profiles,
   selectedProfileId
-} = useProfiles()
+} = useProfiles({ setFirstAsSelect: true })
 
 interface LinkOrderItem {
   id: string
