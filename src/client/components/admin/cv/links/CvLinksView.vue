@@ -3,8 +3,7 @@ import { mdiChevronDownBoxOutline, mdiChevronUpBoxOutline, mdiHandOkay, mdiPen, 
 import { computed, onBeforeMount, ref } from 'vue'
 import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import Icon from '~/client/components/common/Icon.vue'
-import SelectInputUI, {
-} from '~/client/components/shared/SelectInputUI.vue'
+import SelectInputUI from '~/client/components/shared/SelectInputUI.vue'
 import { useKeyboard } from '~/client/composables/useKeyboard'
 import { _ } from '~/shared/const'
 import type { Link } from '~/shared/dto/cv/link.dto'
@@ -359,6 +358,8 @@ onBeforeMount(async () => {
 
       <div class="w-full flex justify-center">
         <ButtonBaseUI v-if="linksAreReordered" @click="saveNewOrder">Save New Order</ButtonBaseUI>
+        <ButtonBaseUI v-if="linksAreReordered" :variant="'secondary'" @click="resetChangesOrder">Reset New Order
+        </ButtonBaseUI>
         <ButtonBaseUI @click="goToNewLinkPage">* Create New *</ButtonBaseUI>
       </div>
     </div>
