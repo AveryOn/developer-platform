@@ -1,6 +1,6 @@
 import { httpClient } from '~/client/api/http-client'
 import { _ } from '~/shared/const'
-import type { CreateCvLinkDto, Link } from '~/shared/dto/cv/link.dto'
+import type { CreateCvLinkDto, Link, ReorderLinksDto } from '~/shared/dto/cv/link.dto'
 import { AppRoutes } from '~/shared/router'
 
 const routes = AppRoutes.api.admin
@@ -16,10 +16,15 @@ export const CvLinksApi = {
     return result.data
   },
 
-  create(data: CreateCvLinkDto) {
-    return httpClient.post<Link>(routes.CvLinks, {
+  async create(data: CreateCvLinkDto) {
+    return await httpClient.post<Link>(routes.CvLinks, {
       data,
     })
   },
+
+  async reorder(data: ReorderLinksDto) {
+    const result = await httpClient.put<{ data: boolean }>(routes.CvLinksReorder, data)
+    return result.data
+  }
 
 }

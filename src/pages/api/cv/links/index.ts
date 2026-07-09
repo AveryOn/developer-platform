@@ -5,8 +5,8 @@ import {
 } from '~/shared/logger/logger.client'
 import { _ } from '~/shared/const'
 import { CvLinkService } from '~/server/services/admin/cv/link.service'
-import { throwZodError, ZodBundleErrors } from '~/server/plugins/zod.plugin'
-import { createCvLinkDto, reorderLinksDto } from '~/shared/dto/cv/link.dto'
+import { throwZodError } from '~/server/plugins/zod.plugin'
+import { createCvLinkDto } from '~/shared/dto/cv/link.dto'
 import { HttpStatusCode } from 'axios'
 
 export const GET: APIRoute = async () => {
@@ -44,34 +44,4 @@ export const POST: APIRoute = async ({ request }) => {
     { data: newRecord },
     { status: HttpStatusCode.Created },
   )
-}
-
-export const PUT: APIRoute = async ({ request }) => {
-  const logger = new Logger('HTTP:PUT:REORDER_LINKS')
-  try {
-    const body = await request.json()
-    logger.info('Excludes request body', { body })
-
-    const { success, data, error } = reorderLinksDto.safeParse(
-      body?.data,
-    )
-
-    if (!success) {
-      logger.error(_, { error })
-      return Response.json(
-        { error: ZodBundleErrors(error) },
-        { status: 400 },
-      )
-    }
-
-    const isSuccess = await CvLinkService.reorder({
-      linksOrder: data.linksOrder,
-      profileId: data.profileId,
-    }, logger)
-
-    return Response.json({ data: isSuccess })
-  } catch (err) {
-    logger.error(_, { err })
-    throw err
-  }
 }

@@ -22,6 +22,7 @@ export const apiRoutes = {
 
     // LINKS
     CvLinks: '/api/cv/links',
+    CvLinksReorder: '/api/cv/links/reorder',
 
     // PROJECTS
     CvProjects: '/api/cv/projects',
