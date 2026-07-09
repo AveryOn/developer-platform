@@ -206,15 +206,16 @@ onBeforeMount(async () => {
           </Icon>
         </div>
 
-        <ul class="flex flex-col gap-[10px] w-[50%]">
+        <TransitionGroup tag="ul" name="links-list" class="flex flex-col gap-[10px] w-[50%]">
           <li v-for="link in linksByProfileId" :key="link.id" class="link-item"
             :class="{ 'bg-[--primary-color-3-100]': link.id === selectedLink?.id }" @click="() => selectLink(link)">
             <span>{{ link.label }}</span>
+
             <div class="link-item__actions">
-              <Icon :icon="mdiPen" :size="16"></Icon>
+              <Icon :icon="mdiPen" :size="16" />
             </div>
           </li>
-        </ul>
+        </TransitionGroup>
 
         <!-- SEPARATOR -->
         <Transition name="separator">
@@ -532,5 +533,23 @@ onBeforeMount(async () => {
 .link-editor-leave-from {
   opacity: 1;
   transform: translateX(0);
+}
+
+/*--------------------------------------------------- */
+.links-list-move {
+  transition: transform 0.25s ease;
+}
+
+.links-list-enter-active,
+.links-list-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.links-list-enter-from,
+.links-list-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
 }
 </style>
