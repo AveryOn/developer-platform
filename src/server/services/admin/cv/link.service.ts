@@ -1,6 +1,6 @@
-import { cvProfileLinkTable } from '~/server/database/schema'
+import { cvProfileLinkTable, cvProfileTable } from '~/server/database/schema'
 import { db } from '~/server/database/client'
-import type { CreateCvLinkDto, CreateLinkResponse, Link } from '~/shared/dto/cv/link.dto'
+import type { CreateCvLinkDto, CreateLinkResponse, Link, ReorderLinksDto } from '~/shared/dto/cv/link.dto'
 import { and, asc, eq } from 'drizzle-orm'
 import { dateISO } from '~/shared/utils/datetime'
 import type { Logger } from '~/shared/logger/logger.client'
@@ -104,4 +104,44 @@ export const CvLinkService = {
       }
     })
   },
+
+  async reorder(dto: ReorderLinksDto, logger?: Logger) {
+    return await db.transaction(async (tx) => {
+      try {
+        logger?.info('Get Profile:: PENDING', { profileId: dto.profileId })
+
+        // GET PROFILE
+        const [profile] = await tx.
+          select()
+          .from(cvProfileTable)
+          .where(
+            eq(cvProfileTable.id, dto.profileId)
+          )
+          .limit(1)
+
+        if (!profile) {
+          logger?.error('Get Profile:: ERROR', { msg: 'Profile not found' })
+          throw new Error('Profile not found')
+        }
+        logger?.info('Get Profile:: COMPLETE')
+
+
+        logger?.info('Reorder Links:: PENDING')
+        for (const link of dto.linksOrder) {
+          await tx
+            .update(cvProfileLinkTable)
+            .set({
+              order: link.order
+            })
+            .where(eq(cvProfileLinkTable.id, link.id))
+        }
+        logger?.info('Reorder Links:: COMPLETE')
+        return true
+      }
+      catch (err) {
+        logger?.error('Reorder Error', { error: err })
+        return false
+      }
+    })
+  }
 }

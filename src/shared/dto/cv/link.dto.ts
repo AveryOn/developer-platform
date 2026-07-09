@@ -13,6 +13,15 @@ export const createCvLinkDto = z.object({
 })
 export type CreateCvLinkDto = z.infer<typeof createCvLinkDto>
 
+export const reorderLinksDto = z.object({
+  linksOrder: z.array(z.object({
+    id: z.uuid(),
+    order: z.number().min(0),
+    label: z.string().trim().optional()
+  })),
+  profileId: z.uuid()
+})
+export type ReorderLinksDto = z.infer<typeof reorderLinksDto>
 
 export interface CreateLinkResponse {
   newLink: Link,
