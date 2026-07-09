@@ -1,4 +1,5 @@
 import { computed, reactive, ref } from 'vue'
+import z from 'zod'
 
 /**
  * Карта ошибок формы.
@@ -127,6 +128,26 @@ export function useFormValidator<TForm extends object>(form: TForm) {
     errors[field] = ''
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function validateFormOrThrow<T extends Record<string, any>>(
+    dto: z.ZodObject<T>,
+    form: TForm,
+    error: () => void,
+
+  ) {
+    const data = dto.safeParse(form)
+
+    if (!data.success) {
+      const details = z.treeifyError(data.error) as ZodErrorCustomDetails<TForm>
+      setErrors(details)
+      console.debug(details)
+      error()
+      throw new Error('INVALID DATA')
+    }
+
+    return data
+  }
+
   const isSomeError = computed(() => {
     return Object.values(errors).some(Boolean)
   })
@@ -137,5 +158,6 @@ export function useFormValidator<TForm extends object>(form: TForm) {
     isSomeError,
     setErrors,
     undoError,
+    validateFormOrThrow,
   }
 }

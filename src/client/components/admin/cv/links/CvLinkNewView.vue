@@ -36,7 +36,8 @@ const {
   errors,
   isSomeError,
   setErrors,
-  undoError
+  undoError,
+  validateFormOrThrow,
 } = useFormValidator(formData)
 
 const isSubmitLoading = ref(false)
@@ -60,14 +61,8 @@ const types = computed(() => {
 async function submit() {
   try {
     isSubmitLoading.value = true
-    const data = createCvLinkDto.safeParse(formData)
+    const data = validateFormOrThrow(createCvLinkDto, formData)
 
-    if (!data.success) {
-      const details = z.treeifyError(data.error)
-      setErrors(details)
-      console.debug(details)
-      throw new Error('INVALID DATA')
-    }
     const newProfile = await CvLinksApi.create({
       url: data.data.url,
       type: data.data.type,
@@ -106,7 +101,7 @@ async function submit() {
 
         <!-- PROFILE_ID -->
         <SelectInputUI v-model="formData.profileId" :options="profiles" :placeholder="'Select Profile'"
-          :label="'Profile*'" />
+          :error="errors.profileId" :label="'Profile*'" />
 
         <!-- LABEL -->
         <InputUI v-model="formData.label" class="w-[360px]!" type="text" :error="errors.label" label="Label*"
