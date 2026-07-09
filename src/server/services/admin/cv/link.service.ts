@@ -16,6 +16,7 @@ export const CvLinkService = {
       const now = dateISO()
 
       logger?.info('TRANSACTION', { now })
+      logger?.info('Conflict Row Check')
 
       const [existingLink] = await tx
         .select()
@@ -37,58 +38,59 @@ export const CvLinkService = {
         throw new Error('Conflict', { cause: 'Such a link already exists' })
       }
 
-      const linksOnProfile = await tx
-        .select({
-          order: cvProfileLinkTable.order,
-          id: cvProfileLinkTable.id,
-        })
-        .from(cvProfileLinkTable)
-        .where(
-          eq(cvProfileLinkTable.profileId, dto.profileId),
-        )
 
-      const shiftedLinks = linksOnProfile.map((link) => {
-        link.order += 1
-        return link
-      })
+      // const linksOnProfile = await tx
+      //   .select({
+      //     order: cvProfileLinkTable.order,
+      //     id: cvProfileLinkTable.id,
+      //   })
+      //   .from(cvProfileLinkTable)
+      //   .where(
+      //     eq(cvProfileLinkTable.profileId, dto.profileId),
+      //   )
 
-      // Фиксирование индексов порядка для всех остальных link в профиле
-      await Promise.all(shiftedLinks.map(async (link) => {
-        const [data] = await tx
-          .update(cvProfileLinkTable)
-          .set({
-            order: link.order
-          })
-          .where(
-            eq(cvProfileLinkTable.id, link.id)
-          )
-          .returning({
-            id: cvProfileLinkTable.id,
-            order: cvProfileLinkTable.order,
-          })
-          .limit(1)
-        return data
-      }))
+      // const shiftedLinks = linksOnProfile.map((link) => {
+      //   link.order += 1
+      //   return link
+      // })
+
+      // // Фиксирование индексов порядка для всех остальных link в профиле
+      // await Promise.all(shiftedLinks.map(async (link) => {
+      //   const [data] = await tx
+      //     .update(cvProfileLinkTable)
+      //     .set({
+      //       order: link.order
+      //     })
+      //     .where(
+      //       eq(cvProfileLinkTable.id, link.id)
+      //     )
+      //     .returning({
+      //       id: cvProfileLinkTable.id,
+      //       order: cvProfileLinkTable.order,
+      //     })
+      //     .limit(1)
+      //   return data
+      // }))
 
 
-      const [newLink] = await tx
-        .insert(cvProfileLinkTable)
-        .values({
-          label: dto.label,
-          profileId: dto.profileId,
-          type: dto.type,
-          url: dto.url,
-          order: 0,
-          isVisible: true,
-          updatedAt: now,
-          createdAt: now,
-        })
-        .returning()
+      // const [newLink] = await tx
+      //   .insert(cvProfileLinkTable)
+      //   .values({
+      //     label: dto.label,
+      //     profileId: dto.profileId,
+      //     type: dto.type,
+      //     url: dto.url,
+      //     order: 0,
+      //     isVisible: true,
+      //     updatedAt: now,
+      //     createdAt: now,
+      //   })
+      //   .returning()
 
-      return {
-        newLink,
-        shiftedLinks: shiftedLinks
-      }
+      // return {
+      //   newLink,
+      //   shiftedLinks: shiftedLinks
+      // }
     })
   },
 }
