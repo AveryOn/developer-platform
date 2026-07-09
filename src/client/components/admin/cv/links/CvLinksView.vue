@@ -34,6 +34,16 @@ interface LinkOrderItem {
 const links = ref<Link[]>([])
 const linksOrder = ref<LinkOrderItem[]>([])
 
+const linksAreReordered = computed(() => {
+  for (let i = 0; i < links.value.length; i++) {
+    const link = links.value[i];
+    if (linksOrder.value[i].order !== link.order) {
+      return true
+    }
+  }
+  return false
+})
+
 const linksByProfileId = computed(() => {
   if (!selectedProfileId.value) return links.value
   return links.value.filter(v => (v.profileId === selectedProfileId.value))
@@ -118,40 +128,28 @@ async function saveNewOrder() {
   //
 }
 
-function moveLinkUp() {
+function moveLink(direction: 'up' | 'down') {
   const selectedId = selectedLink.value?.id
   if (!selectedId) return
 
   const idx = links.value.findIndex((link) => link.id === selectedId)
-
-  if (idx <= 0) {
-    return
-  }
-  ;[links.value[idx - 1], links.value[idx]] = [links.value[idx], links.value[idx - 1]]
-  for (let i = 0; i < links.value.length; i++) {
-    const link = links.value[i]
-
-    linksOrder.value[i] = {
-      id: link.id,
-      order: i + 1,
-      label: link.label,
+  // MOVE UP
+  if (direction === 'up') {
+    if (idx <= 0) {
+      return
     }
+    ;[links.value[idx - 1], links.value[idx]] = [links.value[idx], links.value[idx - 1]]
   }
-}
-
-function moveLinkDown() {
-  const selectedId = selectedLink.value?.id
-  if (!selectedId) return
-
-  const idx = links.value.findIndex((link) => link.id === selectedId)
-
-  if (idx === -1 || idx === links.value.length - 1) {
-    return
+  // MOVE DOWNs
+  else if (direction === 'down') {
+    if (idx === -1 || idx === links.value.length - 1) {
+      return
+    }
+    ;[links.value[idx], links.value[idx + 1]] = [links.value[idx + 1], links.value[idx]]
   }
-
-  ;[links.value[idx], links.value[idx + 1]] = [links.value[idx + 1], links.value[idx]]
   for (let i = 0; i < links.value.length; i++) {
     const link = links.value[i]
+
     linksOrder.value[i] = {
       id: link.id,
       order: i + 1,
@@ -186,8 +184,9 @@ onBeforeMount(async () => {
 
       <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
         <div v-if="selectedLink" class="absolute left-[-36px] top-0 bottom-0 flex flex-col justify-between">
-          <Icon class="move-link-btn" :size="28" :icon="mdiChevronUpBoxOutline" @click="moveLinkUp"></Icon>
-          <Icon class="move-link-btn" :size="28" :icon="mdiChevronDownBoxOutline" @click="moveLinkDown"></Icon>
+          <Icon class="move-link-btn" :size="28" :icon="mdiChevronUpBoxOutline" @click="() => moveLink('up')"></Icon>
+          <Icon class="move-link-btn" :size="28" :icon="mdiChevronDownBoxOutline" @click="moveLink('down')">
+          </Icon>
         </div>
 
         <ul class="flex flex-col gap-[10px] w-[50%]">
