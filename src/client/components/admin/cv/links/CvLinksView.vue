@@ -135,6 +135,12 @@ async function confirmUpdateField(field: keyof LinkInput) {
   }
 }
 
+function resetFormChanges() {
+  for (const k of Object.keys(editLinkFormData.value)) {
+    undoChanges(k as keyof LinkInput)
+  }
+}
+
 async function submitFormChanges() {
   // Если изменений форме ссылки нет, тогда выход
   if (!someChange.value) return
@@ -146,8 +152,6 @@ async function submitFormChanges() {
       body[k as keyof LinkInput] = v.newValue
     }
   }
-
-
 
   console.debug(body)
 }
@@ -398,6 +402,10 @@ onBeforeMount(async () => {
 
         <ButtonBaseUI v-if="someChange" key="commit-changes" @click="submitFormChanges">
           Commit Changes
+        </ButtonBaseUI>
+
+        <ButtonBaseUI v-if="someChange" key="reset-changes" :variant="'secondary'" @click="resetFormChanges">
+          Reset Changes
         </ButtonBaseUI>
       </TransitionGroup>
     </div>
