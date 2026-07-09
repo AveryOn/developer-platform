@@ -10,7 +10,14 @@ export const createCvLinkDto = z.object({
   type: z.enum(SocialNetwork),
   label: z.string().trim().min(3),
   url: z.url(),
-  order: z.number().min(0),
-  isVisible: z.boolean().default(true),
 })
 export type CreateCvLinkDto = z.infer<typeof createCvLinkDto>
+
+
+export interface CreateLinkResponse {
+  newLink: Link,
+  shiftedLinks: {
+    id: string,
+    order: number,
+  }
+}
