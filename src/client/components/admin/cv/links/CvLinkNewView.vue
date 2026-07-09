@@ -99,8 +99,13 @@ async function submit() {
 
       <div class="w-full flex flex-col justify-center items-center">
 
+        <!-- LABEL -->
         <InputUI v-model="formData.label" class="w-[360px]!" type="text" :error="errors.label" label="Label"
-          placeholder="GitHub / Linkedin / Reddit..." @input="undoError('label')" />
+          placeholder="e.g. GitHub / Linkedin / Reddit..." @input="undoError('label')" />
+
+        <!-- URL -->
+        <InputUI v-model="formData.url" class="w-[360px]!" type="text" :error="errors.url" label="url"
+          placeholder="e.g. https://github.com..." @input="undoError('url')" />
 
         <ButtonBaseUI>Save</ButtonBaseUI>
       </div>
