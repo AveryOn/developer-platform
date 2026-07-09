@@ -35,6 +35,7 @@ interface LinkOrderItem {
 const links = ref<Link[]>([])
 const linksOrder = ref<LinkOrderItem[]>([])
 const isSaveReorderLoading = ref(false)
+const isSubmitFormChangesLoading = ref(false)
 
 /** true - если порядок ссылок изменен */
 const linksAreReordered = computed(() => {
@@ -130,6 +131,13 @@ async function confirmUpdateField(field: keyof LinkInput) {
     resetFocus(field)
     commitChange(field)
   }
+  catch (err) {
+    console.error(err)
+    toast.error('Произошла ошибка при обновлении поля', {
+      duration: 3000,
+      title: 'Ошибка',
+    })
+  }
   finally {
     editLinkFormData.value[field]!.loading = false
   }
@@ -142,18 +150,31 @@ function resetFormChanges() {
 }
 
 async function submitFormChanges() {
-  // Если изменений форме ссылки нет, тогда выход
-  if (!someChange.value) return
+  try {
+    isSubmitFormChangesLoading.value = true
+    // Если изменений форме ссылки нет, тогда выход
+    if (!someChange.value) return
 
-  // СОбираем объект измененных полей ссылки
-  const body: Partial<Record<keyof LinkInput, LinkInput[keyof LinkInput]>> = {}
-  for (const [k, v] of Object.entries(editLinkFormData.value)) {
-    if (hasChanges(k as keyof LinkInput)) {
-      body[k as keyof LinkInput] = v.newValue
+    // СОбираем объект измененных полей ссылки
+    const body: Partial<Record<keyof LinkInput, LinkInput[keyof LinkInput]>> = {}
+    for (const [k, v] of Object.entries(editLinkFormData.value)) {
+      if (hasChanges(k as keyof LinkInput)) {
+        body[k as keyof LinkInput] = v.newValue
+      }
     }
+
+    console.debug(body)
+  } catch (err) {
+    console.error(err)
+    toast.error('Произошла ошибка при изменении данных ссылки', {
+      duration: 3000,
+      title: 'Ошибка',
+    })
+  }
+  finally {
+    isSubmitFormChangesLoading.value = false
   }
 
-  console.debug(body)
 }
 
 async function saveNewOrder() {
@@ -171,7 +192,7 @@ async function saveNewOrder() {
     }
   } catch (err) {
     console.error(err)
-    toast.error('Произошла ошибка при создании ссылки', {
+    toast.error('Произошла ошибка при изменении порядка ссылок', {
       duration: 3000,
       title: 'Ошибка',
     })
