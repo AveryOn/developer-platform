@@ -113,6 +113,13 @@ function resetFocus(field: keyof LinkInput) {
   editLinkFormData.value[field]!.focused = false
 }
 
+/** Есть ли хотя бы одно изменение сущности link */
+const someChange = computed(() => {
+  return Object
+    .values(editLinkFormData.value)
+    .some((v) => v.newValue !== v.oldValue)
+})
+
 /** Подтвердить изменение поля */
 async function confirmUpdateField(field: keyof LinkInput) {
   try {
@@ -126,6 +133,23 @@ async function confirmUpdateField(field: keyof LinkInput) {
   finally {
     editLinkFormData.value[field]!.loading = false
   }
+}
+
+async function submitFormChanges() {
+  // Если изменений форме ссылки нет, тогда выход
+  if (!someChange.value) return
+
+  // СОбираем объект измененных полей ссылки
+  const body: Partial<Record<keyof LinkInput, LinkInput[keyof LinkInput]>> = {}
+  for (const [k, v] of Object.entries(editLinkFormData.value)) {
+    if (hasChanges(k as keyof LinkInput)) {
+      body[k as keyof LinkInput] = v.newValue
+    }
+  }
+
+
+
+  console.debug(body)
 }
 
 async function saveNewOrder() {
@@ -338,28 +362,6 @@ onBeforeMount(async () => {
                 </div>
               </div>
 
-              <!-- ORDER FIELD -->
-              <div class="link-edit-item">
-                <div class="flex items-center justify-between">
-                  <p class="link-edit-item__key">Order:</p>
-
-                  <InputUI v-if="editLinkFormData['order']?.focused"
-                    v-model="editLinkFormData['order']!.newValue! as string" size="xsmall" class="w-[50%]!"
-                    placeholder="Order">
-                  </InputUI>
-                  <p v-else class="link-edit-item__value" @click="editLinkFormData['order']!.focused = true">
-                    {{ editLinkFormData.order?.oldValue }}
-                  </p>
-
-                  <div class="link-edit-item__actions">
-                    <Icon class="action-btn" :icon="mdiUndo" :size="26" @click="() => undoChanges('order')" />
-                    <span v-if="editLinkFormData!['order']?.loading" class="base-button__loader" />
-                    <Icon v-else class="action-btn" :icon="mdiHandOkay" :size="26"
-                      @click="() => confirmUpdateField('order')" />
-                  </div>
-                </div>
-              </div>
-
               <!-- IS_VISIBLE FIELD -->
               <div class="link-edit-item">
                 <div class="flex items-center justify-between">
@@ -392,6 +394,10 @@ onBeforeMount(async () => {
 
         <ButtonBaseUI key="create-new" @click="goToNewLinkPage">
           * Create New *
+        </ButtonBaseUI>
+
+        <ButtonBaseUI v-if="someChange" key="commit-changes" @click="submitFormChanges">
+          Commit Changes
         </ButtonBaseUI>
       </TransitionGroup>
     </div>
