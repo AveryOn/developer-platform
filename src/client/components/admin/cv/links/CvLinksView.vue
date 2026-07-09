@@ -356,12 +356,19 @@ onBeforeMount(async () => {
 
       </div>
 
-      <div class="w-full flex justify-center">
-        <ButtonBaseUI v-if="linksAreReordered" @click="saveNewOrder">Save New Order</ButtonBaseUI>
-        <ButtonBaseUI v-if="linksAreReordered" :variant="'secondary'" @click="resetChangesOrder">Reset New Order
+      <TransitionGroup tag="div" name="link-actions" class="w-full flex justify-center gap-[14px]">
+        <ButtonBaseUI v-if="linksAreReordered" key="save-order" @click="saveNewOrder">
+          Save New Order
         </ButtonBaseUI>
-        <ButtonBaseUI @click="goToNewLinkPage">* Create New *</ButtonBaseUI>
-      </div>
+
+        <ButtonBaseUI v-if="linksAreReordered" key="reset-order" :variant="'secondary'" @click="resetChangesOrder">
+          Reset Order
+        </ButtonBaseUI>
+
+        <ButtonBaseUI key="create-new" @click="goToNewLinkPage">
+          * Create New *
+        </ButtonBaseUI>
+      </TransitionGroup>
     </div>
   </section>
 </template>
@@ -552,5 +559,29 @@ onBeforeMount(async () => {
 .links-list-leave-to {
   opacity: 0;
   transform: translateY(8px);
+}
+
+/* ----------------------------------------------------- */
+.link-actions-move {
+  transition: transform 0.25s ease;
+}
+
+.link-actions-enter-active,
+.link-actions-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.link-actions-enter-from,
+.link-actions-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.link-actions-enter-to,
+.link-actions-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
