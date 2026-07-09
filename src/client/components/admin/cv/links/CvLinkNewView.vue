@@ -89,22 +89,17 @@ async function submit() {
 <template>
   <section class="cv-admin__links_new">
     <div class="flex flex-col gap-[24px] min-w-[360px] w-[800px]">
-      <SelectInputUI v-model="selectedProfileId" :options="profiles" :placeholder="'Select Profile'" />
-
-      <!-- SEPARATOR -->
-      <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
-
-      <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
-      </div>
-
-      <div class="w-full flex flex-col justify-center items-center gap-[24px]">
+      <div class="w-full flex flex-col justify-center items-center gap-[24px] w-[360px]! mx-auto">
+        <h1 class="text-[26px] mb-[24px]">Creation a new Link</h1>
+        <SelectInputUI v-model="selectedProfileId" :options="profiles" :placeholder="'Select Profile'"
+          :label="'Profile*'" />
 
         <!-- LABEL -->
-        <InputUI v-model="formData.label" class="w-[360px]!" type="text" :error="errors.label" label="Label"
+        <InputUI v-model="formData.label" class="w-[360px]!" type="text" :error="errors.label" label="Label*"
           placeholder="e.g. GitHub / Linkedin / Reddit..." @input="undoError('label')" />
 
         <!-- URL -->
-        <InputUI v-model="formData.url" class="w-[360px]!" type="text" :error="errors.url" label="URL"
+        <InputUI v-model="formData.url" class="w-[360px]!" type="text" :error="errors.url" label="URL*"
           placeholder="e.g. https://github.com..." @input="undoError('url')" />
 
         <ButtonBaseUI>Save</ButtonBaseUI>
