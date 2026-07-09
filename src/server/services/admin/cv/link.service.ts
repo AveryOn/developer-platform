@@ -3,6 +3,7 @@ import { db } from '~/server/database/client'
 import type { CreateCvLinkDto, CreateLinkResponse, Link } from '~/shared/dto/cv/link.dto'
 import { and, eq } from 'drizzle-orm'
 import { dateISO } from '~/shared/utils/datetime'
+import type { Logger } from '~/shared/logger/logger.client'
 // import { dateISO } from '~/shared/utils/datetime'
 
 export const CvLinkService = {
@@ -10,9 +11,11 @@ export const CvLinkService = {
     return await db.select().from(cvProfileLinkTable)
   },
 
-  async create(dto: CreateCvLinkDto): Promise<CreateLinkResponse> {
+  async create(dto: CreateCvLinkDto, logger?: Logger): Promise<CreateLinkResponse> {
     return await db.transaction(async (tx) => {
       const now = dateISO()
+
+      logger?.info('TRANSACTION', { now })
 
       const [existingLink] = await tx
         .select()
@@ -27,6 +30,10 @@ export const CvLinkService = {
 
       // Если такая ссылка уже существует для этого профиля
       if (existingLink) {
+        logger?.error('[CONFLICT] Such a link already exists', {
+          profileId: existingLink.profileId,
+          label: existingLink.label
+        })
         throw new Error('Conflict', { cause: 'Such a link already exists' })
       }
 

@@ -6,7 +6,7 @@ export type LogLevel = 'info' | 'error' | 'debug' | 'fatal' | 'warn'
 const SEPARATOR = chalk.hex('#ba86b7')('::')
 
 export class Logger {
-  context: string | null
+  private context: string | null
   private colors = {
     info: '#87d1f3',
     debug: '#a2f4bf',

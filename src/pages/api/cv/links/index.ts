@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ request }) => {
     logger.error('Validation Failed', { error })
     throwZodError(error, logger, 'Validation Error')
   }
-  const newRecord = await CvLinkService.create(data!)
+  const newRecord = await CvLinkService.create(data!, logger)
 
   return Response.json(
     { data: newRecord },
