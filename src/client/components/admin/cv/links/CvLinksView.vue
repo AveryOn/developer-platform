@@ -151,7 +151,6 @@ async function saveNewOrder() {
   finally {
     isSaveReorderLoading.value = false
   }
-
 }
 
 function moveLink(direction: 'up' | 'down') {
