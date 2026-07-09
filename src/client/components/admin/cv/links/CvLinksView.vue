@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiChevronDownBoxOutline, mdiChevronUpBoxOutline, mdiHandOkay, mdiPen, mdiUndo } from '@mdi/js'
-import { computed, onBeforeMount, ref, toValue } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import Icon from '~/client/components/common/Icon.vue'
 import SelectInputUI, {
@@ -34,7 +34,9 @@ interface LinkOrderItem {
 const links = ref<Link[]>([])
 const linksOrder = ref<LinkOrderItem[]>([])
 
+/** true - если порядок ссылок изменен */
 const linksAreReordered = computed(() => {
+  console.debug(linksOrder)
   for (let i = 0; i < links.value.length; i++) {
     const link = links.value[i];
     if (linksOrder.value[i].order !== link.order) {
@@ -166,6 +168,7 @@ async function uploadLinks() {
   links.value = await CvLinksApi.getListByProfileId(
     selectedProfileId.value || _,
   )
+  linksOrder.value = links.value.map((v) => ({ id: v.id, order: v.order, label: v.label }))
 }
 
 onBeforeMount(async () => {
@@ -340,7 +343,7 @@ onBeforeMount(async () => {
       </div>
 
       <div class="w-full flex justify-center">
-        <ButtonBaseUI @click="saveNewOrder">Save New Order</ButtonBaseUI>
+        <ButtonBaseUI v-if="linksAreReordered" @click="saveNewOrder">Save New Order</ButtonBaseUI>
         <ButtonBaseUI @click="goToNewLinkPage">* Create New *</ButtonBaseUI>
       </div>
     </div>
