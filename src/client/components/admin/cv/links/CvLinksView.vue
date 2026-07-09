@@ -137,7 +137,10 @@ async function saveNewOrder() {
       profileId: selectedProfileId.value,
     })
 
-    if (success) return
+    if (success) {
+      // Обновление ссылок для сброса состояния
+      await uploadLinks()
+    }
   } catch (err) {
     console.error(err)
     toast.error('Произошла ошибка при создании ссылки', {
@@ -189,19 +192,17 @@ function resetChangesOrder() {
       order: v.order,
       label: v.label
     }))
-  console.debug({
-    links: links.value,
-    linksOrder: linksOrder.value
-  })
 }
 
 function goToNewLinkPage() {
   window.location.href = AppRoutes.admin.CvLinksNew
 }
 
-async function uploadLinks() {
-  // Нужно сбросить прошлое состояние формы перед рендерингом нового списка ссылок
-  resetSelection()
+async function uploadLinks(options?: { resetSelection?: boolean }) {
+  // Если Нужно сбросить прошлое состояние формы перед рендерингом нового списка ссылок
+  if (options?.resetSelection) {
+    resetSelection()
+  }
 
   links.value = await CvLinksApi.getListByProfileId(
     selectedProfileId.value || _,
@@ -210,7 +211,7 @@ async function uploadLinks() {
 }
 
 onBeforeMount(async () => {
-  await uploadLinks()
+  await uploadLinks({ resetSelection: true })
 })
 </script>
 
@@ -218,7 +219,7 @@ onBeforeMount(async () => {
   <section class="cv-admin__links">
     <div class="flex flex-col gap-[24px] min-w-[360px] w-[800px]">
       <SelectInputUI v-model="selectedProfileId" :options="profiles" :placeholder="'Select Profile'"
-        @input="uploadLinks" />
+        @input="() => uploadLinks({ resetSelection: true })" />
 
       <!-- SEPARATOR -->
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
