@@ -132,7 +132,7 @@ export function useFormValidator<TForm extends object>(form: TForm) {
   function validateFormOrThrow<T extends Record<string, any>>(
     dto: z.ZodObject<T>,
     form: TForm,
-    error: () => void,
+    error?: () => void,
 
   ) {
     const data = dto.safeParse(form)
@@ -141,7 +141,7 @@ export function useFormValidator<TForm extends object>(form: TForm) {
       const details = z.treeifyError(data.error) as ZodErrorCustomDetails<TForm>
       setErrors(details)
       console.debug(details)
-      error()
+      error?.()
       throw new Error('INVALID DATA')
     }
 
