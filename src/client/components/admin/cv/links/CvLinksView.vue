@@ -10,7 +10,6 @@ import type { Link, PatchCvLinkDto } from '~/shared/dto/cv/link.dto'
 import { SocialNetworks } from '~/shared/types'
 import type { LinkInput } from '~/shared/dto/cv/link.dto';
 import InputUI from '~/client/components/shared/InputUI.vue'
-import { sleep } from '~/shared/async'
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import { AppRoutes } from '~/shared/router'
@@ -295,7 +294,8 @@ onBeforeMount(async () => {
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
 
       <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
-        <div v-if="selectedLink" class="absolute left-[-36px] top-0 bottom-0 flex flex-col justify-between">
+        <div v-if="selectedLink && linksByProfileId.length > 1"
+          class="absolute left-[-36px] top-0 bottom-0 flex flex-col justify-between">
           <Icon class="move-link-btn" :size="28" :icon="mdiChevronUpBoxOutline" @click="() => moveLink('up')"></Icon>
           <Icon class="move-link-btn" :size="28" :icon="mdiChevronDownBoxOutline" @click="moveLink('down')">
           </Icon>
