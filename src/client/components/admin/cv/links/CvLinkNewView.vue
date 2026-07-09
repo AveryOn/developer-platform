@@ -34,8 +34,6 @@ const formData = reactive<CreateCvLinkDto>({
 
 const {
   errors,
-  isSomeError,
-  setErrors,
   undoError,
   validateFormOrThrow,
 } = useFormValidator(formData)
@@ -61,7 +59,7 @@ const types = computed(() => {
 async function submit() {
   try {
     isSubmitLoading.value = true
-    const data = validateFormOrThrow(createCvLinkDto, formData)
+    const data = validateFormOrThrow(createCvLinkDto, formData, () => { })
 
     const newProfile = await CvLinksApi.create({
       url: data.data.url,
