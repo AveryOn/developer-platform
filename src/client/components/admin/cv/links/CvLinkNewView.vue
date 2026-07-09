@@ -97,9 +97,9 @@ async function submit() {
       <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
       </div>
 
-      <div class="w-full flex flex-col justify-center">
+      <div class="w-full flex flex-col justify-center items-center">
 
-        <InputUI v-model="formData.label" type="text" :error="errors.label" label="Label"
+        <InputUI v-model="formData.label" class="w-[360px]!" type="text" :error="errors.label" label="Label"
           placeholder="GitHub / Linkedin / Reddit..." @input="undoError('label')" />
 
         <ButtonBaseUI>Save</ButtonBaseUI>
