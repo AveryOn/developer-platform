@@ -78,23 +78,6 @@ function isActiveSection(item: NavItem) {
   }
   return isActive
 }
-
-async function click() {
-  const profile = await CvProfileApi.create({
-    firstName: 'Vladislav',
-    lastName: 'Everi',
-    isActive: true,
-    language: ProfileLanguage.en,
-    summary: 'THIS IS EXAMPLE FOR SUMMARY',
-    title: 'PROFILE TITLE',
-    email: 'example@ex.com',
-    location: 'Georgia',
-    phone: '+995555346316',
-  })
-  console.log(profile)
-
-  // await CvProfileApi.getActive()
-}
 </script>
 
 <template>
@@ -104,39 +87,21 @@ async function click() {
         <h1 class="cv-admin__title">CV Management</h1>
         <p class="cv-admin__subtitle">
           Manage resume content, templates and versions.
-          <button class="bg-white text-black" @click="click">
-            CLICK
-          </button>
         </p>
       </div>
 
       <nav class="cv-admin__nav">
-        <a
-          v-for="item in navItems"
-          :key="item.key"
-          :href="item.href"
-          class="cv-admin__nav-item"
-          :class="{
-            'cv-admin__nav-item--active': isActiveSection(item),
-          }"
-          type="button"
-          @click="activeSection = item.key"
-        >
+        <a v-for="item in navItems" :key="item.key" :href="item.href" class="cv-admin__nav-item" :class="{
+          'cv-admin__nav-item--active': isActiveSection(item),
+        }" type="button" @click="activeSection = item.key">
           {{ item.label }}
         </a>
       </nav>
     </header>
 
     <main class="cv-admin__content">
-      <div
-        v-if="!activeSection"
-        class="min-h-[500px] flex items-center justify-center"
-      >
-        <Icon
-          :icon="mdiAccountEdit"
-          :size="200"
-          class="text-[--primary-color-1]"
-        ></Icon>
+      <div v-if="!activeSection" class="min-h-[500px] flex items-center justify-center">
+        <Icon :icon="mdiAccountEdit" :size="200" class="text-[--primary-color-1]"></Icon>
       </div>
       <div v-else>
         <slot></slot>

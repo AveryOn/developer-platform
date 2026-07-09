@@ -5,7 +5,7 @@ import { useKeyboard } from '~/client/composables/useKeyboard'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import { useProfiles } from '~/client/composables/useProfiles'
 import { useFormValidator } from '~/client/composables/useFormValidator'
-import { reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { createCvLinkDto, type CreateCvLinkDto } from '~/shared/dto/cv/link.dto'
 import { SocialNetwork } from '~/shared/types'
 import { useToast } from '~/client/composables/useToast'
@@ -21,10 +21,7 @@ useKeyboard({
   esc: () => { },
 })
 
-const {
-  profiles,
-  selectedProfileId
-} = useProfiles()
+const { profiles } = useProfiles()
 
 const formData = reactive<CreateCvLinkDto>({
   isVisible: true,
@@ -36,13 +33,22 @@ const formData = reactive<CreateCvLinkDto>({
 })
 
 const {
-  isSubmitLoading,
-  isSubmitDisabled,
   errors,
   isSomeError,
   setErrors,
   undoError
 } = useFormValidator(formData)
+
+const isSubmitLoading = ref(false)
+const isSubmitDisabled = computed(() => {
+  return formData.isVisible === true
+    && !formData.label
+    && !formData.order
+    && !formData.profileId
+    && !formData.url
+    && formData.type === SocialNetwork.other
+})
+
 
 async function submit() {
   try {
@@ -69,7 +75,6 @@ async function submit() {
     })
     console.debug('CREATE NEW LINK', { newProfile })
     isSubmitLoading.value = false
-    isSubmitDisabled.value = true
     await sleep('2.5s')
 
     window.location.href = AppRoutes.admin.CvLinks
@@ -91,7 +96,7 @@ async function submit() {
     <div class="flex flex-col gap-[24px] min-w-[360px] w-[800px]">
       <div class="w-full flex flex-col justify-center items-center gap-[24px] w-[360px]! mx-auto">
         <h1 class="text-[26px] mb-[24px]">Creation a new Link</h1>
-        <SelectInputUI v-model="selectedProfileId" :options="profiles" :placeholder="'Select Profile'"
+        <SelectInputUI v-model="formData.profileId" :options="profiles" :placeholder="'Select Profile'"
           :label="'Profile*'" />
 
         <!-- LABEL -->
