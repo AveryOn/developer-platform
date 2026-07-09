@@ -1,6 +1,6 @@
 import { cvProfileLinkTable } from '~/server/database/schema'
 import { db } from '~/server/database/client'
-import type { CreateCvLinkDto, Link } from '~/shared/dto/cv/link.dto'
+import type { CreateCvLinkDto, CreateLinkResponse, Link } from '~/shared/dto/cv/link.dto'
 import { and, eq } from 'drizzle-orm'
 import { dateISO } from '~/shared/utils/datetime'
 // import { dateISO } from '~/shared/utils/datetime'
@@ -10,7 +10,7 @@ export const CvLinkService = {
     return await db.select().from(cvProfileLinkTable)
   },
 
-  async create(dto: CreateCvLinkDto): Promise<Link> {
+  async create(dto: CreateCvLinkDto): Promise<CreateLinkResponse> {
     return await db.transaction(async (tx) => {
       const now = dateISO()
 
@@ -40,13 +40,13 @@ export const CvLinkService = {
           eq(cvProfileLinkTable.profileId, dto.profileId),
         )
 
-      const shiftedOrderLinks = linksOnProfile.map((link) => {
+      const shiftedLinks = linksOnProfile.map((link) => {
         link.order += 1
         return link
       })
 
       // Фиксирование индексов порядка для всех остальных link в профиле
-      await Promise.all(shiftedOrderLinks.map(async (link) => {
+      await Promise.all(shiftedLinks.map(async (link) => {
         const [data] = await tx
           .update(cvProfileLinkTable)
           .set({
@@ -78,7 +78,10 @@ export const CvLinkService = {
         })
         .returning()
 
-      return newLink
+      return {
+        newLink,
+        shiftedLinks: shiftedLinks
+      }
     })
   },
 }

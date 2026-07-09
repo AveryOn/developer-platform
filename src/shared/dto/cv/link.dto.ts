@@ -19,5 +19,5 @@ export interface CreateLinkResponse {
   shiftedLinks: {
     id: string,
     order: number,
-  }
+  }[]
 }
