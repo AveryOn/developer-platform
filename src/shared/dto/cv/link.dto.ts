@@ -8,7 +8,7 @@ export type LinkInput = typeof cvProfileLinkTable.$inferInsert
 export const createCvLinkDto = z.object({
   profileId: z.uuid(),
   type: z.enum(SocialNetwork),
-  label: z.string().trim().min(3),
+  label: z.string().trim().min(1),
   url: z.url(),
 })
 export type CreateCvLinkDto = z.infer<typeof createCvLinkDto>

@@ -23,9 +23,7 @@ useKeyboard({
 const { profiles } = useProfiles()
 
 const formData = reactive<CreateCvLinkDto>({
-  isVisible: true,
   label: '',
-  order: 0,
   profileId: '',
   type: SocialNetwork.other,
   url: ''
@@ -64,9 +62,7 @@ async function submit() {
       url: data.data.url,
       type: data.data.type,
       label: data.data.label,
-      order: data.data.order,
       profileId: data.data.profileId,
-      isVisible: data.data.isVisible,
     })
     toast.success('Ссылка успешно создана!', {
       duration: 3000,

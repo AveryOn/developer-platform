@@ -8,7 +8,7 @@ import SelectInputUI, {
 import { useKeyboard } from '~/client/composables/useKeyboard'
 import { _ } from '~/shared/const'
 import type { Link } from '~/shared/dto/cv/link.dto'
-import { SocialNetworks, type SocialNetwork } from '~/shared/types'
+import { SocialNetworks } from '~/shared/types'
 import type { LinkInput } from '~/shared/dto/cv/link.dto';
 import InputUI from '~/client/components/shared/InputUI.vue'
 import { sleep } from '~/shared/async'
@@ -25,41 +25,7 @@ const {
   selectedProfileId
 } = useProfiles()
 
-const links = ref<Link[]>([
-  {
-    id: 'link_1',
-    label: 'GitHub',
-    createdAt: '2026-06-11T10:00:00.000Z',
-    updatedAt: '2026-06-11T10:00:00.000Z',
-    profileId: '32e31878-32f4-4906-91e0-7162308eeea5',
-    type: 'github' as SocialNetwork,
-    url: 'https://github.com/example-user',
-    order: 1,
-    isVisible: true,
-  },
-  {
-    id: 'link_2',
-    label: 'LinkedIn',
-    createdAt: '2026-06-11T10:05:00.000Z',
-    updatedAt: '2026-06-11T10:05:00.000Z',
-    profileId: '32e31878-32f4-4906-91e0-7162308eeea5',
-    type: 'linkedin' as SocialNetwork,
-    url: 'https://linkedin.com/in/example-user',
-    order: 2,
-    isVisible: true,
-  },
-  {
-    id: 'link_3',
-    label: 'Portfolio',
-    createdAt: '2026-06-11T10:10:00.000Z',
-    updatedAt: '2026-06-11T10:10:00.000Z',
-    profileId: '07b0cd14-06c3-46db-afd3-560e4e5447f4',
-    type: 'website' as SocialNetwork,
-    url: 'https://example.dev',
-    order: 3,
-    isVisible: false,
-  },
-])
+const links = ref<Link[]>([])
 const linksByProfileId = computed(() => {
   if (!selectedProfileId.value) return links.value
   return links.value.filter(v => (v.profileId === selectedProfileId.value))
@@ -144,19 +110,18 @@ function goToNewLinkPage() {
   window.location.href = AppRoutes.admin.CvLinksNew
 }
 
-onBeforeMount(async () => {
-  const uploadedLinks = await CvLinksApi.getListByProfileId(
+async function uploadLinks() {
+  links.value = await CvLinksApi.getListByProfileId(
     selectedProfileId.value || _,
   )
-  console.debug(uploadedLinks)
-  // links.value = uploadedLinks
-})
+}
 </script>
 
 <template>
   <section class="cv-admin__links">
     <div class="flex flex-col gap-[24px] min-w-[360px] w-[800px]">
-      <SelectInputUI v-model="selectedProfileId" :options="profiles" :placeholder="'Select Profile'" />
+      <SelectInputUI v-model="selectedProfileId" :options="profiles" :placeholder="'Select Profile'"
+        @input="uploadLinks" />
 
       <!-- SEPARATOR -->
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
