@@ -1,14 +1,17 @@
 import { cvProfileLinkTable } from '~/server/database/schema'
 import { db } from '~/server/database/client'
 import type { CreateCvLinkDto, CreateLinkResponse, Link } from '~/shared/dto/cv/link.dto'
-import { and, eq, sql } from 'drizzle-orm'
+import { and, asc, eq } from 'drizzle-orm'
 import { dateISO } from '~/shared/utils/datetime'
 import type { Logger } from '~/shared/logger/logger.client'
 // import { dateISO } from '~/shared/utils/datetime'
 
 export const CvLinkService = {
   async getList(): Promise<Link[]> {
-    return await db.select().from(cvProfileLinkTable)
+    return await db
+      .select()
+      .from(cvProfileLinkTable)
+      .orderBy(asc(cvProfileLinkTable.order))
   },
 
   async create(dto: CreateCvLinkDto, logger?: Logger): Promise<CreateLinkResponse> {
