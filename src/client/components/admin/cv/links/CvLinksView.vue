@@ -87,6 +87,7 @@ function resetSelection() {
     v.focused = false
     v.loading = false
   })
+  resetChangesOrder()
 }
 
 /** Зафиксировать изменения в поле */
@@ -157,6 +158,20 @@ function moveLink(direction: 'up' | 'down') {
       label: link.label,
     }
   }
+}
+
+function resetChangesOrder() {
+  linksOrder.value = links.value
+    .sort((a, b) => a.order - b.order)
+    .map((v) => ({
+      id: v.id,
+      order: v.order,
+      label: v.label
+    }))
+  console.debug({
+    links: links.value,
+    linksOrder: linksOrder.value
+  })
 }
 
 function goToNewLinkPage() {
