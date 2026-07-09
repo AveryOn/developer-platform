@@ -63,11 +63,11 @@ async function submit() {
       profileId: data.data.profileId,
       isVisible: data.data.isVisible,
     })
-    toast.success('Профиль успешно создан!', {
+    toast.success('Ссылка успешно создана!', {
       duration: 3000,
-      title: 'Профиль успешно создан!',
+      title: 'Ссылка успешно создана!',
     })
-    console.debug('CREATE NEW PROFILE', { newProfile })
+    console.debug('CREATE NEW LINK', { newProfile })
     isSubmitLoading.value = false
     isSubmitDisabled.value = true
     await sleep('2.5s')
