@@ -6,10 +6,9 @@ import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import { useProfiles } from '~/client/composables/useProfiles'
 import { useFormValidator } from '~/client/composables/useFormValidator'
 import { computed, reactive, ref } from 'vue'
-import { createCvLinkDto, type CreateCvLinkDto } from '~/shared/dto/cv/link.dto'
+import { type CreateCvLinkDto } from '~/shared/dto/cv/link.dto'
 import { SocialNetwork } from '~/shared/types'
 import { useToast } from '~/client/composables/useToast'
-import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import { sleep } from '~/shared/async'
 import { AppRoutes } from '~/shared/router'
 import InputUI from '~/client/components/shared/InputUI.vue'
@@ -45,14 +44,14 @@ const isSubmitDisabled = computed(() => {
     && formData.type === SocialNetwork.other
 })
 
-const types = computed(() => {
-  return Object.values(SocialNetwork).map((el) => {
-    return {
-      label: el,
-      value: el,
-    }
-  })
-})
+// const types = computed(() => {
+//   return Object.values(SocialNetwork).map((el) => {
+//     return {
+//       label: el,
+//       value: el,
+//     }
+//   })
+// })
 
 
 async function submit() {
@@ -112,7 +111,7 @@ async function submit() {
           placeholder="e.g. https://github.com..." @input="undoError('url')" />
 
         <!-- TYPE -->
-        <SelectInputUI v-model="formData.type" :options="types" :placeholder="'Select Type of Link'" :label="'Type*'" />
+        <!-- <SelectInputUI v-model="formData.type" :options="types" :placeholder="'Select Type of Link'" :label="'Type*'" /> -->
 
         <ButtonBaseUI :disabled="isSubmitDisabled" @click="submit">Save</ButtonBaseUI>
       </div>
