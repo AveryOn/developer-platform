@@ -1,21 +1,23 @@
 <script setup lang="ts">
 import { useCvExperienceEditor } from '~/client/composables/useCvExperienceEditor';
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue';
+import { mdiPen } from '@mdi/js';
+import Icon from '~/client/components/common/Icon.vue';
 
 
 const {
   profiles,
   selectedProfileId,
   // isSaveReorderLoading,
-  // entitiesByProfileId: linksByProfileId,
-  // selectedEntity: selectedLink,
+  entitiesByProfileId: profilesByProfileId,
+  selectedEntity: selectedExperience,
 
   // editFormData: editLinkFormData,
 
   // entitiesAreReordered: linksAreReordered,
   // someChange,
 
-  // selectEntity: selectLink,
+  selectEntity: selectExperience,
   // moveEntity: moveLink,
   // loadEntities: uploadLinks,
 
@@ -46,6 +48,18 @@ const {
           <Icon class="move-link-btn" :size="28" :icon="mdiChevronDownBoxOutline" @click="moveLink('down')">
           </Icon>
         </div> -->
+
+        <TransitionGroup tag="ul" name="experience-list" class="flex flex-col gap-[10px] w-[50%]">
+          <li v-for="profile in profilesByProfileId" :key="profile.id" class="link-item"
+            :class="{ 'bg-[--primary-color-3-100]': profile.id === selectedExperience?.id }"
+            @click="() => selectExperience(profile)">
+            <span>{{ profile }}</span>
+
+            <div class="link-item__actions">
+              <Icon :icon="mdiPen" :size="16" />
+            </div>
+          </li>
+        </TransitionGroup>
       </div>
 
     </div>
@@ -62,5 +76,23 @@ const {
   border-radius: 10px;
   border: 1px dashed var(--border-color-1);
   padding: 24px 48px;
+}
+
+/*--------------------------------------------------- */
+.experience-list-move {
+  transition: transform 0.25s ease;
+}
+
+.experience-list-enter-active,
+.experience-list-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.experience-list-enter-from,
+.experience-list-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
 }
 </style>

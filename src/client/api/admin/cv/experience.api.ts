@@ -8,7 +8,7 @@ const routes = AppRoutes.api.admin
 export const CvExperienceApi = {
   async getListByProfileId(profileId?: string) {
     const result = await httpClient.get<{ data: Experience[] }>(
-      routes.CvLinks,
+      routes.CvExperiences,
       {
         params: profileId ? { profileId } : _,
       },
