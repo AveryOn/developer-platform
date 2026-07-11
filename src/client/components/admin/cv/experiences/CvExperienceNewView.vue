@@ -6,7 +6,6 @@ import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import { useProfiles } from '~/client/composables/useProfiles'
 import { useFormValidator } from '~/client/composables/useFormValidator'
 import { computed, reactive, ref } from 'vue'
-import { SocialNetwork } from '~/shared/types'
 import { useToast } from '~/client/composables/useToast'
 import { sleep } from '~/shared/async'
 import { AppRoutes } from '~/shared/router'
@@ -50,16 +49,6 @@ const isSubmitDisabled = computed(() => {
     && !formData.location
     && !formData.position
 })
-
-// const types = computed(() => {
-//   return Object.values(SocialNetwork).map((el) => {
-//     return {
-//       label: el,
-//       value: el,
-//     }
-//   })
-// })
-
 
 async function submit() {
   try {
@@ -109,13 +98,21 @@ async function submit() {
         <SelectInputUI v-model="formData.profileId" :options="profiles" :placeholder="'Select Profile'"
           :error="errors.profileId" :label="'Profile*'" />
 
-        <!-- LABEL -->
-        <InputUI v-model="formData.label" class="w-[360px]!" type="text" :error="errors.label" label="Label*"
-          placeholder="e.g. GitHub / Linkedin / Reddit..." @input="undoError('label')" />
+        <!-- COMPANY -->
+        <InputUI v-model="formData.company" class="w-[360px]!" type="text" :error="errors.company" label="Company*"
+          placeholder="Company name..." @input="undoError('company')" />
 
-        <!-- URL -->
-        <InputUI v-model="formData.url" class="w-[360px]!" type="text" :error="errors.url" label="URL*"
-          placeholder="e.g. https://github.com..." @input="undoError('url')" />
+        <!-- DESCRIPTION -->
+        <InputUI v-model="formData.description" class="w-[360px]!" type="text" :error="errors.description"
+          label="Description*" placeholder="Description..." @input="undoError('description')" />
+
+        ` <!-- START_DATE -->
+        <InputUI v-model="formData.startDate" class="w-[360px]!" type="text" :error="errors.startDate"
+          label="Start Date*" placeholder="e.g February 2026" @input="undoError('startDate')" />`
+
+        <!-- END_DATE -->
+        <InputUI v-model="formData.endDate as string" class="w-[360px]!" type="text" :error="errors.endDate"
+          label="End Date" placeholder="e.g February 2026" @input="undoError('endDate')" />
 
         <!-- TYPE -->
         <!-- <SelectInputUI v-model="formData.type" :options="types" :placeholder="'Select Type of Link'" :label="'Type*'" /> -->
