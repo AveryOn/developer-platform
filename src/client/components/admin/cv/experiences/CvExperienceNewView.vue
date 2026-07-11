@@ -126,7 +126,8 @@ async function submit() {
           label="End Date" placeholder="e.g February 2026" @input="undoError('endDate')" />
 
         <SelectInputUI v-model="formData.employmentTypeId!" :options="EmploymentTypes"
-          :placeholder="'Select Employment Type'" :label="'Employment Type*'" />
+          :placeholder="'Select Employment Type'" :label="'Employment Type*'" :error="errors.employmentTypeId"
+          @input="undoError('employmentTypeId')" />
 
         <CheckboxUI v-model="formData.isCurrent as boolean" label="Is Current" />
 
