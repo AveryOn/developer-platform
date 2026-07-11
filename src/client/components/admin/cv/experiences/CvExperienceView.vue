@@ -112,7 +112,7 @@ onMounted(async () => {
                     placeholder="Label">
                   </InputUI>
                   <p v-else class="experience-edit-item__value" @click="() => setFieldFocus('company', true)">
-                    {{ employmentTypeLabel }}
+                    {{ editExperienceFormData.company?.oldValue }}
                   </p>
 
                   <div class="experience-edit-item__actions">
