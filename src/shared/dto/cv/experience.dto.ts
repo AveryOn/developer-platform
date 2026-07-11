@@ -17,3 +17,11 @@ export const createCvExperienceDto = z.object({
   isCurrent: z.boolean().default(false),
 })
 export type CreateExperienceDto = z.infer<typeof createCvExperienceDto>
+
+export interface CreateExperienceResponse {
+  newExperience: Experience,
+  shiftedExperiences: {
+    id: string,
+    order: number,
+  }[]
+}
