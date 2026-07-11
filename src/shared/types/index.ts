@@ -37,12 +37,12 @@ export const SocialNetworks = [
 ] as const
 
 export enum CVEmploymentType {
-  fullTime = 'full_time',
-  partTime = 'part_time',
+  full_time = 'full_time',
+  part_time = 'part_time',
   contract = 'contract',
   freelance = 'freelance',
   internship = 'internship',
-  selfEmployed = 'self_employed',
+  self_employed = 'self_employed',
 }
 
 export enum CVEmploymentTypeDisplay {
