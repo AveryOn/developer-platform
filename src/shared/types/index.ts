@@ -45,6 +45,15 @@ export enum CVEmploymentType {
   selfEmployed = 'self_employed',
 }
 
+export enum CVEmploymentTypeDisplay {
+  fullTime = 'Full Time',
+  partTime = 'Part Time',
+  contract = 'Contract',
+  freelance = 'Freelance',
+  internship = 'Internship',
+  selfEmployed = 'Self Employed',
+}
+
 export enum CVTemplateStatus {
   draft = 'draft',
   active = 'active',

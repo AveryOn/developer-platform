@@ -12,6 +12,8 @@ import { AppRoutes } from '~/shared/router'
 import InputUI from '~/client/components/shared/InputUI.vue'
 import { createCvExperienceDto, type CreateExperienceDto } from '~/shared/dto/cv/experience.dto'
 import { CvExperienceApi } from '~/client/api/admin/cv/experience.api'
+import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
+import { CVEmploymentType, CVEmploymentTypeDisplay } from '~/shared/types'
 
 const toast = useToast()
 
@@ -48,6 +50,15 @@ const isSubmitDisabled = computed(() => {
     && !formData.startDate
     && !formData.location
     && !formData.position
+})
+
+const EmploymentTypes = computed(() => {
+  return Object.entries(CVEmploymentType).map(([k, v]) => {
+    return {
+      label: CVEmploymentTypeDisplay[k as keyof typeof CVEmploymentType],
+      value: v,
+    }
+  })
 })
 
 async function submit() {
@@ -106,16 +117,18 @@ async function submit() {
         <InputUI v-model="formData.description" class="w-[360px]!" type="text" :error="errors.description"
           label="Description*" placeholder="Description..." @input="undoError('description')" />
 
-        ` <!-- START_DATE -->
+        <!-- START_DATE -->
         <InputUI v-model="formData.startDate" class="w-[360px]!" type="text" :error="errors.startDate"
-          label="Start Date*" placeholder="e.g February 2026" @input="undoError('startDate')" />`
+          label="Start Date*" placeholder="e.g February 2026" @input="undoError('startDate')" />
 
         <!-- END_DATE -->
         <InputUI v-model="formData.endDate as string" class="w-[360px]!" type="text" :error="errors.endDate"
           label="End Date" placeholder="e.g February 2026" @input="undoError('endDate')" />
 
-        <!-- TYPE -->
-        <!-- <SelectInputUI v-model="formData.type" :options="types" :placeholder="'Select Type of Link'" :label="'Type*'" /> -->
+        <SelectInputUI v-model="formData.employmentTypeId!" :options="EmploymentTypes"
+          :placeholder="'Select Employment Type'" :label="'Employment Type*'" />
+
+        <CheckboxUI v-model="formData.isCurrent as boolean" label="Is Current" />
 
         <ButtonBaseUI :disabled="isSubmitDisabled" @click="submit">Save</ButtonBaseUI>
       </div>
