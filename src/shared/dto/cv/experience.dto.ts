@@ -16,22 +16,3 @@ export const createCvExperienceDto = z.object({
   isCurrent: z.boolean().default(false),
 })
 export type CreateExperienceDto = z.infer<typeof createCvExperienceDto>
-
-
-
-/*
-createdAt: string;
-updatedAt: string;
-profileId: string;
-company: string;
-position: string;
-startDate: string;
-description: string;
-id?: string | undefined;
-location?: string | null | undefined;
-order?: number | undefined;
-employmentTypeId?: string | null | undefined;
-endDate?: string | null | undefined;
-isCurrent?: boolean | undefined;
-
-*/
