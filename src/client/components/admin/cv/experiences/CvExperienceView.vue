@@ -8,14 +8,14 @@ import Icon from '~/client/components/common/Icon.vue';
 const {
   profiles,
   selectedProfileId,
-  // isSaveReorderLoading,
+  isSaveReorderLoading,
   entitiesByProfileId: profilesByProfileId,
   selectedEntity: selectedExperience,
 
   // editFormData: editLinkFormData,
 
-  // entitiesAreReordered: linksAreReordered,
-  // someChange,
+  entitiesAreReordered: experienceAreReordered,
+  someChange,
 
   selectEntity: selectExperience,
   // moveEntity: moveLink,
@@ -23,11 +23,11 @@ const {
 
   // confirmUpdateField,
   // undoChanges,
-  // submitFormChanges,
-  // resetFormChanges,
-  // saveNewOrder,
-  // resetChangesOrder,
-  // goToCreatePage: goToNewLinkPage,
+  submitFormChanges,
+  resetFormChanges,
+  saveNewOrder,
+  resetChangesOrder,
+  goToCreatePage: goToNewLinkPage,
 } = useCvExperienceEditor()
 
 </script>
@@ -62,6 +62,28 @@ const {
         </TransitionGroup>
       </div>
 
+      <TransitionGroup tag="div" name="link-actions" class="w-full flex justify-center gap-[14px]">
+        <ButtonBaseUI v-if="experienceAreReordered" key="save-order" :loading="isSaveReorderLoading"
+          @click="saveNewOrder">
+          Save New Order
+        </ButtonBaseUI>
+
+        <ButtonBaseUI v-if="experienceAreReordered" key="reset-order" :variant="'secondary'" @click="resetChangesOrder">
+          Reset Order
+        </ButtonBaseUI>
+
+        <ButtonBaseUI key="create-new" @click="goToNewLinkPage">
+          * Create New *
+        </ButtonBaseUI>
+
+        <ButtonBaseUI v-if="someChange" key="commit-changes" @click="submitFormChanges">
+          Commit Changes
+        </ButtonBaseUI>
+
+        <ButtonBaseUI v-if="someChange" key="reset-changes" :variant="'secondary'" @click="resetFormChanges">
+          Reset Changes
+        </ButtonBaseUI>
+      </TransitionGroup>
     </div>
 
   </section>
