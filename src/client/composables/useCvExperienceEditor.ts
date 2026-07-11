@@ -25,7 +25,7 @@ export function useCvExperienceEditor() {
 
     getLabel: experience => experience.company,
 
-    createPageUrl: AppRoutes.admin.CvExperience,
+    createPageUrl: AppRoutes.admin.CvExperienceNew,
 
     api: {
       getListByProfileId(profileId) {

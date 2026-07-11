@@ -3,6 +3,7 @@ import { useCvExperienceEditor } from '~/client/composables/useCvExperienceEdito
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue';
 import { mdiPen } from '@mdi/js';
 import Icon from '~/client/components/common/Icon.vue';
+import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue';
 
 
 const {
@@ -27,7 +28,7 @@ const {
   resetFormChanges,
   saveNewOrder,
   resetChangesOrder,
-  goToCreatePage: goToNewLinkPage,
+  goToCreatePage,
 } = useCvExperienceEditor()
 
 </script>
@@ -72,7 +73,7 @@ const {
           Reset Order
         </ButtonBaseUI>
 
-        <ButtonBaseUI key="create-new" @click="goToNewLinkPage">
+        <ButtonBaseUI key="create-new" @click="goToCreatePage">
           * Create New *
         </ButtonBaseUI>
 
@@ -116,5 +117,29 @@ const {
 .experience-list-leave-to {
   opacity: 0;
   transform: translateY(8px);
+}
+
+/* ----------------------------------------------------- */
+.link-actions-move {
+  transition: transform 0.25s ease;
+}
+
+.link-actions-enter-active,
+.link-actions-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.link-actions-enter-from,
+.link-actions-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.link-actions-enter-to,
+.link-actions-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>

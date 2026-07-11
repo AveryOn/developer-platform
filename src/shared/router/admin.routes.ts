@@ -9,6 +9,7 @@ export const adminRoutes = {
 
   // EXPERIENCE
   CvExperience: '/admin/cv/experience',
+  CvExperienceNew: '/admin/cv/experience/new',
   // ---
 
   // LANGUAGES
