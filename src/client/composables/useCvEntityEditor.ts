@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { computed, onBeforeMount, ref, shallowRef } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { useKeyboard } from '~/client/composables/useKeyboard'
 import { useProfiles } from '~/client/composables/useProfiles'
 import { useToast } from '~/client/composables/useToast'
@@ -101,12 +101,12 @@ export function useCvEntityEditor<
     loadEntities({ resetSelection: true })
   })
 
-  const entities = shallowRef<TEntity[]>([])
-  const selectedEntity = shallowRef<TEntity | null>(null)
+  const entities = ref<TEntity[]>([])
+  const selectedEntity = ref<TEntity | null>(null)
 
   const entityOrder = ref<EntityOrderItem[]>([])
 
-  const editFormData = shallowRef<
+  const editFormData = ref<
     Partial<EntityEditForm<TEntity, TEditableKey>>
   >({})
 
@@ -197,11 +197,9 @@ export function useCvEntityEditor<
     field: TKey,
     focused: boolean,
   ) {
-    const state = getFieldState(field)
-
-    if (state) {
-      state.focused = focused
-    }
+    console.debug(editFormData.value[field])
+    editFormData.value[field].focus = focused
+    editFormData.value[field].focused = focused
   }
 
   function undoChanges<TKey extends TEditableKey>(field: TKey) {
@@ -360,7 +358,7 @@ export function useCvEntityEditor<
     entityOrder.value = entities.value.map((entity, index) => ({
       id: entity.id,
       order: index + 1,
-      label: getEntityLabel(entity),
+      label: getEntityLabel(entity as TEntity),
     }))
   }
 
@@ -410,7 +408,7 @@ export function useCvEntityEditor<
     entityOrder.value = entities.value.map(entity => ({
       id: entity.id,
       order: entity.order,
-      label: getEntityLabel(entity),
+      label: getEntityLabel(entity as TEntity),
     }))
   }
 

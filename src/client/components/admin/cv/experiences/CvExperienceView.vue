@@ -4,10 +4,11 @@ import SelectInputUI from '~/client/components/shared/SelectInputUI.vue';
 import { mdiChevronDownBoxOutline, mdiChevronUpBoxOutline, mdiHandOkay, mdiPen, mdiUndo } from '@mdi/js';
 import Icon from '~/client/components/common/Icon.vue';
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import type { EmploymentType } from '~/shared/dto/cv/employment-type.dto';
 import { CVEmploymentType, CVEmploymentTypeDisplay } from '~/shared/types';
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue';
+import InputUI from '~/client/components/shared/InputUI.vue';
 
 
 const {
@@ -25,6 +26,8 @@ const {
   selectEntity: selectExperience,
   moveEntity: moveExperience,
   // loadEntities: uploadLinks,
+
+  setFieldFocus,
 
   confirmUpdateField,
   undoChanges,
@@ -44,6 +47,10 @@ const EmploymentTypes = computed(() => {
       value: v.id,
     }
   })
+})
+
+onMounted(() => {
+  console.debug(editExperienceFormData)
 })
 
 </script>
@@ -91,14 +98,13 @@ const EmploymentTypes = computed(() => {
               <!-- COMPANY FIELD -->
               <div class="experience-edit-item">
                 <div class="flex items-center justify-between">
-                  <p class="experience-edit-item__key">Label:</p>
+                  <p class="experience-edit-item__key">Company:</p>
 
                   <InputUI v-if="editExperienceFormData['company']?.focused"
                     v-model="editExperienceFormData['company']!.newValue! as string" size="xsmall" class="w-[50%]!"
                     placeholder="Label">
                   </InputUI>
-                  <p v-else class="experience-edit-item__value"
-                    @click="editExperienceFormData['company']!.focused = true">
+                  <p v-else class="experience-edit-item__value" @click="() => setFieldFocus('company', true)">
                     {{ editExperienceFormData.company?.oldValue }}
                   </p>
 
@@ -114,14 +120,13 @@ const EmploymentTypes = computed(() => {
               <!-- EMPLOYMENT TYPE ID FIELD -->
               <div class="experience-edit-item">
                 <div class="flex items-center justify-between">
-                  <p class="experience-edit-item__key">Type:</p>
+                  <p class="experience-edit-item__key">Employment Type:</p>
 
                   <SelectInputUI v-if="editExperienceFormData['employmentTypeId']?.focused"
-                    v-model="editExperienceFormData['employmentTypeId']!.newValue! as string" class="w-[50%]!"
+                    v-model="editExperienceFormData['employmentTypeId'].newValue!" class="w-[50%]!"
                     :options="EmploymentTypes" size="xsmall">
                   </SelectInputUI>
-                  <p v-else class="experience-edit-item__value"
-                    @click="editExperienceFormData['employmentTypeId']!.focused = true">
+                  <p v-else class="experience-edit-item__value" @click="() => setFieldFocus('employmentTypeId', true)">
                     {{ editExperienceFormData.employmentTypeId?.oldValue }}
                   </p>
 

@@ -26,6 +26,8 @@ const {
   moveEntity: moveLink,
   loadEntities: uploadLinks,
 
+  setFieldFocus,
+
   confirmUpdateField,
   undoChanges,
   submitFormChanges,
@@ -84,7 +86,7 @@ onBeforeMount(async () => await uploadLinks({ resetSelection: true }))
                     v-model="editLinkFormData['label']!.newValue! as string" size="xsmall" class="w-[50%]!"
                     placeholder="Label">
                   </InputUI>
-                  <p v-else class="link-edit-item__value" @click="editLinkFormData['label']!.focused = true">
+                  <p v-else class="link-edit-item__value" @click="() => setFieldFocus('label', true)">
                     {{ editLinkFormData.label?.oldValue }}
                   </p>
 
@@ -106,7 +108,7 @@ onBeforeMount(async () => await uploadLinks({ resetSelection: true }))
                     v-model="editLinkFormData['profileId']!.newValue! as string" class="w-[50%]!" :options="profiles"
                     size="xsmall">
                   </SelectInputUI>
-                  <p v-else class="link-edit-item__value" @click="editLinkFormData['profileId']!.focused = true">
+                  <p v-else class="link-edit-item__value" @click="() => setFieldFocus('profileId', true)">
                     {{profiles.find(v => v.value === editLinkFormData.profileId?.oldValue)?.label}}
                   </p>
 
@@ -128,7 +130,7 @@ onBeforeMount(async () => await uploadLinks({ resetSelection: true }))
                     v-model="editLinkFormData['type']!.newValue! as string" class="w-[50%]!"
                     :options="SocialNetworks.map(v => ({ label: v, value: v }))" size="xsmall">
                   </SelectInputUI>
-                  <p v-else class="link-edit-item__value" @click="editLinkFormData['type']!.focused = true">
+                  <p v-else class="link-edit-item__value" @click="() => setFieldFocus('type', true)">
                     {{ editLinkFormData.type?.oldValue }}
                   </p>
 
@@ -150,7 +152,7 @@ onBeforeMount(async () => await uploadLinks({ resetSelection: true }))
                     v-model="editLinkFormData['url']!.newValue! as string" size="xsmall" class="w-[50%]!"
                     placeholder="URL">
                   </InputUI>
-                  <p v-else class="link-edit-item__value" @click="editLinkFormData['url']!.focused = true">
+                  <p v-else class="link-edit-item__value" @click="() => setFieldFocus('url', true)">
                     {{ editLinkFormData.url?.oldValue }}
                   </p>
 
