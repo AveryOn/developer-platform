@@ -97,7 +97,9 @@ export function useCvEntityEditor<
   const {
     profiles,
     selectedProfileId,
-  } = useProfiles({ setFirstAsSelect: true })
+  } = useProfiles({ setFirstAsSelect: true }, () => {
+    loadEntities({ resetSelection: true })
+  })
 
   const entities = shallowRef<TEntity[]>([])
   const selectedEntity = shallowRef<TEntity | null>(null)

@@ -1,51 +1,32 @@
 <script setup lang="ts">
-import { mdiChevronDownBoxOutline, mdiChevronUpBoxOutline } from '@mdi/js';
-import { computed, ref } from 'vue';
-import Icon from '~/client/components/common/Icon.vue';
+import { useCvExperienceEditor } from '~/client/composables/useCvExperienceEditor';
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue';
-import { useCvEntityEditor } from '~/client/composables/useCvEntityEditor';
-import { useKeyboard } from '~/client/composables/useKeyboard';
-import { useProfiles } from '~/client/composables/useProfiles';
-import { useToast } from '~/client/composables/useToast';
-import { Entities } from '~/client/config/const';
-import type { Experience } from '~/shared/dto/cv/experience.dto';
 
-
-useKeyboard({
-  esc: () => { }
-})
-const toast = useToast()
-const {
-  profiles,
-  selectedProfileId
-} = useProfiles({ setFirstAsSelect: true })
 
 const {
   profiles,
-} = useCvEntityEditor(Entities.experiences)
+  selectedProfileId,
+  // isSaveReorderLoading,
+  // entitiesByProfileId: linksByProfileId,
+  // selectedEntity: selectedLink,
 
-const experiences = ref<Experience[]>([
-  {
-    company: 'Company Name',
-    createdAt: new Date().toISOString(),
-    description: 'Description about the work experience',
-    employmentTypeId: '2b621412-b884-44b5-bbb0-9f39688808bb',
-    endDate: new Date().toISOString(),
-    id: '2b621412-b884-44b5-bbb0-9f39688808bb',
-    isCurrent: false,
-    location: 'Remote',
-    order: 1,
-    position: 'Backend Engineer',
-    profileId: '2b621412-b884-44b5-bbb0-9f39688808bb',
-    startDate: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  }
-])
+  // editFormData: editLinkFormData,
 
-const experiencesByProfileId = computed(() => {
-  if (!selectedProfileId.value) return experiences.value
-  return experiences.value.filter(v => (v.profileId === selectedProfileId.value))
-})
+  // entitiesAreReordered: linksAreReordered,
+  // someChange,
+
+  // selectEntity: selectLink,
+  // moveEntity: moveLink,
+  // loadEntities: uploadLinks,
+
+  // confirmUpdateField,
+  // undoChanges,
+  // submitFormChanges,
+  // resetFormChanges,
+  // saveNewOrder,
+  // resetChangesOrder,
+  // goToCreatePage: goToNewLinkPage,
+} = useCvExperienceEditor()
 
 </script>
 

@@ -8,6 +8,7 @@ import InputUI from '~/client/components/shared/InputUI.vue'
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import { useCvLinksEditor } from '~/client/composables/useCvLinksEditor'
+import { onBeforeMount } from 'vue'
 
 const {
   profiles,
@@ -33,6 +34,8 @@ const {
   resetChangesOrder,
   goToCreatePage: goToNewLinkPage,
 } = useCvLinksEditor()
+
+onBeforeMount(async () => await uploadLinks({ resetSelection: true }))
 </script>
 
 <template>
