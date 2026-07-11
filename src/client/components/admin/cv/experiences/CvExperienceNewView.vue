@@ -6,13 +6,12 @@ import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import { useProfiles } from '~/client/composables/useProfiles'
 import { useFormValidator } from '~/client/composables/useFormValidator'
 import { computed, reactive, ref } from 'vue'
-import { type CreateCvLinkDto } from '~/shared/dto/cv/link.dto'
 import { SocialNetwork } from '~/shared/types'
 import { useToast } from '~/client/composables/useToast'
 import { sleep } from '~/shared/async'
 import { AppRoutes } from '~/shared/router'
 import InputUI from '~/client/components/shared/InputUI.vue'
-import { createCvExperienceDto } from '~/shared/dto/cv/experience.dto'
+import { createCvExperienceDto, type CreateExperienceDto } from '~/shared/dto/cv/experience.dto'
 import { CvExperienceApi } from '~/client/api/admin/cv/experience.api'
 
 const toast = useToast()
@@ -23,11 +22,16 @@ useKeyboard({
 
 const { profiles } = useProfiles()
 
-const formData = reactive<CreateCvLinkDto>({
-  label: '',
+const formData = reactive<CreateExperienceDto>({
+  company: '',
+  description: '',
+  employmentTypeId: '',
+  endDate: '',
+  location: '',
+  position: '',
   profileId: '',
-  type: SocialNetwork.other,
-  url: ''
+  startDate: '',
+  isCurrent: false,
 })
 
 const {
@@ -38,10 +42,13 @@ const {
 
 const isSubmitLoading = ref(false)
 const isSubmitDisabled = computed(() => {
-  return !formData.label
+  return !formData.company
     && !formData.profileId
-    && !formData.url
-    && formData.type === SocialNetwork.other
+    && !formData.description
+    && !formData.employmentTypeId
+    && !formData.startDate
+    && !formData.location
+    && !formData.position
 })
 
 // const types = computed(() => {
@@ -96,7 +103,7 @@ async function submit() {
   <section class="cv-admin__experience_new">
     <div class="flex flex-col gap-[24px] min-w-[360px] w-[800px]">
       <div class="w-full flex flex-col justify-center items-center gap-[24px] w-[360px]! mx-auto">
-        <h1 class="text-[26px] mb-[24px]">Creation a new Link</h1>
+        <h1 class="text-[26px] mb-[24px]">Creation a new Experience</h1>
 
         <!-- PROFILE_ID -->
         <SelectInputUI v-model="formData.profileId" :options="profiles" :placeholder="'Select Profile'"
