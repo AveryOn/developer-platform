@@ -13,6 +13,8 @@ import { CvLinksApi } from '~/client/api/admin/cv/links.api'
 import { sleep } from '~/shared/async'
 import { AppRoutes } from '~/shared/router'
 import InputUI from '~/client/components/shared/InputUI.vue'
+import { createCvExperienceDto } from '~/shared/dto/cv/experience.dto'
+import { CvExperienceApi } from '~/client/api/admin/cv/experience.api'
 
 const toast = useToast()
 
@@ -56,25 +58,30 @@ const types = computed(() => {
 async function submit() {
   try {
     isSubmitLoading.value = true
-    const data = validateFormOrThrow(createCvLinkDto, formData, () => { })
+    const data = validateFormOrThrow(createCvExperienceDto, formData, () => { })
 
-    const newProfile = await CvLinksApi.create({
-      url: data.data.url,
-      type: data.data.type,
-      label: data.data.label,
+    const newRecord = await CvExperienceApi.create({
+      company: data.data.company,
+      description: data.data.description,
+      employmentTypeId: data.data.employmentTypeId,
+      endDate: data.data.endDate,
+      isCurrent: data.data.isCurrent,
+      location: data.data.location,
+      position: data.data.position,
       profileId: data.data.profileId,
+      startDate: data.data.startDate,
     })
-    toast.success('Ссылка успешно создана!', {
+    toast.success('Опыт успешно создан!', {
       duration: 3000,
-      title: 'Ссылка успешно создана!',
+      title: 'Опыт успешно создан!',
     })
-    console.debug('CREATE NEW LINK', { newProfile })
+    console.debug('CREATE NEW EXPERIENCE', { newRecord })
     isSubmitLoading.value = false
     await sleep('2.5s')
 
     window.location.href = AppRoutes.admin.CvLinks
   } catch (err) {
-    toast.error('Произошла ошибка при создании ссылки', {
+    toast.error('Произошла ошибка при создании опыта', {
       duration: 3000,
       title: 'Ошибка',
     })
@@ -87,7 +94,7 @@ async function submit() {
 </script>
 
 <template>
-  <section class="cv-admin__links_new">
+  <section class="cv-admin__experience_new">
     <div class="flex flex-col gap-[24px] min-w-[360px] w-[800px]">
       <div class="w-full flex flex-col justify-center items-center gap-[24px] w-[360px]! mx-auto">
         <h1 class="text-[26px] mb-[24px]">Creation a new Link</h1>
@@ -114,7 +121,7 @@ async function submit() {
 </template>
 
 <style scoped>
-.cv-admin__links_new {
+.cv-admin__experience_new {
   display: flex;
   flex-direction: column;
   align-items: center;
