@@ -5,7 +5,7 @@ import { useKeyboard } from '~/client/composables/useKeyboard'
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue'
 import { useProfiles } from '~/client/composables/useProfiles'
 import { useFormValidator } from '~/client/composables/useFormValidator'
-import { computed, reactive, ref } from 'vue'
+import { computed, onBeforeMount, reactive, ref } from 'vue'
 import { useToast } from '~/client/composables/useToast'
 import { sleep } from '~/shared/async'
 import { AppRoutes } from '~/shared/router'
@@ -14,6 +14,8 @@ import { createCvExperienceDto, type CreateExperienceDto } from '~/shared/dto/cv
 import { CvExperienceApi } from '~/client/api/admin/cv/experience.api'
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue'
 import { CVEmploymentType, CVEmploymentTypeDisplay } from '~/shared/types'
+import { CvEmploymentTypeApi } from '~/client/api/admin/cv/employment-type.api'
+import type { EmploymentType } from '~/shared/dto/cv/employment-type.dto'
 
 const toast = useToast()
 
@@ -41,6 +43,7 @@ const {
   validateFormOrThrow,
 } = useFormValidator(formData)
 
+const employmentTypes = ref<EmploymentType[]>([])
 const isSubmitLoading = ref(false)
 const isSubmitDisabled = computed(() => {
   return !formData.company
@@ -53,10 +56,10 @@ const isSubmitDisabled = computed(() => {
 })
 
 const EmploymentTypes = computed(() => {
-  return Object.entries(CVEmploymentType).map(([k, v]) => {
+  return employmentTypes.value.map((v) => {
     return {
-      label: CVEmploymentTypeDisplay[k as keyof typeof CVEmploymentType],
-      value: v,
+      label: CVEmploymentTypeDisplay[v.code as keyof typeof CVEmploymentType],
+      value: v.id,
     }
   })
 })
@@ -97,6 +100,10 @@ async function submit() {
   }
 }
 
+onBeforeMount(async () => {
+  employmentTypes.value = await CvEmploymentTypeApi.getList()
+})
+
 </script>
 
 <template>
@@ -125,6 +132,7 @@ async function submit() {
         <InputUI v-model="formData.endDate as string" class="w-[360px]!" type="text" :error="errors.endDate"
           label="End Date" placeholder="e.g February 2026" @input="undoError('endDate')" />
 
+        <!-- EMPLOYMENT TYPE ID -->
         <SelectInputUI v-model="formData.employmentTypeId!" :options="EmploymentTypes"
           :placeholder="'Select Employment Type'" :label="'Employment Type*'" :error="errors.employmentTypeId"
           @input="undoError('employmentTypeId')" />
