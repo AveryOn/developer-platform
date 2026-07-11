@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AppRoutes } from '~/shared/router'
 import type {
   Experience,
