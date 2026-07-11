@@ -9,6 +9,7 @@ import type { EmploymentType } from '~/shared/dto/cv/employment-type.dto';
 import { CVEmploymentType, CVEmploymentTypeDisplay } from '~/shared/types';
 import CheckboxUI from '~/client/components/shared/CheckboxUI.vue';
 import InputUI from '~/client/components/shared/InputUI.vue';
+import { CvEmploymentTypeApi } from '~/client/api/admin/cv/employment-type.api';
 
 
 const {
@@ -49,8 +50,14 @@ const EmploymentTypes = computed(() => {
   })
 })
 
-onMounted(() => {
+const employmentTypeLabel = computed(() => {
+  const val = editExperienceFormData.value['employmentTypeId']?.oldValue
+  return employmentTypes.value.find(v => v.id === val)?.label
+})
+
+onMounted(async () => {
   console.debug(editExperienceFormData)
+  employmentTypes.value = await CvEmploymentTypeApi.getList()
 })
 
 </script>
@@ -105,7 +112,7 @@ onMounted(() => {
                     placeholder="Label">
                   </InputUI>
                   <p v-else class="experience-edit-item__value" @click="() => setFieldFocus('company', true)">
-                    {{ editExperienceFormData.company?.oldValue }}
+                    {{ employmentTypeLabel }}
                   </p>
 
                   <div class="experience-edit-item__actions">
@@ -127,7 +134,7 @@ onMounted(() => {
                     :options="EmploymentTypes" size="xsmall">
                   </SelectInputUI>
                   <p v-else class="experience-edit-item__value" @click="() => setFieldFocus('employmentTypeId', true)">
-                    {{ editExperienceFormData.employmentTypeId?.oldValue }}
+                    {{ employmentTypeLabel }}
                   </p>
 
                   <div class="experience-edit-item__actions">
