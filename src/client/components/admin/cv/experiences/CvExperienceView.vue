@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useCvExperienceEditor } from '~/client/composables/useCvExperienceEditor';
 import SelectInputUI from '~/client/components/shared/SelectInputUI.vue';
-import { mdiPen } from '@mdi/js';
+import { mdiChevronDownBoxOutline, mdiChevronUpBoxOutline, mdiPen } from '@mdi/js';
 import Icon from '~/client/components/common/Icon.vue';
 import ButtonBaseUI from '~/client/components/shared/ButtonBaseUI.vue';
 
@@ -10,7 +10,7 @@ const {
   profiles,
   selectedProfileId,
   isSaveReorderLoading,
-  entitiesByProfileId: profilesByProfileId,
+  entitiesByProfileId: experiencesByProfileId,
   selectedEntity: selectedExperience,
 
   // editFormData: editLinkFormData,
@@ -19,7 +19,7 @@ const {
   someChange,
 
   selectEntity: selectExperience,
-  // moveEntity: moveLink,
+  moveEntity: moveExperience,
   // loadEntities: uploadLinks,
 
   // confirmUpdateField,
@@ -43,18 +43,19 @@ const {
       <div class="w-full h-[4px] bg-[--primary-color-5]"></div>
 
       <div class="relative flex items-start justify-center h-[100%] gap-[24px]">
-        <!-- <div v-if="selectedLink && experiencesByProfileId.length > 1"
+        <div v-if="selectedExperience && experiencesByProfileId.length > 1"
           class="absolute left-[-36px] top-0 bottom-0 flex flex-col justify-between">
-          <Icon class="move-link-btn" :size="28" :icon="mdiChevronUpBoxOutline" @click="() => moveLink('up')"></Icon>
-          <Icon class="move-link-btn" :size="28" :icon="mdiChevronDownBoxOutline" @click="moveLink('down')">
+          <Icon class="move-link-btn" :size="28" :icon="mdiChevronUpBoxOutline" @click="() => moveExperience('up')">
           </Icon>
-        </div> -->
+          <Icon class="move-link-btn" :size="28" :icon="mdiChevronDownBoxOutline" @click="moveExperience('down')">
+          </Icon>
+        </div>
 
         <TransitionGroup tag="ul" name="experience-list" class="flex flex-col gap-[10px] w-[50%]">
-          <li v-for="profile in profilesByProfileId" :key="profile.id" class="link-item"
-            :class="{ 'bg-[--primary-color-3-100]': profile.id === selectedExperience?.id }"
-            @click="() => selectExperience(profile)">
-            <span>{{ profile }}</span>
+          <li v-for="experience in experiencesByProfileId" :key="experience.id" class="link-item"
+            :class="{ 'bg-[--primary-color-3-100]': experience.id === selectedExperience?.id }"
+            @click="() => selectExperience(experience)">
+            <span>{{ experience }}</span>
 
             <div class="link-item__actions">
               <Icon :icon="mdiPen" :size="16" />
