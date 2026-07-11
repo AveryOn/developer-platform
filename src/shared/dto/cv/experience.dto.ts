@@ -14,7 +14,6 @@ export const createCvExperienceDto = z.object({
   startDate: z.string(),
   endDate: z.string().trim().min(1).nullable(),
   isCurrent: z.boolean().default(false),
-
 })
 export type CreateExperienceDto = z.infer<typeof createCvExperienceDto>
 
