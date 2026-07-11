@@ -71,11 +71,11 @@ async function submit() {
 
     const newRecord = await CvExperienceApi.create({
       company: data.data.company,
+      location: data.data.location,
       description: data.data.description,
       employmentTypeId: data.data.employmentTypeId,
       endDate: data.data.endDate,
       isCurrent: data.data.isCurrent,
-      location: data.data.location,
       position: data.data.position,
       profileId: data.data.profileId,
       startDate: data.data.startDate,
@@ -88,7 +88,7 @@ async function submit() {
     isSubmitLoading.value = false
     await sleep('2.5s')
 
-    window.location.href = AppRoutes.admin.CvLinks
+    window.location.href = AppRoutes.admin.CvExperience
   } catch (err) {
     toast.error('Произошла ошибка при создании опыта', {
       duration: 3000,
@@ -120,6 +120,14 @@ onBeforeMount(async () => {
         <InputUI v-model="formData.company" class="w-[360px]!" type="text" :error="errors.company" label="Company*"
           placeholder="Company name..." @input="undoError('company')" />
 
+        <!-- POSITION -->
+        <InputUI v-model="formData.position!" class="w-[360px]!" type="text" :error="errors.position" label="Position*"
+          placeholder="Position..." @input="undoError('position')" />
+
+        <!-- LOCATION -->
+        <InputUI v-model="formData.location!" class="w-[360px]!" type="text" :error="errors.location" label="Location*"
+          placeholder="Location..." @input="undoError('location')" />
+
         <!-- DESCRIPTION -->
         <InputUI v-model="formData.description" class="w-[360px]!" type="text" :error="errors.description"
           label="Description*" placeholder="Description..." @input="undoError('description')" />
@@ -135,7 +143,7 @@ onBeforeMount(async () => {
         <!-- EMPLOYMENT TYPE ID -->
         <SelectInputUI v-model="formData.employmentTypeId!" :options="EmploymentTypes"
           :placeholder="'Select Employment Type'" :label="'Employment Type*'" :error="errors.employmentTypeId"
-          @input="undoError('employmentTypeId')" />
+          @input="undoError('employmentTypeId'); console.debug(EmploymentTypes)" />
 
         <CheckboxUI v-model="formData.isCurrent as boolean" label="Is Current" />
 
