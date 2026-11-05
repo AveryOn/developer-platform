@@ -17,7 +17,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "check": "astro check"
+    "check": "astro check",
+    "snapshot": "python3 ./scripts/snapshot.py"
   },
   "dependencies": {
     "@astrojs/node": "^10.1.3",
